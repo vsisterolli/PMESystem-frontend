@@ -20,11 +20,12 @@ export default function LoginPage() {
     async function sendLogin(event) {
         event.preventDefault();
         try {
-            await client.post("/auth/login", {
+            const response = await client.post("/auth/login", {
                 nick,
                 password
             });
             toast.success("Login feito com sucesso.");
+            localStorage.setItem("userData", JSON.stringify(response.data));
             router.replace("/home");
         } catch (e) {
             catchErrorMessage(e);
