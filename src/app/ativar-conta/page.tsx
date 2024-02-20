@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { client, catchErrorMessage } from "@/api/axios";
 import moment from "moment";
 import { toast } from "react-toastify";
+import {useRouter} from "next/navigation";
 
 const alatsi = Alatsi({ subsets: ["latin"], weight: "400" });
 const leagueGothic = League_Gothic({ subsets: ["latin"] });
@@ -21,6 +22,7 @@ export default function LoginPage() {
         code: "",
         expiresAt: ""
     });
+    const router = useRouter();
 
     function askNewSession() {
         client
@@ -52,14 +54,17 @@ export default function LoginPage() {
             return;
         }
 
-        client
+        await client
             .patch("/users/activate", {
                 sessionId: session.id,
                 nick: nick,
                 password: password
             })
-            .then(() => {
+            .then(async () => {
                 toast.success("Conta ativada com sucesso.");
+                const response = await client.post("/auth/login", {nick, password, sessionId: session.id})
+                localStorage.setItem("userData", JSON.stringify(response.data));
+                router.replace("/home")
             })
             .catch((error) => {
                 if (moment().isAfter(session.expiresAt)) askNewSession();

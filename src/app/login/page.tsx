@@ -3,7 +3,7 @@
 import styles from "./style.module.css";
 import Image from "next/image";
 import { Alatsi, League_Gothic, Poppins } from "next/font/google";
-import { useState } from "react";
+import {createContext, useState} from "react";
 import { client, catchErrorMessage } from "@/api/axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
@@ -11,6 +11,8 @@ import { useRouter } from "next/navigation";
 const alatsi = Alatsi({ subsets: ["latin"], weight: "400" });
 const leagueGothic = League_Gothic({ subsets: ["latin"] });
 const poppins = Poppins({ subsets: ["latin"], weight: "700" });
+
+const userContext = createContext()
 
 export default function LoginPage() {
     const [nick, setNick] = useState("");

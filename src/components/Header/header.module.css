@@ -36,11 +36,14 @@
     position: fixed;
     border-bottom: solid white 2px;
     height: 120px;
-    box-shadow: inset 0 0 0 1000px rgba(22,8,42,0.8);
+    box-shadow: inset 0 0 0 1000px rgba(22,8,42,0.90);
     background-image: url("/stars-bg.png");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    @media (max-width: 768px) {
+        padding-left: 40px;
+    }
 }
 
 .findUser {
@@ -58,7 +61,6 @@
 }
 
 .ghost {
-    margin-bottom: 22px;
     height: 120px;
 }
 

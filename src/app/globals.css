@@ -11,6 +11,21 @@
     --swiper-theme-color: #FFFFFF !important;
 }
 
+.rc-card-title, .card-sub-title {
+    color: white !important;
+}
+
+.card-description {
+    overflow-y: visible !important;
+}
+
+.timeline-card-content {
+    height: fit-content !important;
+    min-height: 200px !important;
+    padding: 0 !important;
+    position: relative !important;
+}
+
 html,
 body,
 div,
