@@ -7,6 +7,10 @@
    License: none (public domain)
 */
 
+* {
+    box-sizing: border-box;
+}
+
 :root {
     --swiper-theme-color: #FFFFFF !important;
 }
@@ -17,6 +21,7 @@
 
 .card-description {
     overflow-y: visible !important;
+    align-items: flex-start !important;
 }
 
 .timeline-card-content {

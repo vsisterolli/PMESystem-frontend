@@ -58,7 +58,7 @@ export default function Menu({ menuState }) {
           <ion-icon name="checkbox-outline"></ion-icon>
           <button>Funções</button>
         </div>
-        <div>
+        <div onClick={() => router.replace('/atividades')}>
           <ion-icon name="arrow-dropup-circle"></ion-icon>
           <button>Atividades</button>
         </div>

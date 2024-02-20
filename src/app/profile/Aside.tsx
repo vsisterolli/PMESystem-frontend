@@ -40,7 +40,9 @@ export default function Aside({ profile }) {
           STATUS
         </div>
         <div className={alata.className}>
+
           <span>Situação: {profile.isAccountActive ? " ativo" : " inativo"}</span>
+          <span>Número de advertências: {profile.advNum}</span>
           <span>Data de criação: {moment(profile.createdAt).format("DD/MM/yyyy")}</span>
           <span>Última promoção: {moment(profile.lastPromoted).format("DD/MM/yyyy")}</span>
         </div>

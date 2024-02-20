@@ -1,4 +1,37 @@
-.home {
+.portrait {
+    width: 238px;
+    height: 258px;
+    background-image: url("/base.png");
+    background-position: left;
+    position: relative;
+    border: solid 2px black;
+    overflow: hidden;
+    margin-top: 40px;
+}
+
+.portrait img {
+    margin-top: 80px;
+}
+
+.blackRectangle {
+    width: 100%;
+    height: 36px;
+    background-color: black;
+    position: absolute;
+    bottom: 0px;
+    color: #FFF;
+    text-align: center;
+    text-shadow: 0px 0px 100px #160430;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.activities {
     box-shadow: inset 0 0 0 1000px rgba(22,8,42,0.80);
     background-image: url("/stars-bg.png");
     background-position: center;
@@ -6,73 +39,112 @@
     background-repeat: no-repeat;
 }
 
-.swiper {
-    width: 1200px;
-    height: 500px;
-    max-width: 100vw;
-    margin-top: 80px;
-    color: white !important;
-}
-
-.swiper img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    animation: fade-in 2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
-    -webkit-animation: fade-in 2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
-}
-
-.sectionTitle {
-    color: #FFF;
-    text-align: center;
-    text-shadow: 4px 4px 100px rgba(0, 0, 0, 0.80), 0px 4px 4px rgba(0, 0, 0, 0.25);
+.activityForm {
+    width: 60vw;
+    min-height: 300px;
+    background: linear-gradient(180deg, rgba(158, 0, 172, 0.20) 13.51%, rgba(0, 0, 0, 0.00) 89.19%), #100027;
     margin-top: 40px;
-    font-size: 60px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.activityForm input[type=text], .activityForm select {
+    height: 68px;
+    width: 100%;
+    background: #261046;
+    outline: none;
+    padding-left: 70px;
+    border: 0;
+    border-radius: 10px;
+}
+
+.activityForm input[type=text]::placeholder, .activityForm textarea, .activityForm select {
+    color: #a4a4a4;
+    font-size: 16.294px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 500;
     line-height: normal;
 }
 
-.newPolice {
-    height: 155px;
-    width: 155px;
-    flex-shrink: 0;
-    background-color: #261046;
-    border-radius: 100%;
-    overflow: hidden;
-    margin: 18px 32px;
+.activityForm input[type=checkbox] {
+    accent-color: #261046;
+    width: 40px;
+    height: 40px;
+    margin-right: 28px;
 }
 
-.newMilitary {
-    padding-bottom: 40px;
+.checkbox {
+    color: #ffffff;
+    font-size: 16.294px;
+    margin-bottom: 40px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    width: 60%;
     display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    max-width: 100vw;
-    width: fit-content;
-    margin: 0 auto;
-    margin-top: 40px;
+    text-align: center;
+}
+
+.activityForm select {
+    padding-left: 68px;
+}
+
+.activityForm ion-icon {
+    position: absolute;
+    left: 24px;
+    font-size: 32px;
+    top: 50%;
+    color: #a4a4a4;
+    transform: translate(0%, -110%);
+}
+
+.activityForm input, .activityForm textarea, .activityForm select {
+    color: #ffffff;
+    font-size: 16.294px;
+    margin-bottom: 40px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.activityForm h2 {
+    color: #FFF;
+    font-size: 3.4em;
+    margin-top: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-align: center;
+}
+
+.activityForm textarea {
+    min-height: 200px;
+    height: auto;
+    width: 100%;
+    background: #261046;
+    outline: none;
+    padding-top: 20px;
+    padding-left: 20px;
+    border: 0;
+    border-radius: 10px;
+}
+
+.formButtons {
+    color: #fff;
+    font-size: 21px;
+    font-style: normal;
+    font-weight: 500;
+    display: flex;
     align-items: center;
-    overflow: hidden;
-}
-
-.newMilitary img {
-    margin-top: -15px;
-}
-
-@-webkit-keyframes fade-in {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-@keyframes fade-in {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
+    justify-content: center;
+    line-height: normal;
+    border-radius: 18.801px;
+    background: linear-gradient(90deg, #501794 0.03%, #3e70a1 101.88%);
+    width: 230px;
+    height: 62.67px;
+    margin-bottom: 30px;
+    margin-top: -30px;
 }

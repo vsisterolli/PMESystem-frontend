@@ -15,11 +15,24 @@ const alata = Alata({ subsets: ["latin"], weight: "400" });
 
 export default function Timeline({ profile }) {
 
+  const icons = {
+    "PROMOTION": "https://i.imgur.com/gcniOkp.png",
+    "DEMOTION": "https://i.imgur.com/TlX8BKM.png",
+    "FIRE": "https://i.imgur.com/EOGBQwu.png",
+    "WARNING": "https://i.imgur.com/SFrKhgE.png"
+  }
+
   function getTitle(activity) {
     const aux: string = activity.newRole
     console.log(aux)
     if(activity.type === "PROMOTION")
       return <h3>Promovido - {aux}</h3>
+    if(activity.type === "DEMOTION")
+      return <h3>Rebaixado - {aux}</h3>
+    if(activity.type === "FIRE")
+      return <h3>Demitido</h3>
+    if(activity.type === "WARNING")
+      return <h3>Advertência ({activity.isActive ? "ATIVA" : "INATIVA"})</h3>
   }
 
   function getPermissions() {
@@ -69,7 +82,7 @@ export default function Timeline({ profile }) {
           )}
 
           <div className="chrono-icons">
-            {profile.ActivityLog?.map(activity => <Image height={48} className={styles.tlIcon} width={48} src="https://i.imgur.com/gcniOkp.png" alt="image1"/>)}
+            {profile.ActivityLog?.map(activity => <Image height={48} className={styles.tlIcon} width={48} src={icons[activity.type]} alt="image1"/>)}
 
           </div>
         </Chrono>

@@ -13,53 +13,156 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/effect-fade';
 import 'swiper/css/pagination';
-import { Alatsi } from "next/font/google";
+import {Alatsi, Bayon, Poppins} from "next/font/google";
 import Image from "next/image";
 import Tippy from "@tippyjs/react";
-import { client } from "@/api/axios";
+import {catchErrorMessage, client} from "@/api/axios";
+import {set} from "yaml/dist/schema/yaml-1.1/set";
+import {toast} from "react-toastify";
+import {useRouter} from "next/navigation";
 
-const alatsi = Alatsi({ subsets: ["latin"], weight: "400" });
+const bayon = Bayon({ subsets: ["latin"], weight: "400" });
+const poppins = Poppins({ subsets: ["latin"], weight: "400" })
 
 export default function Home() {
 
+  const userData = JSON.parse(localStorage.getItem("userData"))
   const menuState = useState("hidden");
-  const pictures = [
-    "https://s3-alpha-sig.figma.com/img/fd60/d3d0/c5f2fa9f764caa71e8c8bfc395283efc?Expires=1708905600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=ontx~vuD61te10EzzMlBDOj-QahRAFde25IJv3NJIIWukxDXsVAG8~xIUxNwuRv3sIFaC7~9bvfGTaK7L~~o6IhDVqzHnY5pIr0Pi4wEiKr~G-Cj3r4zk0zg0iKIbmeliT4WH12V0Vgo~-bRw6wq2tNhcJhFX0uZdjsXsMFI~SJr68z6iQrirP4Oul2cgVBCaC~Wa5SxyugenKACWqkcY6N2V1zigRc6shK-qt0f7S7KgZr7DTh39jTxRzsrgTI54KNxoW95L7xW-vtJZcPPeOTDT0bmROY8NJ86EdbqydAX-ro1LPd9CGJUT8jNya85ZFSKdW4oUFS3eLsInu1o1A__",
-    "https://s3-alpha-sig.figma.com/img/fd60/d3d0/c5f2fa9f764caa71e8c8bfc395283efc?Expires=1708905600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=ontx~vuD61te10EzzMlBDOj-QahRAFde25IJv3NJIIWukxDXsVAG8~xIUxNwuRv3sIFaC7~9bvfGTaK7L~~o6IhDVqzHnY5pIr0Pi4wEiKr~G-Cj3r4zk0zg0iKIbmeliT4WH12V0Vgo~-bRw6wq2tNhcJhFX0uZdjsXsMFI~SJr68z6iQrirP4Oul2cgVBCaC~Wa5SxyugenKACWqkcY6N2V1zigRc6shK-qt0f7S7KgZr7DTh39jTxRzsrgTI54KNxoW95L7xW-vtJZcPPeOTDT0bmROY8NJ86EdbqydAX-ro1LPd9CGJUT8jNya85ZFSKdW4oUFS3eLsInu1o1A__"
-  ]
-  const [recentUsers, setRecentUsers] = useState([]);
+  const [imageNick, setImageNick] = useState(userData.userData.nick)
+  const [nick, setNick] = useState("")
+  const [checkbox, setCheckbox] = useState(false)
+  const [description, setDescription] = useState("")
+  const [option, setOption] = useState("")
 
-  useEffect(() => {
-    const userToken = JSON.parse(localStorage.getItem("userData")).access_token;
-    client.get("/users/recent", {headers: {Authorization: userToken}})
-      .then(response => setRecentUsers(response.data))
-  }, []);
+  const router = useRouter();
+
+  function setImg(event) {
+    if(event.target.value === "")
+      setImageNick(userData.userData.nick)
+    else
+      setImageNick(event.target.value)
+  }
+
+  let timer;
+  const debounce = (event) => {
+    setNick(event.target.value)
+    clearTimeout(timer);
+    timer = setTimeout(() => setImg(event), 1500);
+  };
+
+  async function sendActivity(event) {
+      event.preventDefault()
+      if(option === "unselected") {
+        toast.error("Selecione uma atividade.")
+        return
+      }
+
+
+      if(option === "PROMOVER") {
+        try {
+          await client.post("/actions/promote", { promotedNick: nick, description}, { headers: {Authorization: userData.access_token}})
+          toast.success("Promoção postada!")
+          router.replace("/profile?nick=" + nick);
+        } catch(error) {
+          catchErrorMessage(error);
+        }
+      }
+
+      if(option === "REBAIXAR") {
+        try {
+          await client.post("/actions/demote", { demotedNick: nick, description}, { headers: {Authorization: userData.access_token}})
+          toast.success("Rebaixamento postado!")
+          router.replace("/profile?nick=" + nick);
+        } catch(error) {
+          catchErrorMessage(error);
+        }
+      }
+
+      if(option === "DEMITIR") {
+        try {
+          await client.post("/actions/fire", { firedNick: nick, description}, { headers: {Authorization: userData.access_token}})
+          toast.success("Demissão postada!")
+          router.replace("/profile?nick=" + nick);
+        } catch(error) {
+          catchErrorMessage(error);
+        }
+      }
+
+      if(option === "ADVERTIR") {
+        try {
+          await client.post("/actions/warn", { warnedNick: nick, description}, { headers: {Authorization: userData.access_token}})
+          toast.success("Advertência postada!")
+          router.replace("/profile?nick=" + nick);
+        } catch(error) {
+          catchErrorMessage(error);
+        }
+      }
+  }
 
   return (
-    <main className={"min-h-screen min-w-screen " + styles.home}>
+    <main className={"min-h-screen min-w-screen " + styles.activities}>
       <Header menuState={menuState}/>
       <Menu menuState={menuState}/>
-      <Swiper autoplay={{
-        delay: 6000,
-        disableOnInteraction: false,
-      }}  pagination={true} navigation={true} modules={[Navigation, Pagination, Autoplay]} className={styles.swiper}>
-        {pictures.map((pictureURL, index) =>
-          <SwiperSlide key={index}>
-            <img src={pictureURL} alt={"Slide"}/>
-          </SwiperSlide>
-        )}
-      </Swiper>
-      <h3 className={alatsi.className + " " + styles.sectionTitle}>NOVOS MILITARES</h3>
-      <div className={styles.newMilitary}>
-        {recentUsers.map(user =>
-        <Tippy content={user.nick} placement="bottom">
-          <div className={styles.newPolice}>
-            <Image width={150} height={222}
-                   src={`https://www.habbo.com.br/habbo-imaging/avatarimage?img_format=png&user=${user.nick}&direction=3&head_direction=3&size=l&gesture=sml&action=std`}
-                   alt={"Seu habbo avatar"}/>
+      <div className={"flex items-center justify-center flex-col"}>
+        <div className={"flex flex-col items-center justify-center " + styles.portrait}>
+          <Image width={150} height={222}
+                 src={`https://www.habbo.com.br/habbo-imaging/avatarimage?img_format=png&user=${imageNick}&direction=3&head_direction=3&size=l&gesture=sml&action=std`}
+                 alt={"Seu habbo avatar"}/>
+          <div className={styles.blackRectangle + " " + bayon.className}>
+            {imageNick}
           </div>
-        </Tippy>
-        )}
+        </div>
+        <form onSubmit={sendActivity} className={styles.activityForm}>
+          <h2 className={poppins.className}>POSTAR ATIVIDADE</h2>
+          <div className={"relative w-[60%] flex justify-center"}>
+            <ion-icon name="person"></ion-icon>
+            <input
+              required
+              type="text"
+              placeholder="Nickname do policial"
+              className={poppins.className}
+              value={nick}
+              onChange={debounce}
+            />
+          </div>
+          <div className={"relative w-[60%] flex justify-center"}>
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+            <select
+              required
+              className={poppins.className}
+              value={option}
+              onChange={(event) => setOption(event.target.value)}
+            >
+              <option value={"unselected"} selected>Selecione a atividade</option>
+              <option>PROMOVER</option>
+              <option>ADVERTIR</option>
+              <option>REBAIXAR</option>
+              <option>DEMITIR</option>
+            </select>
+          </div>
+          <div className={"relative w-[60%] flex justify-center"}>
+            <textarea
+              required
+              placeholder="Motivo"
+              className={poppins.className}
+              maxLength={4000}
+              value={description}
+              onChange={(event) => setDescription(event.target.value)}
+            />
+          </div>
+          <div className={styles.checkbox}>
+            <input
+              required
+              type="checkbox"
+              className={poppins.className}
+              value={checkbox}
+              onClick={(event) => setCheckbox(event.target.value)}
+            />
+            <h4>Confirmo ter verificado as condições para postar essa atividade e estou ciente de possíveis punições em
+              caso de erros</h4>
+          </div>
+          <button type="submit" className={styles.formButtons}>PUBLICAR</button>
+        </form>
       </div>
     </main>
   )
