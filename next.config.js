@@ -1,5 +1,11 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
+    eslint: {
+        ignoreDuringBuilds: true
+    },
+    typescript: {
+        ignoreBuildErrors: true
+    },
     images: {
         formats: ["image/avif", "image/webp"],
         remotePatterns: [

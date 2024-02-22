@@ -3,29 +3,30 @@
 import styles from "./styles.module.css";
 import Header from "@/components/Header/Header";
 import Menu from "@/components/Menu/Menu";
-import {useEffect, useState} from "react";
+import {Suspense, useEffect, useState} from "react";
 import Aside from "@/app/profile/Aside";
-import {useSearchParams} from "next/navigation";
 import Timeline from "@/app/profile/Timeline";
 import {client} from "@/api/axios";
-import {toast} from "react-toastify";
 import {BeatLoader} from "react-spinners";
 import {Alata} from "next/font/google";
 import NotFound from "@/app/profile/NotFound";
 
 const alata = Alata({ subsets: ["latin"], weight: "400" });
 
-export default function Profile() {
+export default function Profile({ searchParams }) {
   const menuState = useState("hidden");
-  const searchParams = useSearchParams();
-  const nick = searchParams.get("nick");
+
+  const nick = searchParams.nick;
   const capeSelected = useState(0);
 
   const [profile, setProfile] = useState({});
   const [visualization, setVisualization] = useState("loading");
   const [options, setOptions] = useState([]);
   useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem("userData"));
+    let userData;
+    if (typeof window !== 'undefined') {
+      userData = JSON.parse(localStorage.getItem("userData"));
+    }
     client.get("/users/profile/" + nick, { headers: { Authorization: userData.access_token}})
       .then(response => {
         setProfile(response.data)
@@ -47,7 +48,7 @@ export default function Profile() {
       <Aside profile={profile}/>
       <Timeline capeSelected={capeSelected} profile={profile}/>
     </>,
-    "notFound": <NotFound nick={nick} options={options}/>
+    "notFound": <Suspense><NotFound nick={nick} options={options}/></Suspense>
   }
 
   return (

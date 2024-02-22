@@ -10,13 +10,13 @@ export default function ChangeCape({ capeSelected, visibilityState }) {
   const [capes, setCapes] = useState([]);
   const [visibility, setVisibility] = visibilityState;
   const userData = JSON.parse(localStorage.getItem("userData"))
-  const [chosen, setChosen] = useState(userData.userData.capeSelected)
+  const [chosen, setChosen] = useState(userData?.userData?.capeSelected)
   const baseS3 = "https://pmesystem.s3.sa-east-1.amazonaws.com/";
   const [newCapeSelected, setNewCapeSelected] = capeSelected;
 
   async function changeCape(option) {
     setNewCapeSelected(!newCapeSelected);
-    await client.patch("/cosmetic/userCape/", {userNick: userData.userData.nick, capeName: option}, {headers: {"Authorization": userData.access_token}});
+    await client.patch("/cosmetic/userCape/", {userNick: userData?.userData?.nick, capeName: option}, {headers: {"Authorization": userData?.access_token}});
     toast.success("Capa trocada com sucesso!")
   }
 
@@ -27,7 +27,7 @@ export default function ChangeCape({ capeSelected, visibilityState }) {
   };
 
   useEffect(() => {
-    client.get("/cosmetic/capes", { headers: {"Authorization": userData.access_token}})
+    client.get("/cosmetic/capes", { headers: {"Authorization": userData?.access_token}})
       .then(response => setCapes(response.data))
   }, []);
 

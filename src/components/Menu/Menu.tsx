@@ -28,11 +28,14 @@ export default function Menu({ menuState }) {
   const router = useRouter();
 
   useEffect(() => {
-    const data = localStorage.getItem("userData");
-    if(!data || data === "undefined") {
-      router.replace("/login")
+    let data;
+    if (typeof window !== 'undefined') {
+      data = localStorage.getItem("userData");
+      if (!data || data === "undefined") {
+        router.replace("/login")
+      }
+      else setUserData(JSON.parse(data));
     }
-    else setUserData(JSON.parse(data));
   }, []);
 
   return (

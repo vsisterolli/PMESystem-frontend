@@ -16,7 +16,10 @@ const alata = Alata({ subsets: ["latin"], weight: "400" });
 
 export default function Timeline({ profile, capeSelected }) {
 
-  const userData = JSON.parse(localStorage.getItem("userData")).userData;
+  let userData
+  if (typeof window !== 'undefined') {
+    userData = JSON.parse(localStorage.getItem("userData")).userData;
+  }
   const visibilityState = useState("hidden");
   const baseS3 = "https://pmesystem.s3.sa-east-1.amazonaws.com/";
   const [, setVisibility] = visibilityState;

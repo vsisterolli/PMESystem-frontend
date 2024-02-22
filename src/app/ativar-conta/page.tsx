@@ -29,7 +29,9 @@ export default function LoginPage() {
             .post("/auth/session")
             .then((response) => {
                 setSession(response.data);
-                localStorage.setItem("session", JSON.stringify(response.data));
+                if (typeof window !== 'undefined') {
+                    localStorage.setItem("session", JSON.stringify(response.data));
+                }
             })
             .catch((error) => catchErrorMessage(error));
     }
@@ -63,7 +65,9 @@ export default function LoginPage() {
             .then(async () => {
                 toast.success("Conta ativada com sucesso.");
                 const response = await client.post("/auth/login", {nick, password, sessionId: session.id})
-                localStorage.setItem("userData", JSON.stringify(response.data));
+                if (typeof window !== 'undefined') {
+                    localStorage.setItem("userData", JSON.stringify(response.data));
+                }
                 router.replace("/home")
             })
             .catch((error) => {

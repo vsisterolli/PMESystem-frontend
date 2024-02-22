@@ -30,7 +30,10 @@ export default function Home() {
   const [recentUsers, setRecentUsers] = useState([]);
 
   useEffect(() => {
-    const userToken = JSON.parse(localStorage.getItem("userData")).access_token;
+    let userToken;
+    if (typeof window !== 'undefined') {
+      userToken = JSON.parse(localStorage.getItem("userData")).access_token;
+    }
     client.get("/users/recent", {headers: {Authorization: userToken}})
       .then(response => setRecentUsers(response.data))
   }, []);

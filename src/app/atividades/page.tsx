@@ -31,9 +31,12 @@ let timer;
 
 export default function Activities() {
 
-  const userData = JSON.parse(localStorage.getItem("userData"))
+  let userData;
+  if (typeof window !== 'undefined') {
+    userData = JSON.parse(localStorage.getItem("userData"))
+  }
   const menuState = useState("hidden");
-  const [imageNick, setImageNick] = useState(userData.userData.nick)
+  const [imageNick, setImageNick] = useState(userData?.userData?.nick)
   const [nick, setNick] = useState("")
   const [checkbox, setCheckbox] = useState(false)
   const [description, setDescription] = useState("")
@@ -43,7 +46,7 @@ export default function Activities() {
 
   function setImg(event) {
     if(event.target.value === "")
-      setImageNick(userData.userData.nick)
+      setImageNick(userData?.userData?.nick)
     else
       setImageNick(event.target.value)
   }
@@ -64,7 +67,7 @@ export default function Activities() {
 
       if(option === "PROMOVER") {
         try {
-          await client.post("/actions/promote", { promotedNick: nick, description}, { headers: {Authorization: userData.access_token}})
+          await client.post("/actions/promote", { promotedNick: nick, description}, { headers: {Authorization: userData?.access_token}})
           toast.success("Promoção postada!")
           router.replace("/profile?nick=" + nick);
         } catch(error) {
@@ -74,7 +77,7 @@ export default function Activities() {
 
       if(option === "REBAIXAR") {
         try {
-          await client.post("/actions/demote", { demotedNick: nick, description}, { headers: {Authorization: userData.access_token}})
+          await client.post("/actions/demote", { demotedNick: nick, description}, { headers: {Authorization: userData?.access_token}})
           toast.success("Rebaixamento postado!")
           router.replace("/profile?nick=" + nick);
         } catch(error) {
@@ -84,7 +87,7 @@ export default function Activities() {
 
       if(option === "DEMITIR") {
         try {
-          await client.post("/actions/fire", { firedNick: nick, description}, { headers: {Authorization: userData.access_token}})
+          await client.post("/actions/fire", { firedNick: nick, description}, { headers: {Authorization: userData?.access_token}})
           toast.success("Demissão postada!")
           router.replace("/profile?nick=" + nick);
         } catch(error) {
@@ -94,7 +97,7 @@ export default function Activities() {
 
       if(option === "ADVERTIR") {
         try {
-          await client.post("/actions/warn", { warnedNick: nick, description}, { headers: {Authorization: userData.access_token}})
+          await client.post("/actions/warn", { warnedNick: nick, description}, { headers: {Authorization: userData?.access_token}})
           toast.success("Advertência postada!")
           router.replace("/profile?nick=" + nick);
         } catch(error) {
