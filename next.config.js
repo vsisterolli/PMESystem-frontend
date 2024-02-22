@@ -11,7 +11,7 @@ module.exports = {
             },
             {
                 protocol: "https",
-                hostname: "i.imgur.com",
+                hostname: "pmesystem.s3.sa-east-1.amazonaws.com",
                 port: "",
                 pathname: "/**",
             }

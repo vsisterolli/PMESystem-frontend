@@ -5,6 +5,11 @@ import Image from "next/image";
 import {Alata} from "next/font/google";
 import {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
+import {FaChevronLeft, FaHandshake} from "react-icons/fa";
+import {IoIosArrowDown, IoIosArrowUp, IoIosHome, IoMdCheckmarkCircleOutline} from "react-icons/io";
+import {MdOutlineDocumentScanner} from "react-icons/md";
+import {LuClipboardList} from "react-icons/lu";
+import {PiFunctionFill} from "react-icons/pi";
 
 const alata = Alata({ subsets: ["latin"], weight: "400" });
 
@@ -19,6 +24,7 @@ export default function Menu({ menuState }) {
     }
   });
   const [visibility, setVisibility] = menuState;
+  const [docDropdownVisibility, setDocDropdownVisibility] = useState("hidden");
   const router = useRouter();
 
   useEffect(() => {
@@ -38,33 +44,45 @@ export default function Menu({ menuState }) {
                alt={"Seu habbo avatar"}/>
       </div>
       <div className={styles.closeArrow} onClick={() => setVisibility("hidden")}>
-        <ion-icon name="ios-arrow-dropleft"></ion-icon>
+        <FaChevronLeft />
         <div></div>
       </div>
       <h3 className={alata.className + " text-center mt-4"}>{userData.userData.nick}</h3>
       <h4 className={alata.className + " text-center"}>{userData.userData.role?.name}</h4>
       <div className={styles.options + " md:ml-[46px] " + alata.className}>
         <a href="/home">
-          <div>
-            <ion-icon name="home"></ion-icon>
+          <div className={styles.option}>
+            <IoIosHome/>
             <button>Home</button>
           </div>
         </a>
-        <div>
-          <ion-icon name="paper"></ion-icon>
+        <div onClick={() => setDocDropdownVisibility(docDropdownVisibility === "hidden" ? "block" : "hidden")}
+             className={styles.option}>
+          <MdOutlineDocumentScanner/>
           <button>Documentos</button>
+          <IoIosArrowDown
+            className={(docDropdownVisibility === "hidden" ? "block" : "hidden") + " " + styles.arrowDown}/>
+          <IoIosArrowUp className={docDropdownVisibility + " " + styles.arrowDown}/>
         </div>
-        <div>
-          <ion-icon name="checkbox-outline"></ion-icon>
+        <div className={`pl-4 ${docDropdownVisibility} ` + styles.dropdown}>
+          <button className="block">Estatuto Oficial</button>
+          <button className="block">Regimento Disciplinar</button>
+        </div>
+        <div className={styles.option}>
+          <PiFunctionFill/>
           <button>Funções</button>
         </div>
-        <div onClick={() => router.replace('/atividades')}>
-          <ion-icon name="arrow-dropup-circle"></ion-icon>
+        <div className={styles.option} onClick={() => router.replace('/atividades')}>
+          <IoMdCheckmarkCircleOutline/>
           <button>Atividades</button>
         </div>
-        <div>
-          <ion-icon name="list"></ion-icon>
-          <button>Controle de patentes</button>
+        <div className={styles.option} onClick={() => router.replace('/contratar')}>
+          <FaHandshake/>
+          <button>Contratar</button>
+        </div>
+        <div className={styles.option}>
+          <LuClipboardList/>
+          <button>Listagens</button>
         </div>
       </div>
       <div

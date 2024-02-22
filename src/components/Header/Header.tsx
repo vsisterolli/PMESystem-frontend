@@ -4,6 +4,7 @@ import styles from "./header.module.css";
 import {Alata, Alatsi, League_Gothic, Poppins} from "next/font/google";
 import {useState} from "react";
 import {useRouter} from "next/navigation";
+import {IoIosMenu, IoIosSearch} from "react-icons/io";
 
 const alatsi = Alatsi({ subsets: ["latin"], weight: "400" });
 const leagueGothic = League_Gothic({ subsets: ["latin"] });
@@ -30,12 +31,12 @@ export default function Header({ menuState }) {
       </div>
       <form onSubmit={searchUser}>
         <div className={"flex " + styles.searchInput}>
-          <ion-icon name="search"></ion-icon>
+          <IoIosSearch/>
           <input required value={search} onChange={event => setSearch(event.target.value)} placeholder={"Buscar militar"} className={styles.findUser + " " + alata.className}/>
         </div>
       </form>
       <div className={styles.menuIcon}>
-        <ion-icon onClick={() => setMenu(menu === "hidden" ? "flex":"hidden")} name="menu"></ion-icon>
+        <IoIosMenu onClick={() => setMenu(menu === "hidden" ? "flex":"hidden")}/>
       </div>
     </header>
     </>

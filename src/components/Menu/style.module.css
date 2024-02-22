@@ -23,6 +23,32 @@
     }
 }
 
+@-webkit-keyframes slide-in-top {
+    0% {
+        -webkit-transform: translateY(-50px);
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+@keyframes slide-in-top {
+    0% {
+        -webkit-transform: translateY(-50px);
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+
 .menu {
     background-color: #2B1F3E;
     top: 0;
@@ -70,7 +96,7 @@
     margin-top: 46px;
 }
 
-.options div {
+.option {
     display: flex;
     align-items: center;
     margin-bottom: 22px;
@@ -126,8 +152,24 @@
     margin-bottom: 22px;
 }
 
-.options ion-icon {
+.options svg {
     font-size: 28px;
     color: white;
     margin-right: 16px;
+}
+
+.arrowDown {
+    margin-left: 16px;
+    margin-top: 6px;
+}
+
+.dropdown {
+    margin-top: -12px;
+    margin-bottom: 16px;
+    -webkit-animation: slide-in-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    animation: slide-in-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+.dropdown button {
+    margin-bottom: 8px;
 }

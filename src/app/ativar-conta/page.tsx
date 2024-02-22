@@ -158,16 +158,15 @@ export default function LoginPage() {
                     >
                         <ion-icon name="lock"></ion-icon>
                         <input
-                <h3 className={poppins.className + " mt-16"}>
-                          required
-                          type="password"
-                          value={password}
-                          onChange={(event) =>
-                            setPassword(event.target.value)
-                          }
-                          type="password"
-                          placeholder="Senha"
-                          className={poppins.className}
+                            required
+                            type="password"
+                            value={password}
+                            onChange={(event) =>
+                                setPassword(event.target.value)
+                            }
+                            type="password"
+                            placeholder="Senha"
+                            className={poppins.className}
                         />
                     </div>
                     <h3 className={poppins.className + " mt-2 w-[60%]"}>
@@ -176,18 +175,18 @@ export default function LoginPage() {
                     </h3>
 
                     <div
-                      className={"mt-6 relative w-[60%] flex justify-center"}
+                        className={"mt-6 relative w-[60%] flex justify-center"}
                     >
                         <ion-icon name="lock"></ion-icon>
                         <input
-                          required
-                          value={confirmPassword}
-                          onChange={(event) =>
-                            setConfirmPassword(event.target.value)
-                          }
-                          type="password"
-                          placeholder="Confirme a senha."
-                          className={poppins.className}
+                            required
+                            value={confirmPassword}
+                            onChange={(event) =>
+                                setConfirmPassword(event.target.value)
+                            }
+                            type="password"
+                            placeholder="Confirme a senha."
+                            className={poppins.className}
                         />
                     </div>
                     <h3 className={poppins.className + " mt-2 w-[60%]"}>
@@ -195,14 +194,14 @@ export default function LoginPage() {
                     </h3>
 
                     <div
-                      className={"mt-6 relative w-[60%] flex justify-center"}
+                        className={"mt-6 relative w-[60%] flex justify-center"}
                     >
                         <ion-icon name="code"></ion-icon>
                         <input
-                          type="text"
-                          value={"PME" + session.code}
-                          readOnly
-                          className={poppins.className}
+                            type="text"
+                            value={"PME" + session.code}
+                            readOnly
+                            className={poppins.className}
                         />
                     </div>
                     <h3 className={poppins.className + " mt-2 w-[60%]"}>
@@ -211,20 +210,20 @@ export default function LoginPage() {
 
                     <div className="flex w-full justify-center items-center">
                         <a
-                          href="/login"
-                          className={
-                            poppins.className + " " + styles.formButtons
-                          }
+                            href="/login"
+                            className={
+                                poppins.className + " " + styles.formButtons
+                            }
                         >
                             VOLTAR
                         </a>
                         <button
-                          type="submit"
-                          className={
-                            poppins.className +
-                            " ml-12 " +
-                            styles.formButtons
-                          }
+                            type="submit"
+                            className={
+                                poppins.className +
+                                " ml-12 " +
+                                styles.formButtons
+                            }
                         >
                             ATIVAR CONTA
                         </button>
@@ -233,23 +232,24 @@ export default function LoginPage() {
                 <div className={styles.stroke} />
                 <h3 className={poppins.className}>Acesse nosso discord</h3>
                 <a
-                  href="https://discord.gg/rDvqyYwU4F"
-                  target="_blank"
-                  className={
-                    "flex items-center justify-center " +
-                    styles.discordHolder
-                  }
+                    href="https://discord.gg/rDvqyYwU4F"
+                    target="_blank"
+                    className={
+                        "flex items-center justify-center " +
+                        styles.discordHolder
+                    }
                 >
                     <Image
-                      className={"mr-4"}
-                      height={32}
-                      width={32}
-                      src={"/dc-icon.png"}
-                      alt={"Icon discord"}
+                        className={"mr-4"}
+                        height={32}
+                        width={32}
+                        src={"/dc-icon.png"}
+                        alt={"Icon discord"}
                     />
                     Discord
                 </a>
-                Esse site não tem vínculos com a Sulake Inc.
+                <h3 className={poppins.className + " mt-16"}>
+                    Esse site não tem vínculos com a Sulake Inc.
                 </h3>
             </aside>
         </main>

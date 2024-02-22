@@ -6,27 +6,40 @@ import styles from "@/app/profile/styles.module.css";
 import {Chrono} from "react-chrono";
 import Image from "next/image";
 import {Alata, Bayon} from "next/font/google";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {act} from "react-dom/test-utils";
 import moment from "moment";
+import ChangeCape from "@/app/profile/ChangeCape";
 
 const bayon = Bayon({ subsets: ["latin"], weight: "400" });
 const alata = Alata({ subsets: ["latin"], weight: "400" });
 
-export default function Timeline({ profile }) {
+export default function Timeline({ profile, capeSelected }) {
+
+  const userData = JSON.parse(localStorage.getItem("userData")).userData;
+  const visibilityState = useState("hidden");
+  const baseS3 = "https://pmesystem.s3.sa-east-1.amazonaws.com/";
+  const [, setVisibility] = visibilityState;
+  {console.log(userData)}
 
   const icons = {
-    "PROMOTION": "https://i.imgur.com/gcniOkp.png",
-    "DEMOTION": "https://i.imgur.com/TlX8BKM.png",
-    "FIRE": "https://i.imgur.com/EOGBQwu.png",
-    "WARNING": "https://i.imgur.com/SFrKhgE.png"
+    "PROMOTION": "https://pmesystem.s3.sa-east-1.amazonaws.com/x1.png",
+    "DEMOTION": "https://pmesystem.s3.sa-east-1.amazonaws.com/x2.png",
+    "FIRE": "https://pmesystem.s3.sa-east-1.amazonaws.com/x3.png",
+    "WARNING": "https://pmesystem.s3.sa-east-1.amazonaws.com/x4.png",
+    "COURSE": "https://pmesystem.s3.sa-east-1.amazonaws.com/kindpng_298871-removebg-preview-removebg-preview.png",
+    "SELLING": "https://pmesystem.s3.sa-east-1.amazonaws.com/toppng.com-download-handshake-icon-gree-600x600.png",
+    "CONTRACTING": "https://pmesystem.s3.sa-east-1.amazonaws.com/toppng.com-download-handshake-icon-gree-600x600.png"
   }
 
   function getTitle(activity) {
     const aux: string = activity.newRole
-    console.log(aux)
     if(activity.type === "PROMOTION")
       return <h3>Promovido - {aux}</h3>
+    if(activity.type === "SELLING")
+      return <h3>Venda de Cargo - {aux}</h3>
+    if(activity.type === "CONTRACTING")
+      return <h3>Contratado - {aux}</h3>
     if(activity.type === "DEMOTION")
       return <h3>Rebaixado - {aux}</h3>
     if(activity.type === "FIRE")
@@ -52,7 +65,11 @@ export default function Timeline({ profile }) {
 
   return (
     <div className={styles.content}>
-      <div className={styles.cape + " " + bayon.className}>
+      <ChangeCape capeSelected={capeSelected} visibilityState={visibilityState}/>
+      <div
+        style={{backgroundImage: `url(${baseS3 + profile.capeSelected})`}}
+        className={styles.cape + " " + bayon.className}>
+        { (userData.nick === profile.nick) && <Image src={"https://pmesystem.s3.sa-east-1.amazonaws.com/pencil-removebg-preview.png"} onClick={() => setVisibility("inherit")} width={50} height={50} alt={"lápis de edição"}/>}
         <div>
           [PME] {profile.roleName} {getPermissions()}
         </div>

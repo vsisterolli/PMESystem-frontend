@@ -23,13 +23,13 @@ import {useRouter} from "next/navigation";
 
 const bayon = Bayon({ subsets: ["latin"], weight: "400" });
 const poppins = Poppins({ subsets: ["latin"], weight: "400" })
-import { FaRegUserCircle } from "react-icons/fa";
+import {FaHandshake, FaRegUserCircle} from "react-icons/fa";
 import {IoMdCheckmarkCircleOutline} from "react-icons/io";
 
 
 let timer;
 
-export default function Activities() {
+export default function Contract() {
 
   const userData = JSON.parse(localStorage.getItem("userData"))
   const menuState = useState("hidden");
@@ -117,7 +117,7 @@ export default function Activities() {
           </div>
         </div>
         <form onSubmit={sendActivity} className={styles.activityForm}>
-          <h2 className={poppins.className}>POSTAR ATIVIDADE</h2>
+          <h2 className={poppins.className}>CONTRATAR</h2>
           <div className={"relative w-[60%] flex justify-center"}>
             <FaRegUserCircle/>
             <input
@@ -130,24 +130,35 @@ export default function Activities() {
             />
           </div>
           <div className={"relative w-[60%] flex justify-center"}>
-            <IoMdCheckmarkCircleOutline />
+            <IoMdCheckmarkCircleOutline/>
             <select
               required
               className={poppins.className}
               value={option}
               onChange={(event) => setOption(event.target.value)}
             >
-              <option value={"unselected"} selected>Selecione a atividade</option>
-              <option>PROMOVER</option>
-              <option>ADVERTIR</option>
-              <option>REBAIXAR</option>
-              <option>DEMITIR</option>
+              <option value={"unselected"} selected>Selecione o tipo de contratação</option>
+              <option>CONTRATO</option>
+              <option>VENDA DE CARGO</option>
+            </select>
+          </div>
+          <div className={"relative w-[60%] flex justify-center"}>
+            <FaHandshake/>
+            <select
+              required
+              className={poppins.className}
+              value={option}
+              onChange={(event) => setOption(event.target.value)}
+            >
+              <option value={"unselected"} selected>Selecione o cargo</option>
+              <option>CONTRATO</option>
+              <option>VENDA DE CARGO</option>
             </select>
           </div>
           <div className={"relative w-[60%] flex justify-center"}>
             <textarea
               required
-              placeholder="Motivo"
+              placeholder="Descrição"
               className={poppins.className}
               maxLength={4000}
               value={description}
@@ -166,7 +177,7 @@ export default function Activities() {
               caso de erros</h4>
           </div>
           <button type="submit" className={styles.formButtons}>PUBLICAR</button>
-          </form>
+        </form>
       </div>
     </main>
   )
