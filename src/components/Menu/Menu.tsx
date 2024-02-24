@@ -37,14 +37,12 @@ export default function Menu({ menuState }) {
   }
 
   useEffect(() => {
-    let data;
-    if (typeof window !== 'undefined') {
-      data = localStorage.getItem("userData");
-      if (!data || data === "undefined") {
-        router.replace("/login")
-      }
-      else setUserData(JSON.parse(data));
+    const data = localStorage.getItem("userData");
+    if (!data || data === "undefined") {
+      localStorage.removeItem("userData");
+      router.replace("/login");
     }
+    else setUserData(JSON.parse(data));
   }, []);
 
   return (
@@ -52,7 +50,7 @@ export default function Menu({ menuState }) {
       className={"flex flex-col min-h-screen w-full w-screen md:w-[350px] fixed " + visibility + " " + styles.menu}>
       <div className={styles.portrait}>
         <Image width={150} height={222}
-               src={`https://www.habbo.com.br/habbo-imaging/avatarimage?img_format=png&user=${userData.nick}&direction=3&head_direction=3&size=l&gesture=sml&action=std`}
+               src={`https://www.habbo.com.br/habbo-imaging/avatarimage?img_format=png&user=${userData.userData.nick}&direction=3&head_direction=3&size=l&gesture=sml&action=std`}
                alt={"Seu habbo avatar"}/>
       </div>
       <div className={styles.closeArrow} onClick={() => setVisibility("hidden")}>

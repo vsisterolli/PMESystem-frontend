@@ -19,6 +19,7 @@ import Tippy from "@tippyjs/react";
 import { client } from "@/api/axios";
 import {useRouter} from "next/navigation";
 import {toast} from "react-toastify";
+import {remove} from "next/dist/build/webpack/loaders/resolve-url-loader/lib/file-protocol";
 
 const alatsi = Alatsi({ subsets: ["latin"], weight: "400" });
 
@@ -37,6 +38,7 @@ export default function Home() {
     client.get("/users/recent", {headers: {Authorization: userToken}})
       .then(response => setRecentUsers(response.data))
       .catch(() => {
+        localStorage.removeItem("userData")
         router.replace("/login")
       })
   }, []);
