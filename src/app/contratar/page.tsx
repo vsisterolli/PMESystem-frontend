@@ -56,6 +56,7 @@ export default function Contract() {
       .then(response => setRoles(response.data))
       .catch(() => {
         toast.error("Opa! Você precisa estar logado para acessar essa página.")
+        localStorage.removeItem("userData")
         router.replace("/login")
       })
   }, []);

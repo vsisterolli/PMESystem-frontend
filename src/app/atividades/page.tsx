@@ -47,6 +47,7 @@ export default function Activities() {
     client.get("/users/permissions", {headers: {Authorization: localUserData?.access_token}})
       .catch(() => {
         toast.error("Opa! Você precisa estar logado para acessar essa página.")
+        localStorage.removeItem("userData")
         router.replace("/login")
       })
   }, []);

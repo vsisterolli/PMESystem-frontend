@@ -39,6 +39,7 @@ export default function Profile({ searchParams }) {
         console.log(e)
         if(e.response.status === 401) {
           toast.error("Opa! Você precisa logar antes de acessar essa página.")
+          localStorage.removeItem("userData")
           router.replace("/login")
         }
         setOptions(e.response.data);
