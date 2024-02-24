@@ -77,7 +77,7 @@ export default function Menu({ menuState }) {
           <IoIosArrowUp className={docDropdownVisibility + " " + styles.arrowDown}/>
         </div>
         <div className={`pl-4 ${docDropdownVisibility} ` + styles.dropdown}>
-          <button className="block">Estatuto Oficial</button>
+          <button className="block" onClick={() => router.replace("/document/estatuto")}>Estatuto Oficial</button>
           <button className="block">Regimento Disciplinar</button>
         </div>
         <div className={styles.option}>

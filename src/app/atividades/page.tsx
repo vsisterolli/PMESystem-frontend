@@ -31,21 +31,20 @@ let timer;
 
 export default function Activities() {
 
-  let userData;
-  if (typeof window !== 'undefined') {
-    userData = JSON.parse(localStorage.getItem("userData"))
-  }
   const menuState = useState("hidden");
-  const [imageNick, setImageNick] = useState(userData?.userData?.nick)
+  const [imageNick, setImageNick] = useState("")
   const [nick, setNick] = useState("")
   const [checkbox, setCheckbox] = useState(false)
   const [description, setDescription] = useState("")
   const [option, setOption] = useState("")
+  const [userData, setUserData] = useState(null);
 
   const router = useRouter();
-
   useEffect(() => {
-    client.get("/users/permissions")
+    const localUserData = JSON.parse(localStorage.getItem("userData"));
+    setUserData(localUserData);
+    setImg({target: {value: localUserData.userData.nick}});
+    client.get("/users/permissions", {headers: {Authorization: localUserData?.access_token}})
       .catch(() => {
         toast.error("Opa! Você precisa estar logado para acessar essa página.")
         router.replace("/login")

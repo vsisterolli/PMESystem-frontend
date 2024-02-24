@@ -31,25 +31,29 @@ let timer;
 
 export default function Contract() {
 
-  let userData;
-  if (typeof window !== 'undefined') {
-    userData = JSON.parse(localStorage.getItem("userData"))
-  }
+  const [userData, setUserData] = useState(null);
   const menuState = useState("hidden");
-  const [imageNick, setImageNick] = useState(userData?.userData?.nick)
-  const [nick, setNick] = useState("")
-  const [checkbox, setCheckbox] = useState(false)
-  const [description, setDescription] = useState("")
-  const [option, setOption] = useState("")
+  const [imageNick, setImageNick] = useState(userData?.userData?.nick);
+  const [nick, setNick] = useState("");
+  const [checkbox, setCheckbox] = useState(false);
+  const [description, setDescription] = useState("");
+  const [option, setOption] = useState("");
+  const [selectedRole, setSelectedRole] = useState("unselected");
 
   const router = useRouter();
 
+  const [roles, setRoles] = useState([]);
+
   useEffect(() => {
-    if(!userData || (userData?.role.name !== "Supremo" && userData?.role.name !== "Conselheiro")) {
+    const localUserData = JSON.parse(localStorage.getItem("userData"));
+    setUserData(localUserData);
+    setImg({target : {value: localUserData.userData.nick}});
+    if(!localUserData || (localUserData?.userData.role.name !== "Supremo" && localUserData?.userData.role.name !== "Conselheiro")) {
       toast.error("Opa! Não era pra você estar por aqui.")
       return router.replace("/login");
     }
-    client.get("/users/permissions")
+    client.get("/auth/roles", {headers: {Authorization: localUserData?.access_token}})
+      .then(response => setRoles(response.data))
       .catch(() => {
         toast.error("Opa! Você precisa estar logado para acessar essa página.")
         router.replace("/login")
@@ -71,50 +75,17 @@ export default function Contract() {
 
   async function sendActivity(event) {
       event.preventDefault()
-      if(option === "unselected") {
-        toast.error("Selecione uma atividade.")
-        return
-      }
-
-
-      if(option === "PROMOVER") {
-        try {
-          await client.post("/actions/promote", { promotedNick: nick, description}, { headers: {Authorization: userData?.access_token}})
-          toast.success("Promoção postada!")
-          router.replace("/profile?nick=" + nick);
-        } catch(error) {
-          catchErrorMessage(error);
-        }
-      }
-
-      if(option === "REBAIXAR") {
-        try {
-          await client.post("/actions/demote", { demotedNick: nick, description}, { headers: {Authorization: userData?.access_token}})
-          toast.success("Rebaixamento postado!")
-          router.replace("/profile?nick=" + nick);
-        } catch(error) {
-          catchErrorMessage(error);
-        }
-      }
-
-      if(option === "DEMITIR") {
-        try {
-          await client.post("/actions/fire", { firedNick: nick, description}, { headers: {Authorization: userData?.access_token}})
-          toast.success("Demissão postada!")
-          router.replace("/profile?nick=" + nick);
-        } catch(error) {
-          catchErrorMessage(error);
-        }
-      }
-
-      if(option === "ADVERTIR") {
-        try {
-          await client.post("/actions/warn", { warnedNick: nick, description}, { headers: {Authorization: userData?.access_token}})
-          toast.success("Advertência postada!")
-          router.replace("/profile?nick=" + nick);
-        } catch(error) {
-          catchErrorMessage(error);
-        }
+      try {
+        await client.post("/users/contract", {
+          nick,
+          description,
+          type: option === "CONTRATO" ? "CONTRACTING" : "SELLING",
+          role: selectedRole
+        }, {headers: {Authorization: userData?.access_token}});
+        toast.success("Postado com sucesso!")
+        router.replace("/profile?nick=" + nick);
+      } catch (e) {
+        catchErrorMessage(e);
       }
   }
 
@@ -162,12 +133,13 @@ export default function Contract() {
             <select
               required
               className={poppins.className}
-              value={option}
-              onChange={(event) => setOption(event.target.value)}
+              value={selectedRole}
+              onChange={(event) => setSelectedRole(event.target.value)}
             >
               <option value={"unselected"} selected>Selecione o cargo</option>
-              <option>CONTRATO</option>
-              <option>VENDA DE CARGO</option>
+              {roles.filter(role => (option === "CONTRATO" ? role.hierarchyKind === "MILITARY" : role.hierarchyKind === "EXECUTIVE")).map(role =>
+                <option>{role.name}</option>
+              )}
             </select>
           </div>
           <div className={"relative w-[60%] flex justify-center"}>

@@ -44,7 +44,7 @@ export default function Profile({ searchParams }) {
         setOptions(e.response.data);
         setVisualization("notFound")
       })
-  }, [nick, capeSelected]);
+  }, [nick, capeSelected[0]]);
 
   const renderedComponent = {
     "loading":
