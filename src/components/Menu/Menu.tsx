@@ -50,15 +50,15 @@ export default function Menu({ menuState }) {
       className={"flex flex-col min-h-screen w-full w-screen md:w-[350px] fixed " + visibility + " " + styles.menu}>
       <div className={styles.portrait}>
         <Image width={150} height={222}
-               src={`https://www.habbo.com.br/habbo-imaging/avatarimage?img_format=png&user=${userData.userData.nick}&direction=3&head_direction=3&size=l&gesture=sml&action=std`}
+               src={`https://www.habbo.com.br/habbo-imaging/avatarimage?img_format=png&user=${userData?.userData?.nick}&direction=3&head_direction=3&size=l&gesture=sml&action=std`}
                alt={"Seu habbo avatar"}/>
       </div>
       <div className={styles.closeArrow} onClick={() => setVisibility("hidden")}>
         <FaChevronLeft />
         <div></div>
       </div>
-      <h3 className={alata.className + " text-center mt-4"}>{userData.userData.nick}</h3>
-      <h4 className={alata.className + " text-center"}>{userData.userData.role?.name}</h4>
+      <h3 className={alata.className + " text-center mt-4"}>{userData?.userData?.nick}</h3>
+      <h4 className={alata.className + " text-center"}>{userData?.userData?.role?.name}</h4>
       <div className={styles.options + " md:ml-[46px] " + alata.className}>
         <a href="/home">
           <div className={styles.option}>
@@ -86,7 +86,7 @@ export default function Menu({ menuState }) {
           <IoMdCheckmarkCircleOutline/>
           <button>Atividades</button>
         </div>
-        {userData?.userData.role.name === "Supremo" || userData?.userData.role.name === "Conselheiro" && <div className={styles.option} onClick={() => router.replace('/contratar')}>
+        {userData?.userData?.role.name === "Supremo" || userData?.userData?.role.name === "Conselheiro" && <div className={styles.option} onClick={() => router.replace('/contratar')}>
           <FaHandshake/>
           <button>Contratar</button>
         </div>}
@@ -108,13 +108,13 @@ export default function Menu({ menuState }) {
           className={"z-10"}
           width={160}
           height={160}
-          src={"/emblema.png"}
+          src={"https://pmesystem.s3.sa-east-1.amazonaws.com/emblema.png"}
           alt={"Emblema PME"}
         />
         <Image
           width={260}
           height={260}
-          src={"/pulse-ring.png"}
+          src={"https://pmesystem.s3.sa-east-1.amazonaws.com/pulse-ring.png"}
           alt={"Emblema pulso"}
         />
       </div>

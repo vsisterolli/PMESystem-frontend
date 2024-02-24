@@ -53,13 +53,13 @@ export default function LoginPage() {
                         className={"z-10"}
                         width={460}
                         height={460}
-                        src={"/emblema.png"}
+                        src={"https://pmesystem.s3.sa-east-1.amazonaws.com/emblema.png"}
                         alt={"Emblema PME"}
                     />
                     <Image
                         width={560}
                         height={560}
-                        src={"/pulse-ring.png"}
+                        src={"https://pmesystem.s3.sa-east-1.amazonaws.com/pulse-ring.png"}
                         alt={"Emblema pulso"}
                     />
                 </div>
@@ -87,13 +87,13 @@ export default function LoginPage() {
                         className={"z-10"}
                         width={160}
                         height={160}
-                        src={"/emblema.png"}
+                        src={"https://pmesystem.s3.sa-east-1.amazonaws.com/emblema.png"}
                         alt={"Emblema PME"}
                     />
                     <Image
                         width={260}
                         height={260}
-                        src={"/pulse-ring.png"}
+                        src={"https://pmesystem.s3.sa-east-1.amazonaws.com/pulse-ring.png"}
                         alt={"Emblema pulso"}
                     />
                 </div>
