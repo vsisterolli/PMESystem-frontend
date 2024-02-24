@@ -3,14 +3,11 @@ import { useRouter } from "next/router"
 
 export default function NotFound() {
 
-
-  export default function Custom404() {
-    const router = useRouter()
+  const router = useRouter()
 
     useEffect(() => {
       router.replace("/home")
     })
 
     return null
-  }
 }
