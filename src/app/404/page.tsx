@@ -1,15 +1,5 @@
-"use client"
-
-import { useEffect } from "react"
-import { useRouter } from "next/router"
+import {redirect} from "next/navigation";
 
 export default function NotFound() {
-
-  const router = useRouter()
-
-    useEffect(() => {
-      router.replace("/home")
-    })
-
-    return null
+  return redirect("/home")
 }
