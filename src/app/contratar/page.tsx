@@ -45,7 +45,7 @@ export default function Contract() {
   const router = useRouter();
 
   useEffect(() => {
-    if(!userData || (userData.roleName !== "Supremo" && userData.roleName !== "Conselheiro")) {
+    if(!userData || (userData.role.name !== "Supremo" && userData.role.name !== "Conselheiro")) {
       toast.error("Opa! Não era pra você estar por aqui.")
       return router.replace("/login");
     }
