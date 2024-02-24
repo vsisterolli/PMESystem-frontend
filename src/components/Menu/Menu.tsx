@@ -16,14 +16,7 @@ const alata = Alata({ subsets: ["latin"], weight: "400" });
 
 export default function Menu({ menuState }) {
 
-  const [userData, setUserData] = useState({
-    userData: {
-      "nick": "",
-      role: {
-        "name": ""
-      }
-    }
-  });
+  const [userData, setUserData] = useState(null);
   const [visibility, setVisibility] = menuState;
   const [docDropdownVisibility, setDocDropdownVisibility] = useState("hidden");
   const router = useRouter();
@@ -38,11 +31,11 @@ export default function Menu({ menuState }) {
 
   useEffect(() => {
     const data = localStorage.getItem("userData");
+    setUserData(JSON.parse(data));
     if (!data || data === "undefined") {
       localStorage.removeItem("userData");
       router.replace("/login");
     }
-    else setUserData(JSON.parse(data));
   }, []);
 
   return (
