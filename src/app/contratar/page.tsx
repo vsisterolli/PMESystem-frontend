@@ -44,6 +44,18 @@ export default function Contract() {
 
   const router = useRouter();
 
+  useEffect(() => {
+    if(!userData || (userData.roleName !== "Supremo" && userData.roleName !== "Conselheiro")) {
+      toast.error("Opa! Não era pra você estar por aqui.")
+      return router.replace("/login");
+    }
+    client.get("/users/permissions")
+      .catch(() => {
+        toast.error("Opa! Você precisa estar logado para acessar essa página.")
+        router.replace("/login")
+      })
+  }, []);
+
   function setImg(event) {
     if(event.target.value === "")
       setImageNick(userData?.userData?.nick)

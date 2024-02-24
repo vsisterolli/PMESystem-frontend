@@ -10,6 +10,7 @@ import {IoIosArrowDown, IoIosArrowUp, IoIosHome, IoMdCheckmarkCircleOutline} fro
 import {MdOutlineDocumentScanner} from "react-icons/md";
 import {LuClipboardList} from "react-icons/lu";
 import {PiFunctionFill} from "react-icons/pi";
+import {CiLogout} from "react-icons/ci";
 
 const alata = Alata({ subsets: ["latin"], weight: "400" });
 
@@ -26,6 +27,14 @@ export default function Menu({ menuState }) {
   const [visibility, setVisibility] = menuState;
   const [docDropdownVisibility, setDocDropdownVisibility] = useState("hidden");
   const router = useRouter();
+
+
+  function handleLogout() {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem("userData");
+      router.replace("/login")
+    }
+  }
 
   useEffect(() => {
     let data;
@@ -79,13 +88,17 @@ export default function Menu({ menuState }) {
           <IoMdCheckmarkCircleOutline/>
           <button>Atividades</button>
         </div>
-        <div className={styles.option} onClick={() => router.replace('/contratar')}>
+        {userData?.userData.roleName === "Supremo" || userData?.userData.roleName === "Conselheiro" && <div className={styles.option} onClick={() => router.replace('/contratar')}>
           <FaHandshake/>
           <button>Contratar</button>
-        </div>
+        </div>}
         <div className={styles.option}>
           <LuClipboardList/>
           <button>Listagens</button>
+        </div>
+        <div onClick={handleLogout} className={styles.option}>
+          <CiLogout/>
+          <button>Logout</button>
         </div>
       </div>
       <div

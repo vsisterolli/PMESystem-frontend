@@ -1,10 +1,26 @@
+"use client"
+
 import Header from "@/components/Header/Header";
 import styles from "./style.module.css"
 import {Alata} from "next/font/google";
+import {client} from "@/api/axios";
+import {useEffect} from "react";
+import {useRouter} from "next/navigation";
+import {toast} from "react-toastify";
 
 const alata = Alata({subsets: ["latin"], weight: "400"})
 
 export default function Document() {
+
+  const router = useRouter();
+  useEffect(() => {
+    client.get("/users/permissions")
+      .catch(() => {
+        toast.error("Opa! Você precisa estar logado para acessar essa página.")
+        router.replace("/login")
+      })
+  }, []);
+
   return (
     <div className={"flex flex-col items-center justify-center bg-[#261046] " + styles.document}>
       <Header menuState={"false"}/>

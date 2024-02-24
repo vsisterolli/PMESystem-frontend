@@ -44,6 +44,14 @@ export default function Activities() {
 
   const router = useRouter();
 
+  useEffect(() => {
+    client.get("/users/permissions")
+      .catch(() => {
+        toast.error("Opa! Você precisa estar logado para acessar essa página.")
+        router.replace("/login")
+      })
+  }, []);
+
   function setImg(event) {
     if(event.target.value === "")
       setImageNick(userData?.userData?.nick)

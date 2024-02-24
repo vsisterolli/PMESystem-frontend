@@ -17,6 +17,8 @@ import { Alatsi } from "next/font/google";
 import Image from "next/image";
 import Tippy from "@tippyjs/react";
 import { client } from "@/api/axios";
+import {useRouter} from "next/navigation";
+import {toast} from "react-toastify";
 
 const alatsi = Alatsi({ subsets: ["latin"], weight: "400" });
 
@@ -28,14 +30,19 @@ export default function Home() {
     "https://s3-alpha-sig.figma.com/img/fd60/d3d0/c5f2fa9f764caa71e8c8bfc395283efc?Expires=1708905600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=ontx~vuD61te10EzzMlBDOj-QahRAFde25IJv3NJIIWukxDXsVAG8~xIUxNwuRv3sIFaC7~9bvfGTaK7L~~o6IhDVqzHnY5pIr0Pi4wEiKr~G-Cj3r4zk0zg0iKIbmeliT4WH12V0Vgo~-bRw6wq2tNhcJhFX0uZdjsXsMFI~SJr68z6iQrirP4Oul2cgVBCaC~Wa5SxyugenKACWqkcY6N2V1zigRc6shK-qt0f7S7KgZr7DTh39jTxRzsrgTI54KNxoW95L7xW-vtJZcPPeOTDT0bmROY8NJ86EdbqydAX-ro1LPd9CGJUT8jNya85ZFSKdW4oUFS3eLsInu1o1A__"
   ]
   const [recentUsers, setRecentUsers] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
     let userToken;
     if (typeof window !== 'undefined') {
-      userToken = JSON.parse(localStorage.getItem("userData")).access_token;
+      userToken = JSON.parse(localStorage.getItem("userData"))?.access_token;
     }
     client.get("/users/recent", {headers: {Authorization: userToken}})
       .then(response => setRecentUsers(response.data))
+      .catch(() => {
+        toast.error("Opa! Você precisa logar antes de acessar essa página.")
+        router.replace("/login")
+      })
   }, []);
 
   return (

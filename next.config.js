@@ -1,5 +1,13 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
+    async rewrites() {
+        return [
+            {
+                source: '/:path*',
+                destination: '/home',
+            },
+        ];
+    },
     eslint: {
         ignoreDuringBuilds: true
     },

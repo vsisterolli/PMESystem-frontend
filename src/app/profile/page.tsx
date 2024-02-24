@@ -10,6 +10,8 @@ import {client} from "@/api/axios";
 import {BeatLoader} from "react-spinners";
 import {Alata} from "next/font/google";
 import NotFound from "@/app/profile/NotFound";
+import {toast} from "react-toastify";
+import {useRouter} from "next/navigation";
 
 const alata = Alata({ subsets: ["latin"], weight: "400" });
 
@@ -22,17 +24,23 @@ export default function Profile({ searchParams }) {
   const [profile, setProfile] = useState({});
   const [visualization, setVisualization] = useState("loading");
   const [options, setOptions] = useState([]);
+  const router = useRouter();
   useEffect(() => {
     let userData;
     if (typeof window !== 'undefined') {
       userData = JSON.parse(localStorage.getItem("userData"));
     }
-    client.get("/users/profile/" + nick, { headers: { Authorization: userData.access_token}})
+    client.get("/users/profile/" + nick, { headers: { Authorization: userData?.access_token}})
       .then(response => {
         setProfile(response.data)
         setVisualization("found")
       })
       .catch((e) => {
+        console.log(e)
+        if(e.response.status === 401) {
+          toast.error("Opa! Você precisa logar antes de acessar essa página.")
+          router.replace("/login")
+        }
         setOptions(e.response.data);
         setVisualization("notFound")
       })

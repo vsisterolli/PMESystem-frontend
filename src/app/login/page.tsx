@@ -3,7 +3,7 @@
 import styles from "./style.module.css";
 import Image from "next/image";
 import { Alatsi, League_Gothic, Poppins } from "next/font/google";
-import {createContext, useState} from "react";
+import {createContext, useEffect, useState} from "react";
 import { client, catchErrorMessage } from "@/api/axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
@@ -18,6 +18,12 @@ export default function LoginPage() {
     const [nick, setNick] = useState("");
     const [password, setPassword] = useState("");
     const router = useRouter();
+
+    useEffect(() => {
+        if(typeof window !== "undefined" && localStorage.getItem("userData")) {
+            router.replace("/home")
+        }
+    }, []);
 
     async function sendLogin(event) {
         event.preventDefault();
