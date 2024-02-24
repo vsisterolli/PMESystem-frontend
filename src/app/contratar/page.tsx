@@ -47,7 +47,7 @@ export default function Contract() {
   useEffect(() => {
     const localUserData = JSON.parse(localStorage.getItem("userData"));
     setUserData(localUserData);
-    setImg({target : {value: localUserData?.userData.nick}});
+    setImg({target : {value: localUserData?.userData?.nick}});
     if(!localUserData || (localUserData?.userData.role.name !== "Supremo" && localUserData?.userData.role.name !== "Conselheiro")) {
       toast.error("Opa! Não era pra você estar por aqui.")
       return router.replace("/login");
