@@ -18,8 +18,7 @@ import Image from "next/image";
 import Tippy from "@tippyjs/react";
 import { client } from "@/api/axios";
 import {useRouter} from "next/navigation";
-import {toast} from "react-toastify";
-import {remove} from "next/dist/build/webpack/loaders/resolve-url-loader/lib/file-protocol";
+import {useUserContext} from "@/app/Context/context";
 
 const alatsi = Alatsi({ subsets: ["latin"], weight: "400" });
 
@@ -32,13 +31,13 @@ export default function Home() {
   ]
   const [recentUsers, setRecentUsers] = useState([]);
   const router = useRouter();
+  const {userData} = useUserContext();
 
   useEffect(() => {
-    const userToken = JSON.parse(localStorage.getItem("userData"))?.access_token;
-    client.get("/users/recent", {headers: {Authorization: userToken}})
+    client.get("/users/recent", {headers: {Authorization: userData.access_token}})
       .then(response => setRecentUsers(response.data))
-      .catch(() => {
-        localStorage.removeItem("userData")
+      .catch((e) => {
+        console.log(e)
         router.replace("/login")
       })
   }, []);

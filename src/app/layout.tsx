@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
+import { UserContextProvider } from "./Context/context";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +20,9 @@ export default function RootLayout({children}:
         <html lang="pt-BR">
             <body className={inter.className}>
             <ToastContainer theme={"dark"} />
-                {children}
+                <UserContextProvider>
+                  {children}
+                </UserContextProvider>
                 <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
             </body>
         </html>

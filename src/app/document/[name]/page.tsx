@@ -8,6 +8,7 @@ import {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
 import {toast} from "react-toastify";
 import Menu from "@/components/Menu/Menu";
+import {useUserContext} from "@/app/Context/context";
 
 const alata = Alata({subsets: ["latin"], weight: "400"})
 
@@ -16,17 +17,13 @@ export default function Document({ params }) {
 
   const menuState = useState("hidden");
 
-  let userData;
-  if(typeof window !== "undefined") {
-    userData = JSON.parse(localStorage.getItem("userData"));
-  }
+  const {userData} = useUserContext();
 
   const router = useRouter();
   useEffect(() => {
     client.get("/users/permissions", {headers: {Authorization: userData?.access_token}})
       .catch(() => {
         toast.error("Opa! Você precisa estar logado para acessar essa página.")
-        localStorage.removeItem("userData")
         router.replace("/login")
       })
 

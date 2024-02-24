@@ -53,7 +53,6 @@
     background-color: #2B1F3E;
     top: 0;
     z-index: 10;
-    border-right: solid 2px #FFFFFF;
     -webkit-animation: slide-in-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
     animation: slide-in-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }

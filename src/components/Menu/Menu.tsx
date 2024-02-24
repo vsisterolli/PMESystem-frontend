@@ -11,48 +11,44 @@ import {MdOutlineDocumentScanner} from "react-icons/md";
 import {LuClipboardList} from "react-icons/lu";
 import {PiFunctionFill} from "react-icons/pi";
 import {CiLogout} from "react-icons/ci";
+import {useUserContext} from "@/app/Context/context";
 
 const alata = Alata({ subsets: ["latin"], weight: "400" });
 
 export default function Menu({ menuState }) {
 
-  const [userData, setUserData] = useState(null);
+  const {userData, setUserData} = useUserContext();
   const [visibility, setVisibility] = menuState;
   const [docDropdownVisibility, setDocDropdownVisibility] = useState("hidden");
   const router = useRouter();
 
 
   function handleLogout() {
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem("userData");
+      setUserData({...userData, nick: ""});
       router.replace("/login")
-    }
   }
 
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("userData"));
-    console.log(data)
-    setUserData(data);
-    if (!data || data === "undefined") {
-      localStorage.removeItem("userData");
+    console.log(userData)
+    if (userData.nick === "") {
       router.replace("/login");
     }
   }, []);
 
   return (
     <aside
-      className={"flex flex-col min-h-screen w-full w-screen md:w-[350px] fixed " + visibility + " " + styles.menu}>
+      className={"flex flex-col min-h-screen overflow-y-auto overflow-x-clip w-full w-screen md:w-[350px] fixed " + visibility + " " + styles.menu}>
       <div className={styles.portrait}>
         <Image width={150} height={222}
-               src={`https://www.habbo.com.br/habbo-imaging/avatarimage?img_format=png&user=${userData?.userData?.nick}&direction=3&head_direction=3&size=l&gesture=sml&action=std`}
+               src={`https://www.habbo.com.br/habbo-imaging/avatarimage?img_format=png&user=${userData.nick}&direction=3&head_direction=3&size=l&gesture=sml&action=std`}
                alt={"Seu habbo avatar"}/>
       </div>
       <div className={styles.closeArrow} onClick={() => setVisibility("hidden")}>
         <FaChevronLeft />
         <div></div>
       </div>
-      <h3 className={alata.className + " text-center mt-4"}>{userData?.userData?.nick}</h3>
-      <h4 className={alata.className + " text-center"}>{userData?.userData?.role?.name}</h4>
+      <h3 className={alata.className + " text-center mt-4"}>{userData.nick}</h3>
+      <h4 className={alata.className + " text-center"}>{userData.role.name}</h4>
       <div className={styles.options + " md:ml-[46px] " + alata.className}>
         <a href="/home">
           <div className={styles.option}>
@@ -80,7 +76,7 @@ export default function Menu({ menuState }) {
           <IoMdCheckmarkCircleOutline/>
           <button>Atividades</button>
         </div>
-        {userData?.userData?.role.name === "Supremo" || userData?.userData?.role.name === "Conselheiro" && <div className={styles.option} onClick={() => router.replace('/contratar')}>
+        {userData.role.name === "Supremo" || userData.role.name === "Conselheiro" && <div className={styles.option} onClick={() => router.replace('/contratar')}>
           <FaHandshake/>
           <button>Contratar</button>
         </div>}

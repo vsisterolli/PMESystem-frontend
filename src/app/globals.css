@@ -26,6 +26,26 @@
     position: relative !important;
 }
 
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #261046 #100027;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+    background: #100027;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #261046;
+    border-radius: 30px;
+    border: 3px none #383838;
+}
+
 html,
 body,
 div,

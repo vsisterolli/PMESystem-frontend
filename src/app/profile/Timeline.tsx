@@ -10,20 +10,17 @@ import {useEffect, useState} from "react";
 import {act} from "react-dom/test-utils";
 import moment from "moment";
 import ChangeCape from "@/app/profile/ChangeCape";
+import {useUserContext} from "@/app/Context/context";
 
 const bayon = Bayon({ subsets: ["latin"], weight: "400" });
 const alata = Alata({ subsets: ["latin"], weight: "400" });
 
 export default function Timeline({ profile, capeSelected }) {
 
-  let userData
-  if (typeof window !== 'undefined') {
-    userData = JSON.parse(localStorage.getItem("userData")).userData;
-  }
+  const {userData} = useUserContext();
   const visibilityState = useState("hidden");
   const baseS3 = "https://pmesystem.s3.sa-east-1.amazonaws.com/";
   const [, setVisibility] = visibilityState;
-  {console.log(userData)}
 
   const icons = {
     "PROMOTION": "https://pmesystem.s3.sa-east-1.amazonaws.com/x1.png",

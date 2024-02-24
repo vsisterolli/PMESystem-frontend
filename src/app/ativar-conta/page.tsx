@@ -8,12 +8,14 @@ import { client, catchErrorMessage } from "@/api/axios";
 import moment from "moment";
 import { toast } from "react-toastify";
 import {useRouter} from "next/navigation";
+import {useUserContext} from "@/app/Context/context";
 
 const alatsi = Alatsi({ subsets: ["latin"], weight: "400" });
 const leagueGothic = League_Gothic({ subsets: ["latin"] });
 const poppins = Poppins({ subsets: ["latin"], weight: "700" });
 
 export default function LoginPage() {
+    const {setUserData} = useUserContext();
     const [nick, setNick] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -65,9 +67,7 @@ export default function LoginPage() {
             .then(async () => {
                 toast.success("Conta ativada com sucesso.");
                 const response = await client.post("/auth/login", {nick, password, sessionId: session.id})
-                if (typeof window !== 'undefined') {
-                    localStorage.setItem("userData", JSON.stringify(response.data));
-                }
+                setUserData(response.data);
                 router.replace("/home")
             })
             .catch((error) => {

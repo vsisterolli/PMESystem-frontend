@@ -2,6 +2,7 @@ import styles from "./styles.module.css";
 import {useEffect, useState} from "react";
 import {client} from "@/api/axios";
 import {toast} from "react-toastify";
+import {useUserContext} from "@/app/Context/context";
 
 let timer;
 
@@ -9,7 +10,7 @@ export default function ChangeCape({ capeSelected, visibilityState }) {
 
   const [capes, setCapes] = useState([]);
   const [visibility, setVisibility] = visibilityState;
-  const userData = JSON.parse(localStorage.getItem("userData"))
+  const {userData} = useUserContext();
   const [chosen, setChosen] = useState(userData?.userData?.capeSelected)
   const baseS3 = "https://pmesystem.s3.sa-east-1.amazonaws.com/";
   const [newCapeSelected, setNewCapeSelected] = capeSelected;

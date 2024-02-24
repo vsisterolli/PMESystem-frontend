@@ -25,6 +25,7 @@ const bayon = Bayon({ subsets: ["latin"], weight: "400" });
 const poppins = Poppins({ subsets: ["latin"], weight: "400" })
 import { FaRegUserCircle } from "react-icons/fa";
 import {IoMdCheckmarkCircleOutline} from "react-icons/io";
+import {useUserContext} from "@/app/Context/context";
 
 
 let timer;
@@ -37,24 +38,22 @@ export default function Activities() {
   const [checkbox, setCheckbox] = useState(false)
   const [description, setDescription] = useState("")
   const [option, setOption] = useState("")
-  const [userData, setUserData] = useState(null);
+  const {userData, setUserData} = useUserContext();
 
   const router = useRouter();
   useEffect(() => {
-    const localUserData = JSON.parse(localStorage.getItem("userData"));
-    setUserData(localUserData);
-    setImg({target: {value: localUserData?.userData.nick}});
-    client.get("/users/permissions", {headers: {Authorization: localUserData?.access_token}})
+    setImg({target: {value: userData.nick}});
+    client.get("/users/permissions", {headers: {Authorization: userData?.access_token}})
       .catch(() => {
         toast.error("Opa! Você precisa estar logado para acessar essa página.")
-        localStorage.removeItem("userData")
+        setUserData({...userData, nick: ""});
         router.replace("/login")
       })
   }, []);
 
   function setImg(event) {
     if(event.target.value === "")
-      setImageNick(userData?.userData?.nick)
+      setImageNick(userData.nick)
     else
       setImageNick(event.target.value)
   }

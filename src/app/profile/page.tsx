@@ -12,6 +12,7 @@ import {Alata} from "next/font/google";
 import NotFound from "@/app/profile/NotFound";
 import {toast} from "react-toastify";
 import {useRouter} from "next/navigation";
+import {useUserContext} from "@/app/Context/context";
 
 const alata = Alata({ subsets: ["latin"], weight: "400" });
 
@@ -22,14 +23,11 @@ export default function Profile({ searchParams }) {
   const capeSelected = useState(0);
 
   const [profile, setProfile] = useState({});
+  const {userData, setUserData} = useUserContext();
   const [visualization, setVisualization] = useState("loading");
   const [options, setOptions] = useState([]);
   const router = useRouter();
   useEffect(() => {
-    let userData;
-    if (typeof window !== 'undefined') {
-      userData = JSON.parse(localStorage.getItem("userData"));
-    }
     client.get("/users/profile/" + nick, { headers: { Authorization: userData?.access_token}})
       .then(response => {
         setProfile(response.data)
@@ -39,7 +37,7 @@ export default function Profile({ searchParams }) {
         console.log(e)
         if(e.response.status === 401) {
           toast.error("Opa! Você precisa logar antes de acessar essa página.")
-          localStorage.removeItem("userData")
+          setUserData({...userData, nick: ""});
           router.replace("/login")
         }
         setOptions(e.response.data);

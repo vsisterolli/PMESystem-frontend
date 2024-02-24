@@ -1,9 +1,10 @@
-"use client";
+"use client"
 
 import styles from "./style.module.css";
+import {useUserContext} from "@/app/Context/context";
 import Image from "next/image";
 import { Alatsi, League_Gothic, Poppins } from "next/font/google";
-import {createContext, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import { client, catchErrorMessage } from "@/api/axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
@@ -12,17 +13,16 @@ const alatsi = Alatsi({ subsets: ["latin"], weight: "400" });
 const leagueGothic = League_Gothic({ subsets: ["latin"] });
 const poppins = Poppins({ subsets: ["latin"], weight: "700" });
 
-const userContext = createContext()
 
 export default function LoginPage() {
+    const {userData, setUserData} = useUserContext();
     const [nick, setNick] = useState("");
     const [password, setPassword] = useState("");
     const router = useRouter();
 
     useEffect(() => {
-        if(typeof window !== "undefined" && localStorage.getItem("userData")) {
+        if(userData.nick !== "")
             router.replace("/home")
-        }
     }, []);
 
     async function sendLogin(event) {
@@ -33,7 +33,7 @@ export default function LoginPage() {
                 password
             });
             toast.success("Login feito com sucesso.");
-            localStorage.setItem("userData", JSON.stringify(response.data));
+            setUserData(response.data);
             router.replace("/home");
         } catch (e) {
             catchErrorMessage(e);

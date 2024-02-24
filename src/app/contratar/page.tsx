@@ -25,15 +25,16 @@ const bayon = Bayon({ subsets: ["latin"], weight: "400" });
 const poppins = Poppins({ subsets: ["latin"], weight: "400" })
 import {FaHandshake, FaRegUserCircle} from "react-icons/fa";
 import {IoMdCheckmarkCircleOutline} from "react-icons/io";
+import {useUserContext} from "@/app/Context/context";
 
 
 let timer;
 
 export default function Contract() {
 
-  const [userData, setUserData] = useState(null);
+  const {userData, setUserData} = useUserContext();
   const menuState = useState("hidden");
-  const [imageNick, setImageNick] = useState(userData?.userData?.nick);
+  const [imageNick, setImageNick] = useState(userData.nick);
   const [nick, setNick] = useState("");
   const [checkbox, setCheckbox] = useState(false);
   const [description, setDescription] = useState("");
@@ -45,25 +46,22 @@ export default function Contract() {
   const [roles, setRoles] = useState([]);
 
   useEffect(() => {
-    const localUserData = JSON.parse(localStorage.getItem("userData"));
-    setUserData(localUserData);
-    setImg({target : {value: localUserData?.userData?.nick}});
-    if(!localUserData || (localUserData?.userData?.role.name !== "Supremo" && localUserData?.userData?.role.name !== "Conselheiro")) {
+    if(!userData || (userData.role.name !== "Supremo" && userData.role.name !== "Conselheiro")) {
       toast.error("Opa! Não era pra você estar por aqui.")
       return router.replace("/login");
     }
-    client.get("/auth/roles", {headers: {Authorization: localUserData?.access_token}})
+    client.get("/auth/roles", {headers: {Authorization: userData?.access_token}})
       .then(response => setRoles(response.data))
       .catch(() => {
         toast.error("Opa! Você precisa estar logado para acessar essa página.")
-        localStorage.removeItem("userData")
+        setUserData({...userData, nick: ""});
         router.replace("/login")
       })
   }, []);
 
   function setImg(event) {
     if(event.target.value === "")
-      setImageNick(userData?.userData?.nick)
+      setImageNick(userData.nick)
     else
       setImageNick(event.target.value)
   }
