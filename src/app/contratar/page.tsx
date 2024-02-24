@@ -48,7 +48,7 @@ export default function Contract() {
     const localUserData = JSON.parse(localStorage.getItem("userData"));
     setUserData(localUserData);
     setImg({target : {value: localUserData?.userData?.nick}});
-    if(!localUserData || (localUserData?.userData.role.name !== "Supremo" && localUserData?.userData.role.name !== "Conselheiro")) {
+    if(!localUserData || (localUserData?.userData?.role.name !== "Supremo" && localUserData?.userData?.role.name !== "Conselheiro")) {
       toast.error("Opa! Não era pra você estar por aqui.")
       return router.replace("/login");
     }
@@ -123,8 +123,9 @@ export default function Contract() {
               className={poppins.className}
               value={option}
               onChange={(event) => setOption(event.target.value)}
+              defaultValue={"unselected"}
             >
-              <option value={"unselected"} selected>Selecione o tipo de contratação</option>
+              <option value={"unselected"}>Selecione o tipo de contratação</option>
               <option>CONTRATO</option>
               <option>VENDA DE CARGO</option>
             </select>

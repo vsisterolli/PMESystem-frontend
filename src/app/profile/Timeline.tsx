@@ -72,7 +72,7 @@ export default function Timeline({ profile, capeSelected }) {
       <div
         style={{backgroundImage: `url(${baseS3 + profile.capeSelected})`}}
         className={styles.cape + " " + bayon.className}>
-        { (userData.nick === profile.nick) && <Image src={"https://pmesystem.s3.sa-east-1.amazonaws.com/pencil-removebg-preview.png"} onClick={() => setVisibility("inherit")} width={50} height={50} alt={"lápis de edição"}/>}
+        { (userData?.nick === profile.nick) && <Image src={"https://pmesystem.s3.sa-east-1.amazonaws.com/pencil-removebg-preview.png"} onClick={() => setVisibility("inherit")} width={50} height={50} alt={"lápis de edição"}/>}
         <div>
           [PME] {profile.roleName} {getPermissions()}
         </div>

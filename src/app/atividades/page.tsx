@@ -43,7 +43,7 @@ export default function Activities() {
   useEffect(() => {
     const localUserData = JSON.parse(localStorage.getItem("userData"));
     setUserData(localUserData);
-    setImg({target: {value: localUserData.userData.nick}});
+    setImg({target: {value: localUserData?.userData.nick}});
     client.get("/users/permissions", {headers: {Authorization: localUserData?.access_token}})
       .catch(() => {
         toast.error("Opa! Você precisa estar logado para acessar essa página.")
@@ -147,8 +147,9 @@ export default function Activities() {
               className={poppins.className}
               value={option}
               onChange={(event) => setOption(event.target.value)}
+              defaultValue={"unselected"}
             >
-              <option value={"unselected"} selected>Selecione a atividade</option>
+              <option value={"unselected"}>Selecione a atividade</option>
               <option>PROMOVER</option>
               <option>ADVERTIR</option>
               <option>REBAIXAR</option>

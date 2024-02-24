@@ -30,8 +30,9 @@ export default function Menu({ menuState }) {
   }
 
   useEffect(() => {
-    const data = localStorage.getItem("userData");
-    setUserData(JSON.parse(data));
+    const data = JSON.parse(localStorage.getItem("userData"));
+    console.log(data)
+    setUserData(data);
     if (!data || data === "undefined") {
       localStorage.removeItem("userData");
       router.replace("/login");
