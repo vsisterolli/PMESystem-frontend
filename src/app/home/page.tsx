@@ -40,7 +40,6 @@ export default function Home() {
     client.get("/users/recent", {headers: {Authorization: userToken}})
       .then(response => setRecentUsers(response.data))
       .catch(() => {
-        toast.error("Opa! Você precisa logar antes de acessar essa página.")
         router.replace("/login")
       })
   }, []);
