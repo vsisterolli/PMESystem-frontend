@@ -1,43 +1,79 @@
-"use client"
+"use client";
 
 import styles from "./style.module.css";
-import {useUserContext} from "@/app/Context/context";
 import Image from "next/image";
 import { Alatsi, League_Gothic, Poppins } from "next/font/google";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import { client, catchErrorMessage } from "@/api/axios";
+import moment from "moment";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
+import {useRouter} from "next/navigation";
+import {useUserContext} from "@/app/Context/context";
 
 const alatsi = Alatsi({ subsets: ["latin"], weight: "400" });
 const leagueGothic = League_Gothic({ subsets: ["latin"] });
 const poppins = Poppins({ subsets: ["latin"], weight: "700" });
 
-
-export default function LoginPage() {
-    const {userData, setUserData} = useUserContext();
+export default function ChangePasswordPage() {
+    const {setUserData} = useUserContext();
     const [nick, setNick] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [session, setSession] = useState({
+        id: "",
+        code: "",
+        expiresAt: ""
+    });
     const router = useRouter();
 
+    function askNewSession() {
+        client
+            .post("/auth/session")
+            .then((response) => {
+                setSession(response.data);
+                if (typeof window !== 'undefined') {
+                    localStorage.setItem("session", JSON.stringify(response.data));
+                }
+            })
+            .catch((error) => catchErrorMessage(error));
+    }
+
+    // @ts-expect-error
     useEffect(() => {
-        if(userData.nick !== "")
-            router.replace("/home")
+        const currentSession = localStorage.getItem("session");
+        if (
+            currentSession &&
+            moment().isBefore(JSON.parse(currentSession).expiresAt)
+        ) {
+            setSession(JSON.parse(currentSession));
+            return;
+        }
+        askNewSession();
     }, []);
 
-    async function sendLogin(event) {
-        event.preventDefault();
-        try {
-            const response = await client.post("/auth/login", {
-                nick,
-                password
-            });
-            toast.success("Login feito com sucesso.");
-            setUserData(response.data);
-            router.replace("/home");
-        } catch (e) {
-            catchErrorMessage(e);
+    async function sendActivation(event) {
+        event?.preventDefault();
+        if (password !== confirmPassword) {
+            toast.error("As senhas não batem!");
+            return;
         }
+
+        await client
+            .patch("/users/changePassword", {
+                sessionId: session.id,
+                nick: nick,
+                password: password
+            })
+            .then(async () => {
+                toast.success("Senha trocada com sucesso.");
+                const response = await client.post("/auth/login", {nick, password, sessionId: session.id})
+                setUserData(response.data);
+                router.replace("/home")
+            })
+            .catch((error) => {
+                if (moment().isAfter(session.expiresAt)) askNewSession();
+                catchErrorMessage(error);
+            });
     }
 
     return (
@@ -75,8 +111,8 @@ export default function LoginPage() {
             <aside
                 className={`flex flex-col justify-center items-center min-h-screen w-[100%] xl:w-[45%] ${styles.loginForm}`}
             >
-                <h2 className={poppins.className + " " + styles.pageTitle}>
-                    LOGIN
+                <h2 className={poppins.className + " " + styles.pageSubtitle}>
+                    TROCAR SENHA
                 </h2>
                 <div
                     className={
@@ -97,10 +133,8 @@ export default function LoginPage() {
                         alt={"Emblema pulso"}
                     />
                 </div>
-                <h1 className={styles.mobileTitle + " xl:hidden"}>SYSTEM</h1>
-                <h1 className={styles.mobileSubtitle + " xl:hidden"}>PME</h1>
                 <form
-                    onSubmit={sendLogin}
+                    onSubmit={sendActivation}
                     className={
                         "w-full flex justify-center flex-col items-center"
                     }
@@ -109,19 +143,24 @@ export default function LoginPage() {
                         <ion-icon name="person"></ion-icon>
                         <input
                             required
-                            type="text"
                             value={nick}
                             onChange={(event) => setNick(event.target.value)}
+                            type="text"
                             placeholder="Nickname"
                             className={poppins.className}
                         />
                     </div>
+                    <h3 className={poppins.className + " mt-2 w-[60%]"}>
+                        O nickname deve ser igual ao do habbo.
+                    </h3>
+
                     <div
                         className={"mt-6 relative w-[60%] flex justify-center"}
                     >
                         <ion-icon name="lock"></ion-icon>
                         <input
                             required
+                            type="password"
                             value={password}
                             onChange={(event) =>
                                 setPassword(event.target.value)
@@ -131,15 +170,53 @@ export default function LoginPage() {
                             className={poppins.className}
                         />
                     </div>
-                    <a href="/trocar-senha">Esqueceu a senha? Troque aqui.</a>
+                    <h3 className={poppins.className + " mt-2 w-[60%]"}>
+                        Use no mínimo 8 caracteres, 1 dígito, 1 letra e 1
+                        caractere especial.
+                    </h3>
+
+                    <div
+                        className={"mt-6 relative w-[60%] flex justify-center"}
+                    >
+                        <ion-icon name="lock"></ion-icon>
+                        <input
+                            required
+                            value={confirmPassword}
+                            onChange={(event) =>
+                                setConfirmPassword(event.target.value)
+                            }
+                            type="password"
+                            placeholder="Confirme a senha."
+                            className={poppins.className}
+                        />
+                    </div>
+                    <h3 className={poppins.className + " mt-2 w-[60%]"}>
+                        Tenha certeza de que as senhas digitadas estão iguais.
+                    </h3>
+
+                    <div
+                        className={"mt-6 relative w-[60%] flex justify-center"}
+                    >
+                        <ion-icon name="code"></ion-icon>
+                        <input
+                            type="text"
+                            value={"PMETROCAR" + session.code}
+                            readOnly
+                            className={poppins.className}
+                        />
+                    </div>
+                    <h3 className={poppins.className + " mt-2 w-[60%]"}>
+                        Coloque esse código na sua missão do Habbo Hotel.
+                    </h3>
+
                     <div className="flex w-full justify-center items-center">
                         <a
-                            href="/ativar-conta"
+                            href="/login"
                             className={
                                 poppins.className + " " + styles.formButtons
                             }
                         >
-                            ATIVAR CONTA
+                            VOLTAR
                         </a>
                         <button
                             type="submit"
@@ -149,7 +226,7 @@ export default function LoginPage() {
                                 styles.formButtons
                             }
                         >
-                            ENTRAR
+                            ATIVAR CONTA
                         </button>
                     </div>
                 </form>

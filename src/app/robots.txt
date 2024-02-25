@@ -1,0 +1,6 @@
+User-Agent: *
+Allow: /login
+Disallow: /home
+Disallow: /contratar
+Disallow: /atividades
+Disallow: /documents
