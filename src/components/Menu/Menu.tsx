@@ -17,19 +17,18 @@ const alata = Alata({ subsets: ["latin"], weight: "400" });
 
 export default function Menu({ menuState }) {
 
-  const {userData, setUserData} = useUserContext();
+  const {userData, clearContext} = useUserContext();
   const [visibility, setVisibility] = menuState;
   const [docDropdownVisibility, setDocDropdownVisibility] = useState("hidden");
   const router = useRouter();
 
 
   function handleLogout() {
-      setUserData({...userData, nick: ""});
+      clearContext();
       router.replace("/login")
   }
 
   useEffect(() => {
-    console.log(userData)
     if (userData.nick === "") {
       router.replace("/login");
     }
@@ -38,7 +37,7 @@ export default function Menu({ menuState }) {
   return (
     <aside
       className={"flex flex-col min-h-screen overflow-y-auto overflow-x-clip w-full w-screen md:w-[350px] fixed " + visibility + " " + styles.menu}>
-      <div className={styles.portrait}>
+      <div onClick={() => router.replace("/profile?nick=" + userData.nick)} className={styles.portrait + " cursor-pointer"}>
         <Image width={150} height={222}
                src={`https://www.habbo.com.br/habbo-imaging/avatarimage?img_format=png&user=${userData.nick}&direction=3&head_direction=3&size=l&gesture=sml&action=std`}
                alt={"Seu habbo avatar"}/>

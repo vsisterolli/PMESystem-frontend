@@ -32,7 +32,7 @@ let timer;
 
 export default function Contract() {
 
-  const {userData, setUserData} = useUserContext();
+  const {userData, clearContext} = useUserContext();
   const menuState = useState("hidden");
   const [imageNick, setImageNick] = useState(userData.nick);
   const [nick, setNick] = useState("");
@@ -54,7 +54,7 @@ export default function Contract() {
       .then(response => setRoles(response.data))
       .catch(() => {
         toast.error("Opa! Você precisa estar logado para acessar essa página.")
-        setUserData({...userData, nick: ""});
+        clearContext();
         router.replace("/login")
       })
   }, []);

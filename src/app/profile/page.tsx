@@ -23,7 +23,7 @@ export default function Profile({ searchParams }) {
   const capeSelected = useState(0);
 
   const [profile, setProfile] = useState({});
-  const {userData, setUserData} = useUserContext();
+  const {userData, clearContext} = useUserContext();
   const [visualization, setVisualization] = useState("loading");
   const [options, setOptions] = useState([]);
   const router = useRouter();
@@ -37,7 +37,7 @@ export default function Profile({ searchParams }) {
         console.log(e)
         if(e.response.status === 401) {
           toast.error("Opa! Você precisa logar antes de acessar essa página.")
-          setUserData({...userData, nick: ""});
+          clearContext();
           router.replace("/login")
         }
         setOptions(e.response.data);

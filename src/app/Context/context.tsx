@@ -11,7 +11,8 @@ const UserContext = createContext({
     permissionsObtained: [],
     access_token: ""
   },
-  setUserData: (value) => null
+  setUserData: (value) => null,
+  clearContext: () => null
 })
 
 export const UserContextProvider = ({ children }) => {
@@ -39,10 +40,16 @@ export const UserContextProvider = ({ children }) => {
       localStorage.setItem("userData", JSON.stringify(data));
   }
 
+  const clearContext = () => {
+    setData(defaultData)
+    if(typeof window !== "undefined")
+      localStorage.setItem("userData", JSON.stringify(defaultData));
+  }
+
 
   // @ts-ignore
   return (
-    <UserContext.Provider value={{userData, setUserData}}>
+    <UserContext.Provider value={{userData, setUserData, clearContext}}>
       {children}
     </UserContext.Provider>
   )

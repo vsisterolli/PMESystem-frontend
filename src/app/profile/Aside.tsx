@@ -2,12 +2,39 @@ import styles from "./styles.module.css";
 import {Alata, Bayon} from "next/font/google";
 import Image from "next/image";
 import moment from "moment";
+import {useUserContext} from "@/app/Context/context";
+import {useState} from "react";
+import {toast} from "react-toastify";
+import {client} from "@/api/axios";
+import {useRouter} from "next/navigation";
 
 const bayon = Bayon({ subsets: ["latin"], weight: "400" });
 const alata = Alata({ subsets: ["latin"], weight: "400" });
 
+let timer;
 
 export default function Aside({ profile }) {
+  const {userData} = useUserContext();
+  const [discord, setDiscord] = useState(profile.discord);
+  const router = useRouter();
+
+  async function postDiscord(dc) {
+    try {
+      await client.patch("/users/changeDiscord", {discord}, {headers: {Authorization: userData.access_token}});
+      toast.success("Discord alterado.")
+      profile.discord = dc;
+      router.refresh()
+    } catch(e) {
+      toast.error("Algo deu errado ao atualizar o discord... Se o problema persistir, procure um administrador.")
+    }
+  }
+
+  const debounce = (event) => {
+    setDiscord(event.target.value)
+    clearTimeout(timer);
+    timer = setTimeout(() => postDiscord(event.target.value), 1500);
+  };
+
   return (
     <aside className={"min-w-[400px] w-[30vw] flex flex-col items-center"}>
       <div className={"flex items-center justify-center " + styles.portrait}>
@@ -18,9 +45,15 @@ export default function Aside({ profile }) {
           {profile.nick}
         </div>
       </div>
+      {profile.nick === userData.nick &&
+      <div className={"flex flex-col items-center mt-4 " + styles.dcHolder + " " + alata.className}>
+        Insira seu @ do discord
+        <input
+            value={discord}
+            onChange={event => debounce(event)} className={"mt-4"} placeholder={"Coloque o @, não o usuário!"}/>
+      </div>}
+      {profile.discord &&
       <a
-        href="https://discord.gg/rDvqyYwU4F"
-        target="_blank"
         className={
           "flex items-center justify-center " +
           styles.discordHolder
@@ -33,8 +66,9 @@ export default function Aside({ profile }) {
           src={"/dc-icon.png"}
           alt={"Icon discord"}
         />
-        Discord
+        {profile.discord}
       </a>
+      }
       <div className={styles.status}>
         <div className={styles.sectionTitle + " " + bayon.className}>
           STATUS

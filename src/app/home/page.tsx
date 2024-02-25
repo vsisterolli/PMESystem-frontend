@@ -31,14 +31,14 @@ export default function Home() {
   ]
   const [recentUsers, setRecentUsers] = useState([]);
   const router = useRouter();
-  const {userData} = useUserContext();
+  const {userData, clearContext} = useUserContext();
 
   useEffect(() => {
     client.get("/users/recent", {headers: {Authorization: userData.access_token}})
       .then(response => setRecentUsers(response.data))
-      .catch((e) => {
-        console.log(e)
-        router.replace("/login")
+      .catch(() => {
+        clearContext();
+        router.replace("/login");
       })
   }, []);
 

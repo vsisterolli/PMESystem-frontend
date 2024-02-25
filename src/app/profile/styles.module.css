@@ -281,6 +281,29 @@
     padding-bottom: 40px;
 }
 
+.dcHolder input {
+    height: 68px;
+    width: 250px;
+    display: flex;
+    padding-left: 18px;
+    background: #261046;
+    outline: none;
+    border: 0;
+    border-radius: 10px;
+}
+
+.dcHolder {
+    color: white;
+}
+
+.dcHolder input::placeholder {
+    color: #a4a4a4;
+    font-size: 16.294px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
 .popInside h3 {
     margin-bottom: 20px;
     font-weight: bold;

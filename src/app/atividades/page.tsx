@@ -38,7 +38,7 @@ export default function Activities() {
   const [checkbox, setCheckbox] = useState(false)
   const [description, setDescription] = useState("")
   const [option, setOption] = useState("")
-  const {userData, setUserData} = useUserContext();
+  const {userData, clearContext} = useUserContext();
 
   const router = useRouter();
   useEffect(() => {
@@ -46,7 +46,7 @@ export default function Activities() {
     client.get("/users/permissions", {headers: {Authorization: userData?.access_token}})
       .catch(() => {
         toast.error("Opa! Você precisa estar logado para acessar essa página.")
-        setUserData({...userData, nick: ""});
+        clearContext();
         router.replace("/login")
       })
   }, []);
