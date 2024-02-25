@@ -120,19 +120,10 @@
     font-size: 12.534px;
     font-style: normal;
     font-weight: 600;
-    margin-top: 24px;
     line-height: normal;
 }
 
-.loginForm a {
-    color: #FFFFFF;
-    font-size: 14px;
-    text-decoration: underline;
-    font-style: normal;
-    font-weight: 600;
-    margin-top: 24px;
-    line-height: normal;
-}
+
 
 .formButtons {
     color: #fff;
@@ -148,6 +139,16 @@
     width: 230px;
     height: 62.67px;
     margin-top: 28px;
+}
+
+.link {
+    color: #FFFFFF;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    text-decoration: underline;
+    margin-top: 24px;
+    line-height: normal;
 }
 
 .discordHolder {

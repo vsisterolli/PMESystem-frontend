@@ -199,10 +199,11 @@ export default function ChangePasswordPage() {
                     >
                         <ion-icon name="code"></ion-icon>
                         <input
+                            onClick={() => {navigator.clipboard.writeText("PMETROCAR" + session.code); toast.success("Código copiado.")}}
                             type="text"
                             value={"PMETROCAR" + session.code}
                             readOnly
-                            className={poppins.className}
+                            className={poppins.className + " cursor-pointer"}
                         />
                     </div>
                     <h3 className={poppins.className + " mt-2 w-[60%]"}>

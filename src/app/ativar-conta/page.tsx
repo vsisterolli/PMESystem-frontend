@@ -203,9 +203,10 @@ export default function LoginPage() {
                         <ion-icon name="code"></ion-icon>
                         <input
                             type="text"
+                            onClick={() => {navigator.clipboard.writeText("PME" + session.code); toast.success("Código copiado.")}}
                             value={"PME" + session.code}
                             readOnly
-                            className={poppins.className}
+                            className={poppins.className + " cursor-pointer"}
                         />
                     </div>
                     <h3 className={poppins.className + " mt-2 w-[60%]"}>

@@ -131,7 +131,7 @@ export default function LoginPage() {
                             className={poppins.className}
                         />
                     </div>
-                    <a href="/trocar-senha">Esqueceu a senha? Troque aqui.</a>
+                    <a href="/trocar-senha" className={styles.link}>Esqueceu a senha? Troque aqui.</a>
                     <div className="flex w-full justify-center items-center">
                         <a
                             href="/ativar-conta"

@@ -76,7 +76,7 @@ export default function Menu({ menuState }) {
           <IoMdCheckmarkCircleOutline/>
           <button>Atividades</button>
         </div>
-        {userData.role.name === "Supremo" || userData.role.name === "Conselheiro" && <div className={styles.option} onClick={() => router.replace('/contratar')}>
+        {(userData.role.name === "Supremo" || userData.role.name === "Conselheiro") && <div className={styles.option} onClick={() => router.replace('/contratar')}>
           <FaHandshake/>
           <button>Contratar</button>
         </div>}
