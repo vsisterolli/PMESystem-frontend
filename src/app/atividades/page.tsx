@@ -47,7 +47,6 @@ export default function Activities() {
       .catch(() => {
         toast.error("Opa! Você precisa estar logado para acessar essa página.")
         clearContext();
-        router.replace("/login")
       })
   }, []);
 

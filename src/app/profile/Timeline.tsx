@@ -5,15 +5,16 @@ import {client} from "@/api/axios";
 import styles from "@/app/profile/styles.module.css";
 import {Chrono} from "react-chrono";
 import Image from "next/image";
-import {Alata, Bayon} from "next/font/google";
+import {Alata, Bayon, Raleway} from "next/font/google";
 import {useEffect, useState} from "react";
 import {act} from "react-dom/test-utils";
 import moment from "moment";
 import ChangeCape from "@/app/profile/ChangeCape";
 import {useUserContext} from "@/app/Context/context";
 
-const bayon = Bayon({ subsets: ["latin"], weight: "400" });
+const raleway = Raleway({ subsets: ["latin"], weight: "700" });
 const alata = Alata({ subsets: ["latin"], weight: "400" });
+
 
 export default function Timeline({ profile, capeSelected }) {
 
@@ -27,7 +28,7 @@ export default function Timeline({ profile, capeSelected }) {
     "DEMOTION": "https://pmesystem.s3.sa-east-1.amazonaws.com/x2.png",
     "FIRE": "https://pmesystem.s3.sa-east-1.amazonaws.com/x3.png",
     "WARNING": "https://pmesystem.s3.sa-east-1.amazonaws.com/x4.png",
-    "COURSE": "https://pmesystem.s3.sa-east-1.amazonaws.com/kindpng_298871-removebg-preview-removebg-preview.png",
+    "APPROVATION": "https://pmesystem.s3.sa-east-1.amazonaws.com/kindpng_298871-removebg-preview-removebg-preview.png",
     "SELLING": "https://pmesystem.s3.sa-east-1.amazonaws.com/toppng.com-download-handshake-icon-gree-600x600.png",
     "CONTRACTING": "https://pmesystem.s3.sa-east-1.amazonaws.com/toppng.com-download-handshake-icon-gree-600x600.png"
   }
@@ -42,6 +43,8 @@ export default function Timeline({ profile, capeSelected }) {
       return <h3>Contratado - {aux}</h3>
     if(activity.type === "DEMOTION")
       return <h3>Rebaixado - {aux}</h3>
+    if(activity.type === "APPROVATION")
+      return <h3>Aprovado - {activity.courseAcronym}</h3>
     if(activity.type === "FIRE")
       return <h3>Demitido</h3>
     if(activity.type === "WARNING")
@@ -68,7 +71,7 @@ export default function Timeline({ profile, capeSelected }) {
       <ChangeCape capeSelected={capeSelected} visibilityState={visibilityState}/>
       <div
         style={{backgroundImage: `url(${baseS3 + profile.capeSelected})`}}
-        className={styles.cape + " " + bayon.className}>
+        className={styles.cape + " " + raleway.className}>
         { (userData?.nick === profile.nick) && <Image src={"https://pmesystem.s3.sa-east-1.amazonaws.com/pencil-removebg-preview.png"} onClick={() => setVisibility("inherit")} width={50} height={50} alt={"lápis de edição"}/>}
         <div>
           [PME] {profile.roleName} {getPermissions()}

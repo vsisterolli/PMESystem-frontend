@@ -38,7 +38,6 @@ export default function Profile({ searchParams }) {
         if(e.response.status === 401) {
           toast.error("Opa! Você precisa logar antes de acessar essa página.")
           clearContext();
-          router.replace("/login")
         }
         setOptions(e.response.data);
         setVisualization("notFound")

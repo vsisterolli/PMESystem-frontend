@@ -46,16 +46,15 @@ export default function Contract() {
   const [roles, setRoles] = useState([]);
 
   useEffect(() => {
-    if(!userData || (userData.role.name !== "S  upremo" && userData.role.name !== "Conselheiro")) {
+    if(!userData || (userData.role.name !== "Supremo" && userData.role.name !== "Conselheiro")) {
       toast.error("Opa! Não era pra você estar por aqui.")
-      return router.replace("/login");
+      return router.replace("/home");
     }
     client.get("/auth/roles", {headers: {Authorization: userData?.access_token}})
       .then(response => setRoles(response.data))
       .catch(() => {
         toast.error("Opa! Você precisa estar logado para acessar essa página.")
         clearContext();
-        router.replace("/login")
       })
   }, []);
 
@@ -135,10 +134,11 @@ export default function Contract() {
               className={poppins.className}
               value={selectedRole}
               onChange={(event) => setSelectedRole(event.target.value)}
+              defaultValue={"unselected"}
             >
-              <option value={"unselected"} selected>Selecione o cargo</option>
+              <option value={"unselected"}>Selecione o cargo</option>
               {roles.filter(role => (option === "CONTRATO" ? role.hierarchyKind === "MILITARY" : role.hierarchyKind === "EXECUTIVE")).map(role =>
-                <option>{role.name}</option>
+                <option key={role.name}>{role.name}</option>
               )}
             </select>
           </div>

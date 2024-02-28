@@ -26,8 +26,7 @@ export default function Home() {
 
   const menuState = useState("hidden");
   const pictures = [
-    "https://s3-alpha-sig.figma.com/img/fd60/d3d0/c5f2fa9f764caa71e8c8bfc395283efc?Expires=1708905600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=ontx~vuD61te10EzzMlBDOj-QahRAFde25IJv3NJIIWukxDXsVAG8~xIUxNwuRv3sIFaC7~9bvfGTaK7L~~o6IhDVqzHnY5pIr0Pi4wEiKr~G-Cj3r4zk0zg0iKIbmeliT4WH12V0Vgo~-bRw6wq2tNhcJhFX0uZdjsXsMFI~SJr68z6iQrirP4Oul2cgVBCaC~Wa5SxyugenKACWqkcY6N2V1zigRc6shK-qt0f7S7KgZr7DTh39jTxRzsrgTI54KNxoW95L7xW-vtJZcPPeOTDT0bmROY8NJ86EdbqydAX-ro1LPd9CGJUT8jNya85ZFSKdW4oUFS3eLsInu1o1A__",
-    "https://s3-alpha-sig.figma.com/img/fd60/d3d0/c5f2fa9f764caa71e8c8bfc395283efc?Expires=1708905600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=ontx~vuD61te10EzzMlBDOj-QahRAFde25IJv3NJIIWukxDXsVAG8~xIUxNwuRv3sIFaC7~9bvfGTaK7L~~o6IhDVqzHnY5pIr0Pi4wEiKr~G-Cj3r4zk0zg0iKIbmeliT4WH12V0Vgo~-bRw6wq2tNhcJhFX0uZdjsXsMFI~SJr68z6iQrirP4Oul2cgVBCaC~Wa5SxyugenKACWqkcY6N2V1zigRc6shK-qt0f7S7KgZr7DTh39jTxRzsrgTI54KNxoW95L7xW-vtJZcPPeOTDT0bmROY8NJ86EdbqydAX-ro1LPd9CGJUT8jNya85ZFSKdW4oUFS3eLsInu1o1A__"
+    "https://pmesystem.s3.sa-east-1.amazonaws.com/anfC8FK.png",
   ]
   const [recentUsers, setRecentUsers] = useState([]);
   const router = useRouter();
@@ -38,7 +37,6 @@ export default function Home() {
       .then(response => setRecentUsers(response.data))
       .catch(() => {
         clearContext();
-        router.replace("/login");
       })
   }, []);
 
@@ -52,7 +50,7 @@ export default function Home() {
       }}  pagination={true} navigation={true} modules={[Navigation, Pagination, Autoplay]} className={styles.swiper}>
         {pictures.map((pictureURL, index) =>
           <SwiperSlide key={index}>
-            <img src={pictureURL} alt={"Slide"}/>
+            <img key={pictureURL} src={pictureURL} alt={"Slide"}/>
           </SwiperSlide>
         )}
       </Swiper>

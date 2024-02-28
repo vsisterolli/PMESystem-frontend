@@ -1,6 +1,8 @@
 "use client"
 
 import {createContext, useContext, useEffect, useState} from "react";
+import {router} from "next/client";
+import {useRouter} from "next/navigation";
 
 const UserContext = createContext({
   userData: {
@@ -9,6 +11,7 @@ const UserContext = createContext({
       "name": ""
     },
     permissionsObtained: [],
+    userDepartamentRole: [],
     access_token: ""
   },
   setUserData: (value) => null,
@@ -17,12 +20,15 @@ const UserContext = createContext({
 
 export const UserContextProvider = ({ children }) => {
 
+  const router = useRouter();
+
   let defaultData = {
     nick: "",
     role: {
       "name": ""
     },
     permissionsObtained: [],
+    departamentRoles: [],
     access_token: ""
   }
 
@@ -44,8 +50,8 @@ export const UserContextProvider = ({ children }) => {
     setData(defaultData)
     if(typeof window !== "undefined")
       localStorage.setItem("userData", JSON.stringify(defaultData));
+    router.replace("/login?redirected=true")
   }
-
 
   // @ts-ignore
   return (

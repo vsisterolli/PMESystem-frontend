@@ -14,14 +14,14 @@ const leagueGothic = League_Gothic({ subsets: ["latin"] });
 const poppins = Poppins({ subsets: ["latin"], weight: "700" });
 
 
-export default function LoginPage() {
+export default function LoginPage({ searchParams }) {
     const {userData, setUserData} = useUserContext();
     const [nick, setNick] = useState("");
     const [password, setPassword] = useState("");
     const router = useRouter();
 
     useEffect(() => {
-        if(userData.nick !== "")
+        if(userData.nick !== "" && !searchParams.redirected)
             router.replace("/home")
     }, []);
 

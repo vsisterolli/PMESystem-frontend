@@ -5,7 +5,7 @@ import Image from "next/image";
 import {Alata} from "next/font/google";
 import {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
-import {FaChevronLeft, FaHandshake} from "react-icons/fa";
+import {FaChalkboardTeacher, FaChevronLeft, FaHandshake} from "react-icons/fa";
 import {IoIosArrowDown, IoIosArrowUp, IoIosHome, IoMdCheckmarkCircleOutline} from "react-icons/io";
 import {MdOutlineDocumentScanner} from "react-icons/md";
 import {LuClipboardList} from "react-icons/lu";
@@ -18,19 +18,29 @@ const alata = Alata({ subsets: ["latin"], weight: "400" });
 export default function Menu({ menuState }) {
 
   const {userData, clearContext} = useUserContext();
+  const [userClassRole, setUserClassRole] = useState(false);
   const [visibility, setVisibility] = menuState;
   const [docDropdownVisibility, setDocDropdownVisibility] = useState("hidden");
+  const [classesDropdownVisibility, setClassesDropdownVisibility] = useState("hidden");
+
   const router = useRouter();
 
 
   function handleLogout() {
       clearContext();
-      router.replace("/login")
   }
 
   useEffect(() => {
+    if(userData.role.name === "Supremo" || userData.role.name === "Conselheiro")
+      setUserClassRole([{departament: "INS"}, {departament: "EFEX"}, {departament: "CDO"}, {departament: "ESP"}]);
+
+    else
+      userData.userDepartamentRole.forEach(role => {
+        if (role.departament === "INS" || role.departament === "EFEX" || role.departament === "CDO" || role.departament === "ESP")
+          setUserClassRole([role])
+      })
     if (userData.nick === "") {
-      router.replace("/login");
+      router.replace("/login?redirected=true");
     }
   }, []);
 
@@ -65,20 +75,34 @@ export default function Menu({ menuState }) {
         </div>
         <div className={`pl-4 ${docDropdownVisibility} ` + styles.dropdown}>
           <button className="block" onClick={() => router.replace("/document/estatuto")}>Estatuto Oficial</button>
-          <button className="block">Regimento Disciplinar</button>
+          <button className="block" onClick={() => router.replace("/document/cd")}>Código Disciplinar</button>
         </div>
-        <div className={styles.option}>
-          <PiFunctionFill/>
-          <button>Funções</button>
+
+        {userClassRole &&
+            <>
+        <div onClick={() => setClassesDropdownVisibility(classesDropdownVisibility === "hidden" ? "block" : "hidden")}
+         className={styles.option}>
+          <FaChalkboardTeacher/>
+          <button>Aulas</button>
+          <IoIosArrowDown
+            className={(classesDropdownVisibility === "hidden" ? "block" : "hidden") + " " + styles.arrowDown}/>
+          <IoIosArrowUp className={classesDropdownVisibility + " " + styles.arrowDown}/>
         </div>
+        <div className={`pl-4 ${classesDropdownVisibility} ` + styles.dropdown}>
+          {
+            userClassRole.map(role => <button key={role.departament} className="block" onClick={() => router.replace("/aulas/" + role.departament.toLowerCase())}>- {role.departament}</button>)
+          }
+        </div>
+            </>}
         <div className={styles.option} onClick={() => router.replace('/atividades')}>
           <IoMdCheckmarkCircleOutline/>
           <button>Atividades</button>
         </div>
-        {(userData.role.name === "Supremo" || userData.role.name === "Conselheiro") && <div className={styles.option} onClick={() => router.replace('/contratar')}>
-          <FaHandshake/>
-          <button>Contratar</button>
-        </div>}
+        {(userData.role.name === "Supremo" || userData.role.name === "Conselheiro") &&
+            <div className={styles.option} onClick={() => router.replace('/contratar')}>
+                <FaHandshake/>
+                <button>Contratar</button>
+            </div>}
         <div className={styles.option}>
           <LuClipboardList/>
           <button>Listagens</button>

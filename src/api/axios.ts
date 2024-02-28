@@ -6,8 +6,9 @@ export const client = axios.create({
 });
 
 export const catchErrorMessage = (error) => {
-    console.log(error);
-    if (error.response.data.message)
+    if(!Array.isArray(error?.response.data.message))
+        toast.error(error.response.data.message)
+    else if (error?.response.data.message)
         error.response.data.message.forEach((message) => toast.error(message));
-    else error.response.data.forEach((message) => toast.error(message));
+    else if(error) error.response.data.forEach((message) => toast.error(message));
 };
