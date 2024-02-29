@@ -19,11 +19,12 @@ import {FaLock} from "react-icons/fa";
 const HoldRedirect = () => {
     const searchParams = useSearchParams();
     const router = useRouter();
-    const {userData} = useUserContext();
+    const {userDatam, clearContext} = useUserContext();
 
     useEffect(() => {
         if(searchParams.get("redirected") !== "true" && userData.nick !== "")
             router.replace("/home")
+        else clearContext()
     }, []);
     return <p></p>
 }
