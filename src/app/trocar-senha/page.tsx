@@ -9,6 +9,8 @@ import moment from "moment";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { useUserContext } from "@/app/Context/context";
+import {IoPersonSharp} from "react-icons/io5";
+import {FaCode, FaLock} from "react-icons/fa";
 
 const alatsi = Alatsi({ subsets: ["latin"], weight: "400" });
 const leagueGothic = League_Gothic({ subsets: ["latin"] });
@@ -155,7 +157,7 @@ export default function ChangePasswordPage() {
                     }
                 >
                     <div className={"relative w-[60%] flex justify-center"}>
-                        <ion-icon name="person"></ion-icon>
+                        <IoPersonSharp />
                         <input
                             required
                             value={nick}
@@ -172,7 +174,7 @@ export default function ChangePasswordPage() {
                     <div
                         className={"mt-6 relative w-[60%] flex justify-center"}
                     >
-                        <ion-icon name="lock"></ion-icon>
+                        <FaLock/>
                         <input
                             required
                             type="password"
@@ -193,7 +195,7 @@ export default function ChangePasswordPage() {
                     <div
                         className={"mt-6 relative w-[60%] flex justify-center"}
                     >
-                        <ion-icon name="lock"></ion-icon>
+                        <FaLock/>
                         <input
                             required
                             value={confirmPassword}
@@ -212,7 +214,7 @@ export default function ChangePasswordPage() {
                     <div
                         className={"mt-6 relative w-[60%] flex justify-center"}
                     >
-                        <ion-icon name="code"></ion-icon>
+                        <FaCode/>
                         <input
                             onClick={() => {
                                 navigator.clipboard.writeText(

@@ -13,6 +13,8 @@ const alatsi = Alatsi({ subsets: ["latin"], weight: "400" });
 const leagueGothic = League_Gothic({ subsets: ["latin"] });
 const poppins = Poppins({ subsets: ["latin"], weight: "700" });
 import { useSearchParams } from 'next/navigation'
+import {IoPersonSharp} from "react-icons/io5";
+import {FaLock} from "react-icons/fa";
 
 const HoldRedirect = () => {
     const searchParams = useSearchParams();
@@ -123,7 +125,7 @@ export default function LoginPage() {
                     }
                 >
                     <div className={"relative w-[60%] flex justify-center"}>
-                        <ion-icon name="person"></ion-icon>
+                        <IoPersonSharp />
                         <input
                             required
                             type="text"
@@ -136,7 +138,7 @@ export default function LoginPage() {
                     <div
                         className={"mt-6 relative w-[60%] flex justify-center"}
                     >
-                        <ion-icon name="lock"></ion-icon>
+                        <FaLock />
                         <input
                             required
                             value={password}
