@@ -21,8 +21,8 @@ export default function LoginPage({ searchParams }) {
 
     useEffect(() => {
         console.log(searchParams.redirected)
-        if (!searchParams.redirected || userData.nick !== "")
-            router.replace("/home");
+        if(searchParams.redirected !== "true" && userData.nick !== "")
+            router.replace("/home")
     }, []);
 
     async function sendLogin(event) {
