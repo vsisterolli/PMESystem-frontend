@@ -24,7 +24,8 @@ const HoldRedirect = () => {
     useEffect(() => {
         if(searchParams.get("redirected") !== "true" && userData?.nick !== "")
             router.replace("/home")
-        else clearContext()
+        if(searchParams.get("redirected"))
+            clearContext()
     }, []);
     return <p></p>
 }

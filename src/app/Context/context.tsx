@@ -44,11 +44,14 @@ export const UserContextProvider = ({ children }) => {
             localStorage.setItem("userData", JSON.stringify(data));
     };
 
-    const clearContext = async () => {
+    const clearContext =  async () => {
         setData(defaultData);
-        if (typeof window !== "undefined")
-            await localStorage.setItem("userData", JSON.stringify(defaultData));
-
+        if (typeof window !== "undefined") {
+            await new Promise(resolve => {
+                localStorage.setItem("userData", JSON.stringify(defaultData));
+                resolve();
+            });
+        }
         router.replace("/login?redirected=true");
     };
 
