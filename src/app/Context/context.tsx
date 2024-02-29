@@ -1,7 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
-import { router } from "next/client";
+import { createContext, useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 
 const UserContext = createContext({
@@ -40,7 +39,7 @@ export const UserContextProvider = ({ children }) => {
 
     const setUserData = async (data) => {
         setData(data);
-        if (typeof window !== "undefined") {
+        if (typeof window !== "undefined")
             await new Promise(resolve => {
                 localStorage.setItem("userData", JSON.stringify(data));
                 resolve();
