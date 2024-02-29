@@ -48,13 +48,13 @@
     }
 }
 
-
 .menu {
-    background-color: #2B1F3E;
+    background-color: #2b1f3e;
     top: 0;
     z-index: 10;
-    -webkit-animation: slide-in-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-    animation: slide-in-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    -webkit-animation: slide-in-left 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+        both;
+    animation: slide-in-left 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
 .portrait {
@@ -71,9 +71,10 @@
     margin-top: -15px;
 }
 
-.menu h3, .options button{
+.menu h3,
+.options button {
     display: block;
-    color: #FFF;
+    color: #fff;
     font-size: 25px;
     font-style: normal;
     font-weight: 400;
@@ -82,7 +83,7 @@
 }
 
 .menu h4 {
-    color: #FFF;
+    color: #fff;
     font-size: 25px;
     font-style: normal;
     font-weight: 400;
@@ -124,7 +125,7 @@
     right: -20px;
     top: 50%;
     transform: translate(0, -50%);
-    background: linear-gradient(180deg, #261046 0%, #5B4DFF 100%);
+    background: linear-gradient(180deg, #261046 0%, #5b4dff 100%);
 }
 
 .emblema img,
@@ -164,9 +165,10 @@
 
 .dropdown {
     margin-top: -12px;
-    margin-bottom: 16px;
-    -webkit-animation: slide-in-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-    animation: slide-in-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    margin-bottom: 24px;
+    -webkit-animation: slide-in-top 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+        both;
+    animation: slide-in-top 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
 .dropdown button {

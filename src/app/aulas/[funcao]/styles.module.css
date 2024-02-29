@@ -1,5 +1,5 @@
 .home {
-    box-shadow: inset 0 0 0 1000px rgba(22,8,42,0.80);
+    box-shadow: inset 0 0 0 1000px rgba(22, 8, 42, 0.8);
     background-image: url("/stars-bg.png");
     background-position: center;
     background-size: cover;
@@ -27,7 +27,7 @@
 }
 
 .cape div {
-    color: #FFF;
+    color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -43,9 +43,11 @@
 }
 
 .sectionTitle {
-    color: #FFF;
+    color: #fff;
     text-align: center;
-    text-shadow: 4px 4px 100px rgba(0, 0, 0, 0.80), 0px 4px 4px rgba(0, 0, 0, 0.25);
+    text-shadow:
+        4px 4px 100px rgba(0, 0, 0, 0.8),
+        0px 4px 4px rgba(0, 0, 0, 0.25);
     margin-top: 40px;
     font-size: 60px;
     font-style: normal;
@@ -59,7 +61,7 @@
     background-color: black;
     position: absolute;
     bottom: 0px;
-    color: #FFF;
+    color: #fff;
     text-align: center;
     text-shadow: 0px 0px 100px #160430;
     font-size: 24px;
@@ -145,7 +147,7 @@
     background: #100027;
     border-radius: 12px;
     height: 70px;
-    color: #FFF;
+    color: #fff;
     font-size: 32px;
     display: flex;
     justify-content: center;
@@ -173,10 +175,15 @@
     min-width: 450px;
     width: fit-content;
     min-height: 300px;
-    background: linear-gradient(180deg, rgba(158, 0, 172, 0.20) 13.51%, rgba(0, 0, 0, 0.00) 89.19%), #100027;
+    background: linear-gradient(
+            180deg,
+            rgba(158, 0, 172, 0.2) 13.51%,
+            rgba(0, 0, 0, 0) 89.19%
+        ),
+        #100027;
     position: relative;
     padding-top: 40px;
-    color: #FFFFFF;
+    color: #ffffff;
     font-size: 26px;
     cursor: pointer;
 }
@@ -212,7 +219,12 @@
 }
 
 .historyHolder table {
-    background: linear-gradient(180deg, rgba(158, 0, 172, 0.20) 13.51%, rgba(0, 0, 0, 0.00) 89.19%), #100027;
+    background: linear-gradient(
+            180deg,
+            rgba(158, 0, 172, 0.2) 13.51%,
+            rgba(0, 0, 0, 0) 89.19%
+        ),
+        #100027;
     width: 55vw;
     height: 160px;
     border-radius: 8px;
@@ -228,7 +240,7 @@
 }
 
 .historyHolder th {
-    border-bottom: solid 2px #FFFFFF;
+    border-bottom: solid 2px #ffffff;
     height: 50px;
     font-size: 24px;
     text-align: center;
@@ -236,7 +248,7 @@
 }
 
 .historyHolder td {
-    border-bottom: solid 2px #FFFFFF;
+    border-bottom: solid 2px #ffffff;
     padding-top: 15px;
     height: 50px;
     font-size: 16px;
@@ -249,7 +261,7 @@
     background-color: black;
     position: absolute;
     top: 0px;
-    color: #FFF;
+    color: #fff;
     text-align: center;
     text-shadow: 0px 0px 100px #160430;
     font-size: 30px;

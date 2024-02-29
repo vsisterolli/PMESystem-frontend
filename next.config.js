@@ -2,11 +2,13 @@
 module.exports = {
     async rewrites() {
         return {
-            fallback: [{
-                source: '/:path*',
-                destination: '/home',
-            }],
-        }
+            fallback: [
+                {
+                    source: "/:path*",
+                    destination: "/home"
+                }
+            ]
+        };
     },
     eslint: {
         ignoreDuringBuilds: true
@@ -21,15 +23,14 @@ module.exports = {
                 protocol: "https",
                 hostname: "www.habbo.com.br",
                 port: "",
-                pathname: "/**",
+                pathname: "/**"
             },
             {
                 protocol: "https",
                 hostname: "pmesystem.s3.sa-east-1.amazonaws.com",
                 port: "",
-                pathname: "/**",
+                pathname: "/**"
             }
-        ],
-    },
+        ]
+    }
 };
-

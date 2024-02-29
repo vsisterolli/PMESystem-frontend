@@ -40,7 +40,7 @@
 }
 
 .activityForm {
-    width: 60vw;
+    width: 600px;
     min-height: 300px;
     background: linear-gradient(
             180deg,
@@ -124,6 +124,7 @@
     color: #fff;
     font-size: 3.4em;
     margin-top: 20px;
+    margin-bottom: 20px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
@@ -156,11 +157,113 @@
     width: 230px;
     height: 62.67px;
     margin-bottom: 30px;
-    margin-top: -30px;
 }
 
 .activityForm iframe {
     margin: 0 auto;
     height: 1600px;
     overflow-y: visible;
+}
+
+.popOuter {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
+}
+
+.popInside {
+    overflow-y: auto;
+    max-height: 90vh;
+    background: linear-gradient(
+            180deg,
+            rgba(158, 0, 172, 0.2) 13.51%,
+            rgba(0, 0, 0, 0) 89.19%
+    ),
+    #100027;
+    margin: 0 auto;
+    border-radius: 8px;
+    margin-top: 60px;
+    width: 800px;
+    min-height: 350px;
+    display: flex;
+    align-items: center;
+    padding-top: 60px;
+    color: #ffffff;
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 400;
+    flex-direction: column;
+    line-height: normal;
+    padding-bottom: 40px;
+}
+
+.deleteButtons {
+    display: flex;
+    margin-top: 40px;
+}
+
+.deleteButtons button {
+    height: 70px;
+    width: 200px;
+    border-radius: 8px;
+}
+
+.denyButton {
+    background-color: #ee6b6e;
+}
+
+.confirmButton {
+    background-color: #6fc276;
+    height: 70px;
+    width: 200px;
+    margin-right: 16px;
+}
+
+
+.removeImg {
+    margin: 0 auto;
+}
+
+.activities table {
+    background: linear-gradient(
+            180deg,
+            rgba(158, 0, 172, 0.2) 13.51%,
+            rgba(0, 0, 0, 0) 89.19%
+        ),
+        #100027;
+    width: 55vw;
+    height: 160px;
+    border-radius: 8px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    color: #f5f5f5;
+    margin: 0 auto;
+    margin-top: 80px;
+    @media (max-width: 1154px) {
+        width: 100vw;
+        max-width: 100vw;
+        overflow-x: auto;
+    }
+}
+
+.activities th {
+    border-bottom: solid 2px #ffffff;
+    height: 50px;
+    font-size: 24px;
+    text-align: center;
+    padding-top: 12px;
+}
+
+.activities td {
+    border-bottom: solid 2px #ffffff;
+    padding-top: 15px;
+    height: 50px;
+    font-size: 16px;
+    text-align: center;
 }

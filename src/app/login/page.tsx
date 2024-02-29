@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
 import styles from "./style.module.css";
-import {useUserContext} from "@/app/Context/context";
+import { useUserContext } from "@/app/Context/context";
 import Image from "next/image";
 import { Alatsi, League_Gothic, Poppins } from "next/font/google";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import { client, catchErrorMessage } from "@/api/axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
@@ -13,16 +13,15 @@ const alatsi = Alatsi({ subsets: ["latin"], weight: "400" });
 const leagueGothic = League_Gothic({ subsets: ["latin"] });
 const poppins = Poppins({ subsets: ["latin"], weight: "700" });
 
-
 export default function LoginPage({ searchParams }) {
-    const {userData, setUserData} = useUserContext();
+    const { userData, setUserData } = useUserContext();
     const [nick, setNick] = useState("");
     const [password, setPassword] = useState("");
     const router = useRouter();
 
     useEffect(() => {
-        if(userData.nick !== "" && !searchParams.redirected)
-            router.replace("/home")
+        if (userData.nick !== "" && !searchParams.redirected)
+            router.replace("/home");
     }, []);
 
     async function sendLogin(event) {
@@ -53,13 +52,17 @@ export default function LoginPage({ searchParams }) {
                         className={"z-10"}
                         width={460}
                         height={460}
-                        src={"https://pmesystem.s3.sa-east-1.amazonaws.com/emblema.png"}
+                        src={
+                            "https://pmesystem.s3.sa-east-1.amazonaws.com/emblema.png"
+                        }
                         alt={"Emblema PME"}
                     />
                     <Image
                         width={560}
                         height={560}
-                        src={"https://pmesystem.s3.sa-east-1.amazonaws.com/pulse-ring.png"}
+                        src={
+                            "https://pmesystem.s3.sa-east-1.amazonaws.com/pulse-ring.png"
+                        }
                         alt={"Emblema pulso"}
                     />
                 </div>
@@ -87,13 +90,17 @@ export default function LoginPage({ searchParams }) {
                         className={"z-10"}
                         width={160}
                         height={160}
-                        src={"https://pmesystem.s3.sa-east-1.amazonaws.com/emblema.png"}
+                        src={
+                            "https://pmesystem.s3.sa-east-1.amazonaws.com/emblema.png"
+                        }
                         alt={"Emblema PME"}
                     />
                     <Image
                         width={260}
                         height={260}
-                        src={"https://pmesystem.s3.sa-east-1.amazonaws.com/pulse-ring.png"}
+                        src={
+                            "https://pmesystem.s3.sa-east-1.amazonaws.com/pulse-ring.png"
+                        }
                         alt={"Emblema pulso"}
                     />
                 </div>
@@ -131,7 +138,9 @@ export default function LoginPage({ searchParams }) {
                             className={poppins.className}
                         />
                     </div>
-                    <a href="/trocar-senha" className={styles.link}>Esqueceu a senha? Troque aqui.</a>
+                    <a href="/trocar-senha" className={styles.link}>
+                        Esqueceu a senha? Troque aqui.
+                    </a>
                     <div className="flex w-full justify-center items-center">
                         <a
                             href="/ativar-conta"

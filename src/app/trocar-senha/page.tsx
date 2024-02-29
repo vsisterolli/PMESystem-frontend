@@ -7,15 +7,15 @@ import { useEffect, useState } from "react";
 import { client, catchErrorMessage } from "@/api/axios";
 import moment from "moment";
 import { toast } from "react-toastify";
-import {useRouter} from "next/navigation";
-import {useUserContext} from "@/app/Context/context";
+import { useRouter } from "next/navigation";
+import { useUserContext } from "@/app/Context/context";
 
 const alatsi = Alatsi({ subsets: ["latin"], weight: "400" });
 const leagueGothic = League_Gothic({ subsets: ["latin"] });
 const poppins = Poppins({ subsets: ["latin"], weight: "700" });
 
 export default function ChangePasswordPage() {
-    const {setUserData} = useUserContext();
+    const { setUserData } = useUserContext();
     const [nick, setNick] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -31,8 +31,11 @@ export default function ChangePasswordPage() {
             .post("/auth/session")
             .then((response) => {
                 setSession(response.data);
-                if (typeof window !== 'undefined') {
-                    localStorage.setItem("session", JSON.stringify(response.data));
+                if (typeof window !== "undefined") {
+                    localStorage.setItem(
+                        "session",
+                        JSON.stringify(response.data)
+                    );
                 }
             })
             .catch((error) => catchErrorMessage(error));
@@ -66,9 +69,13 @@ export default function ChangePasswordPage() {
             })
             .then(async () => {
                 toast.success("Senha trocada com sucesso.");
-                const response = await client.post("/auth/login", {nick, password, sessionId: session.id})
+                const response = await client.post("/auth/login", {
+                    nick,
+                    password,
+                    sessionId: session.id
+                });
                 setUserData(response.data);
-                router.replace("/home")
+                router.replace("/home");
             })
             .catch((error) => {
                 if (moment().isAfter(session.expiresAt)) askNewSession();
@@ -89,13 +96,17 @@ export default function ChangePasswordPage() {
                         className={"z-10"}
                         width={460}
                         height={460}
-                        src={"https://pmesystem.s3.sa-east-1.amazonaws.com/emblema.png"}
+                        src={
+                            "https://pmesystem.s3.sa-east-1.amazonaws.com/emblema.png"
+                        }
                         alt={"Emblema PME"}
                     />
                     <Image
                         width={560}
                         height={560}
-                        src={"https://pmesystem.s3.sa-east-1.amazonaws.com/pulse-ring.png"}
+                        src={
+                            "https://pmesystem.s3.sa-east-1.amazonaws.com/pulse-ring.png"
+                        }
                         alt={"Emblema pulso"}
                     />
                 </div>
@@ -123,13 +134,17 @@ export default function ChangePasswordPage() {
                         className={"z-10"}
                         width={160}
                         height={160}
-                        src={"https://pmesystem.s3.sa-east-1.amazonaws.com/emblema.png"}
+                        src={
+                            "https://pmesystem.s3.sa-east-1.amazonaws.com/emblema.png"
+                        }
                         alt={"Emblema PME"}
                     />
                     <Image
                         width={260}
                         height={260}
-                        src={"https://pmesystem.s3.sa-east-1.amazonaws.com/pulse-ring.png"}
+                        src={
+                            "https://pmesystem.s3.sa-east-1.amazonaws.com/pulse-ring.png"
+                        }
                         alt={"Emblema pulso"}
                     />
                 </div>
@@ -199,7 +214,12 @@ export default function ChangePasswordPage() {
                     >
                         <ion-icon name="code"></ion-icon>
                         <input
-                            onClick={() => {navigator.clipboard.writeText("PMETROCAR" + session.code); toast.success("Código copiado.")}}
+                            onClick={() => {
+                                navigator.clipboard.writeText(
+                                    "PMETROCAR" + session.code
+                                );
+                                toast.success("Código copiado.");
+                            }}
                             type="text"
                             value={"PMETROCAR" + session.code}
                             readOnly

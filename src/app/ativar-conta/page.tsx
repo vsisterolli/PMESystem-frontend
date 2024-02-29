@@ -7,15 +7,15 @@ import { useEffect, useState } from "react";
 import { client, catchErrorMessage } from "@/api/axios";
 import moment from "moment";
 import { toast } from "react-toastify";
-import {useRouter} from "next/navigation";
-import {useUserContext} from "@/app/Context/context";
+import { useRouter } from "next/navigation";
+import { useUserContext } from "@/app/Context/context";
 
 const alatsi = Alatsi({ subsets: ["latin"], weight: "400" });
 const leagueGothic = League_Gothic({ subsets: ["latin"] });
 const poppins = Poppins({ subsets: ["latin"], weight: "700" });
 
 export default function LoginPage() {
-    const {setUserData} = useUserContext();
+    const { setUserData } = useUserContext();
     const [nick, setNick] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -31,8 +31,11 @@ export default function LoginPage() {
             .post("/auth/session")
             .then((response) => {
                 setSession(response.data);
-                if (typeof window !== 'undefined') {
-                    localStorage.setItem("session", JSON.stringify(response.data));
+                if (typeof window !== "undefined") {
+                    localStorage.setItem(
+                        "session",
+                        JSON.stringify(response.data)
+                    );
                 }
             })
             .catch((error) => catchErrorMessage(error));
@@ -66,9 +69,13 @@ export default function LoginPage() {
             })
             .then(async () => {
                 toast.success("Conta ativada com sucesso.");
-                const response = await client.post("/auth/login", {nick, password, sessionId: session.id})
+                const response = await client.post("/auth/login", {
+                    nick,
+                    password,
+                    sessionId: session.id
+                });
                 setUserData(response.data);
-                router.replace("/home")
+                router.replace("/home");
             })
             .catch((error) => {
                 if (moment().isAfter(session.expiresAt)) askNewSession();
@@ -89,13 +96,17 @@ export default function LoginPage() {
                         className={"z-10"}
                         width={460}
                         height={460}
-                        src={"https://pmesystem.s3.sa-east-1.amazonaws.com/emblema.png"}
+                        src={
+                            "https://pmesystem.s3.sa-east-1.amazonaws.com/emblema.png"
+                        }
                         alt={"Emblema PME"}
                     />
                     <Image
                         width={560}
                         height={560}
-                        src={"https://pmesystem.s3.sa-east-1.amazonaws.com/pulse-ring.png"}
+                        src={
+                            "https://pmesystem.s3.sa-east-1.amazonaws.com/pulse-ring.png"
+                        }
                         alt={"Emblema pulso"}
                     />
                 </div>
@@ -126,13 +137,17 @@ export default function LoginPage() {
                         className={"z-10"}
                         width={160}
                         height={160}
-                        src={"https://pmesystem.s3.sa-east-1.amazonaws.com/emblema.png"}
+                        src={
+                            "https://pmesystem.s3.sa-east-1.amazonaws.com/emblema.png"
+                        }
                         alt={"Emblema PME"}
                     />
                     <Image
                         width={260}
                         height={260}
-                        src={"https://pmesystem.s3.sa-east-1.amazonaws.com/pulse-ring.png"}
+                        src={
+                            "https://pmesystem.s3.sa-east-1.amazonaws.com/pulse-ring.png"
+                        }
                         alt={"Emblema pulso"}
                     />
                 </div>
@@ -203,7 +218,12 @@ export default function LoginPage() {
                         <ion-icon name="code"></ion-icon>
                         <input
                             type="text"
-                            onClick={() => {navigator.clipboard.writeText("PME" + session.code); toast.success("Código copiado.")}}
+                            onClick={() => {
+                                navigator.clipboard.writeText(
+                                    "PME" + session.code
+                                );
+                                toast.success("Código copiado.");
+                            }}
                             value={"PME" + session.code}
                             readOnly
                             className={poppins.className + " cursor-pointer"}

@@ -1,5 +1,5 @@
 .document {
-    box-shadow: inset 0 0 0 1000px rgba(22,8,42,0.80);
+    box-shadow: inset 0 0 0 1000px rgba(22, 8, 42, 0.8);
     background-image: url("/stars-bg.png");
     background-position: center;
     background-size: cover;
@@ -7,7 +7,7 @@
 }
 
 .docTitle {
-    color: #FFFFFF;
+    color: #ffffff;
     font-size: 2.4rem;
     font-style: normal;
     margin-top: 80px;

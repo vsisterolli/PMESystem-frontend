@@ -7,10 +7,11 @@
 }
 
 :root {
-    --swiper-theme-color: #FFFFFF !important;
+    --swiper-theme-color: #ffffff !important;
 }
 
-.rc-card-title, .card-sub-title {
+.rc-card-title,
+.card-sub-title {
     color: white !important;
 }
 
