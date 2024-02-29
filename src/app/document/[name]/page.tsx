@@ -47,7 +47,7 @@ export default function Document({ params }) {
             <Menu menuState={menuState} />
             <div
                 className={
-                    "flex flex-col items-center justify-center bg-[#261046] " +
+                    "flex flex-col items-center overflow-hidden max-w-[100vw] justify-center bg-[#261046] " +
                     styles.document
                 }
             >
@@ -55,7 +55,7 @@ export default function Document({ params }) {
                     {documents[params.name]?.title}
                 </h1>
                 <iframe
-                    className={"max-w-full w-[1050px] min-h-screen mt-16"}
+                    className={"max-w-[120%] w-[1050px] min-h-screen mt-16"}
                     src={documents[params.name]?.src}
                 />
             </div>

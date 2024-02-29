@@ -28,6 +28,7 @@ import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { useUserContext } from "@/app/Context/context";
 
 let timer;
+let submitTimer;
 
 export default function Activities() {
     const menuState = useState("hidden");
@@ -36,6 +37,7 @@ export default function Activities() {
     const [checkbox, setCheckbox] = useState(false);
     const [description, setDescription] = useState("");
     const [option, setOption] = useState("");
+    const [loading, setLoading] = useState(false);
     const { userData, clearContext } = useUserContext();
 
     const router = useRouter();
@@ -64,8 +66,7 @@ export default function Activities() {
         timer = setTimeout(() => setImg(event), 1500);
     };
 
-    async function sendActivity(event) {
-        event.preventDefault();
+    async function sendActivity() {
         if (option === "unselected") {
             toast.error("Selecione uma atividade.");
             return;
@@ -82,6 +83,7 @@ export default function Activities() {
                 router.replace("/profile?nick=" + nick);
             } catch (error) {
                 catchErrorMessage(error);
+                setLoading(false);
             }
         }
 
@@ -96,6 +98,7 @@ export default function Activities() {
                 router.replace("/profile?nick=" + nick);
             } catch (error) {
                 catchErrorMessage(error);
+                setLoading(false);
             }
         }
 
@@ -110,6 +113,7 @@ export default function Activities() {
                 router.replace("/profile?nick=" + nick);
             } catch (error) {
                 catchErrorMessage(error);
+                setLoading(false)
             }
         }
 
@@ -124,8 +128,16 @@ export default function Activities() {
                 router.replace("/profile?nick=" + nick);
             } catch (error) {
                 catchErrorMessage(error);
+                setLoading(false)
             }
         }
+    }
+
+    const debounceSubmit = (event) => {
+        event.preventDefault()
+        setLoading(true);
+        clearTimeout(submitTimer);
+        submitTimer = setTimeout(() => sendActivity(), 1000)
     }
 
     return (
@@ -153,7 +165,7 @@ export default function Activities() {
                         {imageNick}
                     </div>
                 </div>
-                <form onSubmit={sendActivity} className={styles.activityForm}>
+                <form onSubmit={(event) => debounceSubmit(event)} className={styles.activityForm}>
                     <h2 className={poppins.className}>POSTAR ATIVIDADE</h2>
                     <div className={"relative w-[60%] flex justify-center"}>
                         <FaRegUserCircle />
@@ -210,7 +222,7 @@ export default function Activities() {
                             em caso de erros
                         </h4>
                     </div>
-                    <button type="submit" className={styles.formButtons}>
+                    <button disabled={loading} type="submit" style={{opacity: loading ? "70%" : "100%"}} className={styles.formButtons}>
                         PUBLICAR
                     </button>
                 </form>

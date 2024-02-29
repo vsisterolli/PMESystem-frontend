@@ -136,7 +136,7 @@ export default function Menu({ menuState }) {
                     onClick={() =>
                         setDocDropdownVisibility(
                             docDropdownVisibility === "hidden"
-                                ? "block"
+                                ? "flex"
                                 : "hidden"
                         )
                     }
@@ -147,7 +147,7 @@ export default function Menu({ menuState }) {
                     <IoIosArrowDown
                         className={
                             (docDropdownVisibility === "hidden"
-                                ? "block"
+                                ? "flex"
                                 : "hidden") +
                             " " +
                             styles.arrowDown
@@ -184,7 +184,7 @@ export default function Menu({ menuState }) {
                             onClick={() =>
                                 setClassesDropdownVisibility(
                                     classesDropdownVisibility === "hidden"
-                                        ? "block"
+                                        ? "flex"
                                         : "hidden"
                                 )
                             }
@@ -195,7 +195,7 @@ export default function Menu({ menuState }) {
                             <IoIosArrowDown
                                 className={
                                     (classesDropdownVisibility === "hidden"
-                                        ? "block"
+                                        ? "flex"
                                         : "hidden") +
                                     " " +
                                     styles.arrowDown
@@ -255,7 +255,7 @@ export default function Menu({ menuState }) {
                             onClick={() =>
                                 setManageDropdownVisibility(
                                     manageDropdownVisibility === "hidden"
-                                        ? "block"
+                                        ? "flex"
                                         : "hidden"
                                 )
                             }
@@ -266,7 +266,7 @@ export default function Menu({ menuState }) {
                             <IoIosArrowDown
                                 className={
                                     (manageDropdownVisibility === "hidden"
-                                        ? "block"
+                                        ? "flex"
                                         : "hidden") +
                                     " " +
                                     styles.arrowDown

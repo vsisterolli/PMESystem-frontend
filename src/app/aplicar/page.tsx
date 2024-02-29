@@ -34,6 +34,7 @@ import { FiXOctagon } from "react-icons/fi";
 import { SiIfixit } from "react-icons/si";
 
 let timer;
+let submitTimer;
 
 export default function PostClass() {
     const { userData, clearContext } = useUserContext();
@@ -51,6 +52,8 @@ export default function PostClass() {
     const [course, setCourse] = useState(0);
     const [checkbox, setCheckbox] = useState(false);
     const [classroom, setClassroom] = useState("Sala - 1");
+
+    const [loading, setLoading] = useState(false)
 
     const router = useRouter();
 
@@ -71,8 +74,7 @@ export default function PostClass() {
                 clearContext();
             });
     }, []);
-    async function sendActivity(event) {
-        event.preventDefault();
+    async function sendActivity() {
         if (course.acronym === "unselected")
             return toast.error("Selecione um curso");
 
@@ -94,7 +96,17 @@ export default function PostClass() {
                     "/aulas/" + coursesAllowed[course].departament.toLowerCase()
                 );
             })
-            .catch((e) => catchErrorMessage(e));
+            .catch((e) => {
+                setLoading(false);
+                catchErrorMessage(e);
+            });
+    }
+
+    const debounceSubmit = (event) => {
+        event.preventDefault()
+        setLoading(true);
+        clearTimeout(submitTimer);
+        submitTimer = setTimeout(() => sendActivity(), 1000)
     }
 
     return (
@@ -102,7 +114,7 @@ export default function PostClass() {
             <Header menuState={menuState} />
             <Menu menuState={menuState} />
             <div className={"flex items-center justify-center flex-col"}>
-                <form onSubmit={sendActivity} className={styles.activityForm}>
+                <form onSubmit={debounceSubmit} className={styles.activityForm}>
                     <h2 className={poppins.className}>PUBLICAR AULA</h2>
                     <div className={"relative w-[60%] flex justify-center"}>
                         <IoIosCheckmarkCircle />
@@ -202,7 +214,7 @@ export default function PostClass() {
                             em caso de erros
                         </h4>
                     </div>
-                    <button type="submit" className={styles.formButtons}>
+                    <button disabled={loading} style={{opacity: loading ? "70%" : "100%"}} type="submit" className={styles.formButtons}>
                         PUBLICAR
                     </button>
                 </form>

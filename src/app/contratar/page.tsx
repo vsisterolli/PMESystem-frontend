@@ -28,6 +28,7 @@ import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { useUserContext } from "@/app/Context/context";
 
 let timer;
+let submitTimer;
 
 export default function Contract() {
     const { userData, clearContext } = useUserContext();
@@ -38,6 +39,7 @@ export default function Contract() {
     const [description, setDescription] = useState("");
     const [option, setOption] = useState("");
     const [selectedRole, setSelectedRole] = useState("unselected");
+    const [loading, setLoading] = useState(false);
 
     const router = useRouter();
 
@@ -76,8 +78,7 @@ export default function Contract() {
         timer = setTimeout(() => setImg(event), 1500);
     };
 
-    async function sendActivity(event) {
-        event.preventDefault();
+    async function sendActivity() {
         try {
             await client.post(
                 "/users/contract",
@@ -93,7 +94,15 @@ export default function Contract() {
             router.replace("/profile?nick=" + nick);
         } catch (e) {
             catchErrorMessage(e);
+            setLoading(false);
         }
+    }
+
+    const debounceSubmit = (event) => {
+        event.preventDefault()
+        setLoading(true);
+        clearTimeout(submitTimer);
+        submitTimer = setTimeout(() => sendActivity(), 1000)
     }
 
     return (
@@ -121,7 +130,7 @@ export default function Contract() {
                         {imageNick}
                     </div>
                 </div>
-                <form onSubmit={sendActivity} className={styles.activityForm}>
+                <form onSubmit={debounceSubmit} className={styles.activityForm}>
                     <h2 className={poppins.className}>CONTRATAR</h2>
                     <div className={"relative w-[60%] flex justify-center"}>
                         <FaRegUserCircle />
@@ -201,7 +210,7 @@ export default function Contract() {
                             em caso de erros
                         </h4>
                     </div>
-                    <button type="submit" className={styles.formButtons}>
+                    <button disabled={loading} style={{opacity: loading ? "70%" : "100%"}} type="submit" className={styles.formButtons}>
                         PUBLICAR
                     </button>
                 </form>

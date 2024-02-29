@@ -25,7 +25,7 @@ const alatsi = Alatsi({ subsets: ["latin"], weight: "400" });
 export default function Home() {
     const menuState = useState("hidden");
     const pictures = [
-        "https://pmesystem.s3.sa-east-1.amazonaws.com/anfC8FK.png"
+        "https://pmesystem.s3.sa-east-1.amazonaws.com/anfC8FK.png",
     ];
     const [recentUsers, setRecentUsers] = useState([]);
     const router = useRouter();

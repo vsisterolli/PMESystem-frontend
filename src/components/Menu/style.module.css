@@ -169,6 +169,13 @@
     -webkit-animation: slide-in-top 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)
         both;
     animation: slide-in-top 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    @media (max-width: 768px) {
+        align-items: center;
+        justify-content: center;
+    }
 }
 
 .dropdown button {

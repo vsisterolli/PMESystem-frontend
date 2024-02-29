@@ -5,7 +5,6 @@ import { Chrono } from "react-chrono";
 import Image from "next/image";
 import { Alata, Bayon, Raleway } from "next/font/google";
 import { useEffect, useState } from "react";
-import { act } from "react-dom/test-utils";
 import moment from "moment";
 import ChangeCape from "@/app/profile/ChangeCape";
 import { useUserContext } from "@/app/Context/context";

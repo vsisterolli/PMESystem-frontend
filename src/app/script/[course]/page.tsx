@@ -29,7 +29,6 @@ export default function Script({ params }) {
             })
             .then((response) => setCourseObject(response.data))
             .catch((e) => {
-                console.log("Shauidhiuahduiahsi");
                 router.replace("/home");
                 catchErrorMessage(e);
             });
