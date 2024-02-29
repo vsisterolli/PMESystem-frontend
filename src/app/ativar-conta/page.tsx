@@ -237,7 +237,7 @@ export default function LoginPage() {
 
                     <div className="flex w-full justify-center items-center">
                         <a
-                            href="/login"
+                            href="/login?redirected=true"
                             className={
                                 poppins.className + " " + styles.formButtons
                             }
