@@ -48,7 +48,8 @@ export const UserContextProvider = ({ children }) => {
         setData(defaultData);
         if (typeof window !== "undefined")
             localStorage.setItem("userData", JSON.stringify(defaultData));
-        router.replace("/login?redirected=true");
+
+        setTimeout(() => router.replace("/login?redirected=true"), 2000);
     };
 
     // @ts-ignore

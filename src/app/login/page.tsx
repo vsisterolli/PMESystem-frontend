@@ -20,7 +20,8 @@ export default function LoginPage({ searchParams }) {
     const router = useRouter();
 
     useEffect(() => {
-        if (userData.nick !== "" && !searchParams.redirected)
+        console.log(searchParams.redirected)
+        if (!searchParams.redirected || userData.nick !== "")
             router.replace("/home");
     }, []);
 
