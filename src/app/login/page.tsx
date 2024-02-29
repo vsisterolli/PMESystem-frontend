@@ -4,7 +4,7 @@ import styles from "./style.module.css";
 import { useUserContext } from "@/app/Context/context";
 import Image from "next/image";
 import { Alatsi, League_Gothic, Poppins } from "next/font/google";
-import { useEffect, useState } from "react";
+import {Suspense, useEffect, useState} from "react";
 import { client, catchErrorMessage } from "@/api/axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
@@ -12,18 +12,26 @@ import { useRouter } from "next/navigation";
 const alatsi = Alatsi({ subsets: ["latin"], weight: "400" });
 const leagueGothic = League_Gothic({ subsets: ["latin"] });
 const poppins = Poppins({ subsets: ["latin"], weight: "700" });
+import { useSearchParams } from 'next/navigation'
 
-export default function LoginPage({ searchParams }) {
+const HoldRedirect = () => {
+    const searchParams = useSearchParams();
+    const router = useRouter();
+    const {userData} = useUserContext();
+
+    useEffect(() => {
+        if(searchParams.get("redirected") !== "true" && userData.nick !== "")
+            router.replace("/home")
+    }, []);
+    return <p></p>
+}
+
+export default function LoginPage() {
     const { userData, setUserData } = useUserContext();
     const [nick, setNick] = useState("");
     const [password, setPassword] = useState("");
     const router = useRouter();
 
-    useEffect(() => {
-        console.log(searchParams.redirected)
-        if(searchParams.redirected !== "true" && userData.nick !== "")
-            router.replace("/home")
-    }, []);
 
     async function sendLogin(event) {
         event.preventDefault();
@@ -42,6 +50,7 @@ export default function LoginPage({ searchParams }) {
 
     return (
         <main className="flex min-h-screen min-w-screen">
+            <Suspense><HoldRedirect/></Suspense>
             <div
                 className={`flex-col items-center justify-center min-h-screen hidden xl:flex w-[55%] ${styles.decorativebg}`}
             >
