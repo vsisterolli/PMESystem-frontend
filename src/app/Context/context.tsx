@@ -38,10 +38,13 @@ export const UserContextProvider = ({ children }) => {
 
     const [userData, setData] = useState(defaultData);
 
-    const setUserData = (data) => {
+    const setUserData = async (data) => {
         setData(data);
-        if (typeof window !== "undefined")
-            localStorage.setItem("userData", JSON.stringify(data));
+        if (typeof window !== "undefined") {
+            await new Promise(resolve => {
+                localStorage.setItem("userData", JSON.stringify(data));
+                resolve();
+            });
     };
 
     const clearContext =  async () => {

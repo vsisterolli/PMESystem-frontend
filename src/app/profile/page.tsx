@@ -13,6 +13,7 @@ import NotFound from "@/app/profile/NotFound";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { useUserContext } from "@/app/Context/context";
+import {isArray} from "node:util";
 
 const alata = Alata({ subsets: ["latin"], weight: "400" });
 
@@ -44,7 +45,8 @@ export default function Profile({ searchParams }) {
                     );
                     clearContext();
                 }
-                setOptions(e.response.data);
+                if(Array.isArray(e.response.data))
+                  setOptions(e.response.data);
                 setVisualization("notFound");
             });
     }, [nick, capeSelected[0]]);
