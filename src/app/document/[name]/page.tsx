@@ -22,6 +22,26 @@ export default function Document({ params }) {
         estatuto: {
             title: "Estatuto - PME ®",
             src: "https://docs.google.com/document/d/e/2PACX-1vTLDOk0UC39qryN0KwhPoawzeWGuzUvtoL8oZ0-8JOozM2vJX0FkDmElOLz94Skwb5nKvKrZ66lwhPQ/pub?embedded=true"
+        },
+        ecb: {
+            title: "[PME] Apostila - Especialização de Cabos ®",
+            src: "https://docs.google.com/document/d/e/2PACX-1vRkaa9c27F0QffyYgHR7vn00dSSQm_WR34No92858gzFFSrKKMmx1seGaNVj6CrNTM27vpqFRrzxMNb/pub?embedded=true"
+        },
+        esgt: {
+            title: "[PME] Apostila - Especialização de Sargentos ®",
+            src: "https://docs.google.com/document/d/e/2PACX-1vSKwC5SZcXkH5UF15LaSs_sU-1BZNjguKNZEAMHGsYw5HDFoWWBjSpFn9xaeB-mKgngvGqEKbqHYrBk/pub?embedded=true"
+        },
+        esbt: {
+            title: "[PME] Apostila - Especialização de Subtenentes ®",
+            src: "https://docs.google.com/document/d/e/2PACX-1vTJDFymUcWE7OwTFbykvnrLdcHIuOqLFEGRz1OeAuVcSndkhxsreMaw4jQ6o4uggBmEQA3PLl2hT-wn/pub?embedded=true"
+        },
+        cort: {
+            title: "[PME] - Curso de Ortografia ®",
+            src: "https://docs.google.com/document/d/e/2PACX-1vSxaE1uxFMK2-I5OXarAiMboeM-QV22N6gLCrBe6oJ3D0t7CWwRAH4Nm7wm2sPQ_D8QYunGeU0hE5aW/pub?embedded=true"
+        },
+        cpp: {
+            title: "[PME] - Curso de Planejamento Policial",
+            src: "https://docs.google.com/document/d/e/2PACX-1vRbleS6nl0Jg3mbZfjdz06mqnKFO2bln1yDuCYrNOjNdEYyJGmMQKeOPOjaEBHrNyX1lmWaMDzi4DU7/pub?embedded=true"
         }
     };
 

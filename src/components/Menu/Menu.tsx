@@ -20,6 +20,7 @@ import { MdOutlineDocumentScanner } from "react-icons/md";
 import { CiLogout } from "react-icons/ci";
 import { useUserContext } from "@/app/Context/context";
 import { GrConfigure } from "react-icons/gr";
+import {IoDocumentSharp} from "react-icons/io5";
 
 const alata = Alata({ subsets: ["latin"], weight: "400" });
 
@@ -30,6 +31,8 @@ export default function Menu({ menuState }) {
     const [manageableDepartaments, setManageableDepartaments] = useState(false);
     const [docDropdownVisibility, setDocDropdownVisibility] =
         useState("hidden");
+    const [instructionsDropwdownVisibility, setInstructionsDropdownVisibility] =
+      useState("hidden");
     const [classesDropdownVisibility, setClassesDropdownVisibility] =
         useState("hidden");
     const [manageDropdownVisibility, setManageDropdownVisibility] =
@@ -124,206 +127,269 @@ export default function Menu({ menuState }) {
                 {userData.role.name}
             </h4>
             <div
-                className={styles.options + " md:ml-[46px] " + alata.className}
+              className={styles.options + " md:ml-[46px] " + alata.className}
             >
                 <a href="/home">
                     <div className={styles.option}>
-                        <IoIosHome />
+                        <IoIosHome/>
                         <button>Home</button>
                     </div>
                 </a>
                 <div
-                    onClick={() =>
-                        setDocDropdownVisibility(
-                            docDropdownVisibility === "hidden"
-                                ? "flex"
-                                : "hidden"
-                        )
-                    }
-                    className={styles.option}
+                  onClick={() =>
+                    setDocDropdownVisibility(
+                      docDropdownVisibility === "hidden"
+                        ? "flex"
+                        : "hidden"
+                    )
+                  }
+                  className={styles.option}
                 >
-                    <MdOutlineDocumentScanner />
+                    <MdOutlineDocumentScanner/>
                     <button>Documentos</button>
                     <IoIosArrowDown
-                        className={
-                            (docDropdownVisibility === "hidden"
-                                ? "flex"
-                                : "hidden") +
-                            " " +
-                            styles.arrowDown
-                        }
+                      className={
+                        (docDropdownVisibility === "hidden"
+                          ? "flex"
+                          : "hidden") +
+                        " " +
+                        styles.arrowDown
+                      }
                     />
                     <IoIosArrowUp
-                        className={
-                            docDropdownVisibility + " " + styles.arrowDown
-                        }
+                      className={
+                        docDropdownVisibility + " " + styles.arrowDown
+                      }
                     />
                 </div>
                 <div
-                    className={
-                        `pl-4 ${docDropdownVisibility} ` + styles.dropdown
-                    }
+                  className={
+                    `pl-4 ${docDropdownVisibility} ` + styles.dropdown
+                  }
                 >
                     <button
-                        className="block"
-                        onClick={() => router.replace("/document/estatuto")}
+                      className="block"
+                      onClick={() => router.replace("/document/estatuto")}
                     >
                         Estatuto Oficial
                     </button>
                     <button
-                        className="block"
-                        onClick={() => router.replace("/document/cd")}
+                      className="block"
+                      onClick={() => router.replace("/document/cd")}
                     >
                         Código Disciplinar
                     </button>
                 </div>
+                <div
+                  onClick={() =>
+                    setInstructionsDropdownVisibility(
+                      instructionsDropwdownVisibility === "hidden"
+                        ? "flex"
+                        : "hidden"
+                    )
+                  }
+                  className={styles.option}
+                >
+                    <IoDocumentSharp />
+                    <button>Apostilas</button>
+                    <IoIosArrowDown
+                      className={
+                        (instructionsDropwdownVisibility === "hidden"
+                          ? "flex"
+                          : "hidden") +
+                        " " +
+                        styles.arrowDown
+                      }
+                    />
+                    <IoIosArrowUp
+                      className={
+                        instructionsDropwdownVisibility + " " + styles.arrowDown
+                      }
+                    />
+                </div>
+                <div
+                  className={
+                    `pl-4 ${instructionsDropwdownVisibility} ` + styles.dropdown
+                  }
+                >
+                    <button
+                      className="block"
+                      onClick={() => router.replace("/document/ecb")}
+                    >
+                        - ECb
+                    </button>
+                    <button
+                      className="block"
+                      onClick={() => router.replace("/document/esgt")}
+                    >
+                        - ESgt
+                    </button>
+                    <button
+                      className="block"
+                      onClick={() => router.replace("/document/cort")}
+                    >
+                        - COrt
+                    </button>
+                    <button
+                      className="block"
+                      onClick={() => router.replace("/document/cpp")}
+                    >
+                        - CPP
+                    </button>
+                    <button
+                      className="block"
+                      onClick={() => router.replace("/document/esbt")}
+                    >
+                        - ESbt
+                    </button>
+                </div>
 
                 {userClassRole && (
-                    <>
-                        <div
-                            onClick={() =>
-                                setClassesDropdownVisibility(
-                                    classesDropdownVisibility === "hidden"
-                                        ? "flex"
-                                        : "hidden"
-                                )
-                            }
-                            className={styles.option}
-                        >
-                            <FaChalkboardTeacher />
-                            <button>Aulas</button>
-                            <IoIosArrowDown
-                                className={
-                                    (classesDropdownVisibility === "hidden"
-                                        ? "flex"
-                                        : "hidden") +
-                                    " " +
-                                    styles.arrowDown
-                                }
-                            />
-                            <IoIosArrowUp
-                                className={
-                                    classesDropdownVisibility +
-                                    " " +
-                                    styles.arrowDown
-                                }
-                            />
-                        </div>
-                        <div
+                  <>
+                      <div
+                        onClick={() =>
+                          setClassesDropdownVisibility(
+                            classesDropdownVisibility === "hidden"
+                              ? "flex"
+                              : "hidden"
+                          )
+                        }
+                        className={styles.option}
+                      >
+                          <FaChalkboardTeacher/>
+                          <button>Aulas</button>
+                          <IoIosArrowDown
                             className={
-                                `pl-4 ${classesDropdownVisibility} ` +
-                                styles.dropdown
+                              (classesDropdownVisibility === "hidden"
+                                ? "flex"
+                                : "hidden") +
+                              " " +
+                              styles.arrowDown
                             }
-                        >
-                            {userClassRole.map((role) => (
-                                <button
-                                    key={role.departament}
-                                    className="block"
-                                    onClick={() =>
-                                        router.replace(
-                                            "/aulas/" +
-                                                role.departament.toLowerCase()
-                                        )
-                                    }
-                                >
-                                    - {role.departament}
-                                </button>
-                            ))}
-                        </div>
-                    </>
+                          />
+                          <IoIosArrowUp
+                            className={
+                              classesDropdownVisibility +
+                              " " +
+                              styles.arrowDown
+                            }
+                          />
+                      </div>
+                      <div
+                        className={
+                          `pl-4 ${classesDropdownVisibility} ` +
+                          styles.dropdown
+                        }
+                      >
+                          {userClassRole.map((role) => (
+                            <button
+                              key={role.departament}
+                              className="block"
+                              onClick={() =>
+                                router.replace(
+                                  "/aulas/" +
+                                  role.departament.toLowerCase()
+                                )
+                              }
+                            >
+                                - {role.departament}
+                            </button>
+                          ))}
+                      </div>
+                  </>
                 )}
                 <div
-                    className={styles.option}
-                    onClick={() => router.replace("/atividades")}
+                  className={styles.option}
+                  onClick={() => router.replace("/atividades")}
                 >
-                    <IoMdCheckmarkCircleOutline />
+                    <IoMdCheckmarkCircleOutline/>
                     <button>Atividades</button>
                 </div>
                 {(userData.role.name === "Supremo" ||
-                    userData.role.name === "Conselheiro") && (
-                    <div
-                        className={styles.option}
-                        onClick={() => router.replace("/contratar")}
-                    >
-                        <FaHandshake />
-                        <button>Contratar</button>
-                    </div>
+                  userData.role.name === "Conselheiro") && (
+                  <div
+                    className={styles.option}
+                    onClick={() => router.replace("/contratar")}
+                  >
+                      <FaHandshake/>
+                      <button>Contratar</button>
+                  </div>
                 )}
                 {manageableDepartaments && (
-                    <>
-                        <div
-                            onClick={() =>
-                                setManageDropdownVisibility(
-                                    manageDropdownVisibility === "hidden"
-                                        ? "flex"
-                                        : "hidden"
-                                )
-                            }
-                            className={styles.option}
-                        >
-                            <GrConfigure />
-                            <button>Gerenciar Dpto</button>
-                            <IoIosArrowDown
-                                className={
-                                    (manageDropdownVisibility === "hidden"
-                                        ? "flex"
-                                        : "hidden") +
-                                    " " +
-                                    styles.arrowDown
-                                }
-                            />
-                            <IoIosArrowUp
-                                className={
-                                    manageDropdownVisibility +
-                                    " " +
-                                    styles.arrowDown
-                                }
-                            />
-                        </div>
-                        <div
+                  <>
+                      <div
+                        onClick={() =>
+                          setManageDropdownVisibility(
+                            manageDropdownVisibility === "hidden"
+                              ? "flex"
+                              : "hidden"
+                          )
+                        }
+                        className={styles.option}
+                      >
+                          <GrConfigure/>
+                          <button>Gerenciar Dpto</button>
+                          <IoIosArrowDown
                             className={
-                                `pl-4 ${manageDropdownVisibility} ` +
-                                styles.dropdown
+                              (manageDropdownVisibility === "hidden"
+                                ? "flex"
+                                : "hidden") +
+                              " " +
+                              styles.arrowDown
                             }
-                        >
-                            {manageableDepartaments.map((departament) => (
-                                <button
-                                    onClick={() => {
-                                        router.replace(
-                                            "/gerenciar/" +
-                                                departament.toLowerCase()
-                                        );
-                                    }}
-                                    key={departament}
-                                >
-                                    - {departament}
-                                </button>
-                            ))}
-                        </div>
-                    </>
+                          />
+                          <IoIosArrowUp
+                            className={
+                              manageDropdownVisibility +
+                              " " +
+                              styles.arrowDown
+                            }
+                          />
+                      </div>
+                      <div
+                        className={
+                          `pl-4 ${manageDropdownVisibility} ` +
+                          styles.dropdown
+                        }
+                      >
+                          {manageableDepartaments.map((departament) => (
+                            <button
+                              onClick={() => {
+                                  router.replace(
+                                    "/gerenciar/" +
+                                    departament.toLowerCase()
+                                  );
+                              }}
+                              key={departament}
+                            >
+                                - {departament}
+                            </button>
+                          ))}
+                      </div>
+                  </>
                 )}
                 <div onClick={handleLogout} className={styles.option}>
-                    <CiLogout />
+                    <CiLogout/>
                     <button>Logout</button>
                 </div>
             </div>
             <div className={styles.emblema + " "}>
                 <Image
-                    className={"z-10"}
-                    width={160}
-                    height={160}
-                    src={
-                        "https://pmesystem.s3.sa-east-1.amazonaws.com/emblema.png"
-                    }
-                    alt={"Emblema PME"}
+                  className={"z-10"}
+                  width={160}
+                  height={160}
+                  src={
+                      "https://pmesystem.s3.sa-east-1.amazonaws.com/emblema.png"
+                  }
+                  alt={"Emblema PME"}
                 />
                 <Image
-                    width={260}
-                    height={260}
-                    src={
-                        "https://pmesystem.s3.sa-east-1.amazonaws.com/pulse-ring.png"
-                    }
-                    alt={"Emblema pulso"}
+                  width={260}
+                  height={260}
+                  src={
+                      "https://pmesystem.s3.sa-east-1.amazonaws.com/pulse-ring.png"
+                  }
+                  alt={"Emblema pulso"}
                 />
             </div>
         </aside>
