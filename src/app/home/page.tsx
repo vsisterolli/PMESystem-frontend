@@ -67,7 +67,7 @@ export default function Home() {
             </h3>
             <div className={styles.newMilitary}>
                 {recentUsers.map((user) => (
-                    <Tippy content={user.nick} placement="bottom">
+                    <Tippy key={user.nick} content={user.nick} placement="bottom">
                         <div className={styles.newPolice}>
                             <Image
                                 width={150}

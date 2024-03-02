@@ -21,11 +21,13 @@ import { CiLogout } from "react-icons/ci";
 import { useUserContext } from "@/app/Context/context";
 import { GrConfigure } from "react-icons/gr";
 import {IoDocumentSharp} from "react-icons/io5";
+import {client} from "@/api/axios";
+import {toast} from "react-toastify";
 
 const alata = Alata({ subsets: ["latin"], weight: "400" });
 
 export default function Menu({ menuState }) {
-    const { userData, clearContext } = useUserContext();
+    const { userData, clearContext, setUserData } = useUserContext();
     const [userClassRole, setUserClassRole] = useState(false);
     const [visibility, setVisibility] = menuState;
     const [manageableDepartaments, setManageableDepartaments] = useState(false);
@@ -45,6 +47,12 @@ export default function Menu({ menuState }) {
     }
 
     useEffect(() => {
+        client.get("/users/self", {headers: {Authorization: userData.access_token}})
+          .then(response => setUserData({...response.data, access_token: userData.access_token}))
+          .catch(e => {
+            console.log(e)
+          })
+
         if (
             userData?.role.name === "Supremo" ||
             userData?.role.name === "Conselheiro"
