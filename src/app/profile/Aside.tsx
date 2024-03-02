@@ -22,7 +22,7 @@ export default function Aside({ profile }) {
         try {
             await client.patch(
                 "/users/changeDiscord",
-                { discord },
+                { discord: dc },
                 { headers: { Authorization: userData.access_token } }
             );
             toast.success("Discord alterado.");

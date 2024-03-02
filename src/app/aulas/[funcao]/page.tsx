@@ -105,7 +105,7 @@ export default function Home({ params }) {
         }
 
         client
-            .get("/departaments/courses/" + params.funcao, {
+            .get("/departaments/courses/" + params.funcao.toUpperCase(), {
                 headers: { Authorization: userData.access_token }
             })
             .then((response) => setCourses(response.data))
@@ -129,7 +129,7 @@ export default function Home({ params }) {
                 router.replace("/home");
             });
         userData.userDepartamentRole.forEach((role) => {
-            if (role.departament === params.funcao.toUpperCase())
+            if (role.departamentRoles?.departament === params.funcao.toUpperCase())
                 setUserRole(role);
         });
     }, [params.funcao]);
@@ -271,7 +271,7 @@ export default function Home({ params }) {
                                 </th>
                                 <th>Reprovados</th>
                             </tr>
-                            {classes.map((appliedClass) => (
+                            {classes?.map((appliedClass) => (
                                 <tr>
                                     <td
                                         className={
@@ -361,7 +361,7 @@ export default function Home({ params }) {
                             >
                                 SCRIPTS
                             </div>
-                            {courses.map((course) => (
+                            {courses?.map((course) => (
                                 <div
                                     onClick={() =>
                                         router.replace(

@@ -76,21 +76,22 @@ export default function Menu({ menuState }) {
         } else {
             const depsToManage = [],
                 classRoles = [];
-            userData?.userDepartamentRole.forEach((role) => {
+            userData?.userDepartamentRole?.forEach((role) => {
                 if (role.departamentRoles?.powerLevel >= 10)
                     depsToManage.push(role.departamentRoles?.departament);
             });
 
             if (depsToManage.length) setManageableDepartaments(depsToManage);
 
-            userData.userDepartamentRole.forEach((role) => {
+            userData.userDepartamentRole?.forEach((role) => {
+                console.log(role)
                 if (
-                    role.departament === "INS" ||
-                    role.departament === "EFEX" ||
-                    role.departament === "CDO" ||
-                    role.departament === "ESP"
+                    role.departamentRoles?.departament === "INS" ||
+                    role.departamentRoles?.departament === "EFEX" ||
+                    role.departamentRoles?.departament === "CDO" ||
+                    role.departamentRoles?.departament === "ESP"
                 )
-                    classRoles.push(role);
+                    classRoles.push(role.departamentRoles);
             });
 
             if (classRoles.length) setUserClassRole(classRoles);
