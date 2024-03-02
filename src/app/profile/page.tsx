@@ -30,7 +30,7 @@ export default function Profile({ searchParams }) {
     const router = useRouter();
     useEffect(() => {
         client
-            .get("/users/profile/" + nick, {
+            .get("/users/profile/" + encodeURIComponent(nick), {
                 headers: { Authorization: userData?.access_token }
             })
             .then((response) => {
