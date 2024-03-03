@@ -49,7 +49,7 @@ export default function Document({ params }) {
         },
         uniformes: {
             title: "[PME] Regulamento de Fardamentos ®",
-            src: "https://docs.google.com/document/d/1LqlYGcE8-q6uK14pqQhZq3uZxj2e-kE3dkCjzAsoe94/edit?usp=sharing"
+            src: "https://docs.google.com/document/d/e/2PACX-1vTCTFMqXzLanK0djKTR0XAlpup0VcAaNdDOyjLwcbtaadn_5agOGubXw_2hE6i4_KmfgRmkplSHlt-i/pub?embedded=true"
         }
     };
 
