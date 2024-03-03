@@ -190,7 +190,7 @@ export default function Menu({ menuState }) {
                     </button>
                     <button
                       className="block"
-                      onClick={() => router.replace("/document/ed")}
+                      onClick={() => router.replace("/document/pm")}
                     >
                         Protocolo Militar
                     </button>
