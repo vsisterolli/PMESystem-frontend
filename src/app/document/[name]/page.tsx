@@ -42,6 +42,10 @@ export default function Document({ params }) {
         cpp: {
             title: "[PME] - Curso de Planejamento Policial",
             src: "https://docs.google.com/document/d/e/2PACX-1vRbleS6nl0Jg3mbZfjdz06mqnKFO2bln1yDuCYrNOjNdEYyJGmMQKeOPOjaEBHrNyX1lmWaMDzi4DU7/pub?embedded=true"
+        },
+        pm: {
+            title: "[PME] Protocolo Militar ®",
+            src: "https://docs.google.com/document/d/e/2PACX-1vSMN72Fax6LoYCqymhWene9wT5vmUeo_IU8tJY2yexY_3jzL-77tQqY5tGhSHE9-9iGQ9vfIijtBQWi/pub?embedded=true"
         }
     };
 

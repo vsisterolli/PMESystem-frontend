@@ -188,6 +188,12 @@ export default function Menu({ menuState }) {
                     >
                         Código Disciplinar
                     </button>
+                    <button
+                      className="block"
+                      onClick={() => router.replace("/document/ed")}
+                    >
+                        Protocolo Militar
+                    </button>
                 </div>
                 <div
                   onClick={() =>
