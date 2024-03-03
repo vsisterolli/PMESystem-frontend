@@ -46,6 +46,10 @@ export default function Document({ params }) {
         pm: {
             title: "[PME] Protocolo Militar ®",
             src: "https://docs.google.com/document/d/e/2PACX-1vSMN72Fax6LoYCqymhWene9wT5vmUeo_IU8tJY2yexY_3jzL-77tQqY5tGhSHE9-9iGQ9vfIijtBQWi/pub?embedded=true"
+        },
+        uniformes: {
+            title: "[PME] Regulamento de Fardamentos ®",
+            src: "https://docs.google.com/document/d/1LqlYGcE8-q6uK14pqQhZq3uZxj2e-kE3dkCjzAsoe94/edit?usp=sharing"
         }
     };
 

@@ -194,6 +194,12 @@ export default function Menu({ menuState }) {
                     >
                         Protocolo Militar
                     </button>
+                    <button
+                      className="block"
+                      onClick={() => router.replace("/document/uniforme")}
+                    >
+                        Uniformes
+                    </button>
                 </div>
                 <div
                   onClick={() =>
