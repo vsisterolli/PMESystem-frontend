@@ -7,8 +7,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
     FaChalkboardTeacher,
-    FaChevronLeft,
-    FaHandshake
+    FaChevronLeft, FaClipboardList,
+    FaHandshake, FaList, FaUsers
 } from "react-icons/fa";
 import {
     IoIosArrowDown,
@@ -39,6 +39,7 @@ export default function Menu({ menuState }) {
         useState("hidden");
     const [manageDropdownVisibility, setManageDropdownVisibility] =
         useState("hidden");
+    const [listagesDropdownVisibility, setListagesDropdownVisibility] = useState("hidden");
 
     const router = useRouter();
 
@@ -105,7 +106,7 @@ export default function Menu({ menuState }) {
     return (
         <aside
             className={
-                "flex flex-col min-h-screen overflow-y-auto overflow-x-clip w-full w-screen md:w-[350px] fixed " +
+                "flex flex-col min-h-screen overflow-scroll overflow-x-clip w-full w-screen md:w-[350px] fixed " +
                 visibility +
                 " " +
                 styles.menu
@@ -211,7 +212,7 @@ export default function Menu({ menuState }) {
                   }
                   className={styles.option}
                 >
-                    <IoDocumentSharp />
+                    <IoDocumentSharp/>
                     <button>Apostilas</button>
                     <IoIosArrowDown
                       className={
@@ -389,6 +390,70 @@ export default function Menu({ menuState }) {
                       </div>
                   </>
                 )}
+                <div
+                  className={styles.option}
+                  onClick={() => router.replace("/policiais")}
+                >
+                    <FaUsers/>
+                    <button>Controle de Policiais</button>
+                </div>
+                <div
+                  onClick={() =>
+                    setListagesDropdownVisibility(
+                      listagesDropdownVisibility === "hidden"
+                        ? "flex"
+                        : "hidden"
+                    )
+                  }
+                  className={styles.option}
+                >
+                    <FaList/>
+                    <button>Listagens</button>
+                    <IoIosArrowDown
+                      className={
+                        (listagesDropdownVisibility === "hidden"
+                          ? "flex"
+                          : "hidden") +
+                        " " +
+                        styles.arrowDown
+                      }
+                    />
+                    <IoIosArrowUp
+                      className={
+                        listagesDropdownVisibility + " " + styles.arrowDown
+                      }
+                    />
+                </div>
+                <div
+                  className={
+                    `pl-4 ${listagesDropdownVisibility} ` + styles.dropdown
+                  }
+                >
+                    <button
+                      className="block"
+                      onClick={() => router.replace("/rh/promocoes")}
+                    >
+                        Promoções
+                    </button>
+                    <button
+                      className="block"
+                      onClick={() => router.replace("/rh/advertencias")}
+                    >
+                        Advertências
+                    </button>
+                    <button
+                      className="block"
+                      onClick={() => router.replace("/rh/rebaixamentos")}
+                    >
+                        Rebaixamentos
+                    </button>
+                    <button
+                      className="block"
+                      onClick={() => router.replace("/rh/demissoes")}
+                    >
+                        Demissões
+                    </button>
+                </div>
                 <div onClick={handleLogout} className={styles.option}>
                     <CiLogout/>
                     <button>Logout</button>

@@ -9,18 +9,18 @@ import {toast} from "react-toastify";
 import {client} from "@/api/axios";
 import {useUserContext} from "@/app/Context/context";
 
-export default function Polices() {
+export default function PolicesByRole({ params }) {
 
   const menuState = useState("hidden");
   const { userData, clearContext } = useUserContext();
-  const [roles, setRoles] = useState([]);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     client
-      .get("/auth/roles", {
+      .get("/users/byRole/" + params.cargo, {
         headers: { Authorization: userData?.access_token }
       })
-      .then((response) => setRoles(response.data))
+      .then((response) => setUsers(response.data))
       .catch(() => {
         toast.error(
           "Opa! Você precisa estar logado para acessar essa página."
@@ -35,14 +35,10 @@ export default function Polices() {
       <Menu menuState={menuState}/>
       <section className={styles.listage}>
         <h1>Controle de Policiais Ativos ®</h1>
-        <div className={"flex justify-around w-[100%] mt-8"}>
-          <div className={"w-[50%] border-solid border-r-2 border-t-2 border-white"}>
-            <h2>Militares</h2>
-            {roles.filter(role => role.hierarchyKind === "MILITARY").map(role => <a key={role.name} href={"/policiais/" + role.name}>{role.name}</a>)}
-          </div>
-          <div className={"w-[50%] border-t-2 border-solid border-white"}>
-            <h2>Executivos</h2>
-            {roles.filter(role => role.hierarchyKind === "EXECUTIVE").map(role => <a key={role.name} href={"/policiais/" + role.name}>{role.name}</a>)}
+        <div className={"flex ml-32 w-[100%] mt-8"}>
+          <div className={""}>
+            <h2>{params.cargo} - {users.length} policiais cadastrados.</h2>
+            {users.map(user => <a key={user.nick} target={"_blank"} href={"/profile?nick=" + user.nick}>{user.nick}</a>)}
           </div>
         </div>
       </section>

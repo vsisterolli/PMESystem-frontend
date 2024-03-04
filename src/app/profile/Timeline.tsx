@@ -49,7 +49,7 @@ export default function Timeline({ profile, capeSelected }) {
     function getPermissions() {
         let str = "[";
         profile.permissionsObtained?.forEach((permission, index) => {
-            if (permission.type === "OTHER") return;
+            if (permission.type !== "COURSE") return;
             str = str.concat(permission.name);
             if (index !== profile.permissionsObtained.length - 1)
                 str = str.concat("/");
