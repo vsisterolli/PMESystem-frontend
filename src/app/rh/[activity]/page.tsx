@@ -63,8 +63,9 @@ export default function Home({ params }) {
     const handleSetOption = async (option) => {
         setActions([]);
         setSearch("");
+        setPage(1);
         setOption(option);
-        await triggerSearch({ option, search, page });
+        await triggerSearch({ option, search, page: 1 });
     };
 
     const handlePagination = async (page) => {
@@ -96,7 +97,7 @@ export default function Home({ params }) {
 
         userData.userDepartamentRole.forEach((role) => {
             if (role.departamentRoles?.departament === "RH")
-                setUserRole(role);
+                setUserRole(role.departamentRoles);
         });
     }, [params.activity]);
 
@@ -154,7 +155,7 @@ export default function Home({ params }) {
                                 type="text"
                                 placeholder="Pesquisa..."
                             />
-                            {(userRole.powerLevel >= 10 ||
+                            {(userRole.powerLevel >= 1 ||
                                 userData.role.name === "Supremo" ||
                                 userData.role.name === "Conselheiro") && (
                                 <>
@@ -280,32 +281,34 @@ export default function Home({ params }) {
                             ))}
                         </table>
                         <div className={styles.navigation}>
-                            <MdKeyboardDoubleArrowLeft />
-                            <MdKeyboardArrowLeft />
+                            <MdKeyboardDoubleArrowLeft onClick={() => handlePagination(Math.max(1, page - 10))}/>
+                            <MdKeyboardArrowLeft onClick={() => handlePagination(Math.max(1, page - 1))}/>
                             <button
-                                onClick={() =>
-                                    handlePagination(Math.max(page - 10, 1))
-                                }
-                                className={styles.pageOption}
+                              onClick={() =>
+                                handlePagination(Math.max(page - 10, 1))
+                              }
+                              className={styles.pageOption}
                             >
                                 {Math.max(page - 10, 1)}
                             </button>
+                            <button className={styles.pageOption} onClick={() => handlePagination(Math.max(page - 1, 1))}>{Math.max(page - 1, 1)}</button>
                             <button>{page}</button>
+                            <button className={styles.pageOption} onClick={() => handlePagination(Math.min(page + 1, maxPages))}>{Math.min(page + 1, maxPages)}</button>
                             <button
-                                onClick={() =>
-                                    handlePagination(
-                                        Math.max(
-                                            1,
-                                            Math.min(page + 10, maxPages)
-                                        )
-                                    )
-                                }
-                                className={styles.pageOption}
+                              onClick={() =>
+                                handlePagination(
+                                  Math.max(
+                                    1,
+                                    Math.min(page + 10, maxPages)
+                                  )
+                                )
+                              }
+                              className={styles.pageOption}
                             >
                                 {Math.max(1, Math.min(page + 10, maxPages))}
                             </button>
-                            <MdKeyboardArrowRight />
-                            <MdKeyboardDoubleArrowRight />
+                            <MdKeyboardArrowRight onClick={() => handlePagination(Math.min(maxPages, page + 1))}/>
+                            <MdKeyboardDoubleArrowRight onClick={() => handlePagination(Math.min(maxPages, page + 10))}/>
                         </div>
                     </div>
                 </div>

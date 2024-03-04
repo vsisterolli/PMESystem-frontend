@@ -37,7 +37,7 @@ export default function PolicesByRole({ params }) {
         <h1>Controle de Policiais Ativos ®</h1>
         <div className={"flex ml-32 w-[100%] mt-8"}>
           <div className={""}>
-            <h2>{params.cargo} - {users.length} policiais cadastrados.</h2>
+            <h2>{decodeURIComponent(params.cargo)} - {users.length} policiais cadastrados.</h2>
             {users.map(user => <a key={user.nick} target={"_blank"} href={"/profile?nick=" + user.nick}>{user.nick}</a>)}
           </div>
         </div>
