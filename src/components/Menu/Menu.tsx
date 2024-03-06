@@ -23,6 +23,7 @@ import { GrConfigure } from "react-icons/gr";
 import {IoDocumentSharp} from "react-icons/io5";
 import {client} from "@/api/axios";
 import {toast} from "react-toastify";
+import {GiGraduateCap} from "react-icons/gi";
 
 const alata = Alata({ subsets: ["latin"], weight: "400" });
 
@@ -40,6 +41,7 @@ export default function Menu({ menuState }) {
     const [manageDropdownVisibility, setManageDropdownVisibility] =
         useState("hidden");
     const [listagesDropdownVisibility, setListagesDropdownVisibility] = useState("hidden");
+    const [cfoDropdown, setCfoDropdown] = useState("hidden");
 
     const router = useRouter();
 
@@ -265,6 +267,73 @@ export default function Menu({ menuState }) {
                         - ESbt
                     </button>
                 </div>
+                {userData?.role.hierarchyPosition >= 5 &&
+                  <>
+                  <div
+                  onClick={() =>
+                    setCfoDropdown(
+                      cfoDropdown === "hidden"
+                        ? "flex"
+                        : "hidden"
+                    )
+                  }
+                  className={styles.option}
+                >
+                    <GiGraduateCap />
+                    <button>CFO</button>
+                    <IoIosArrowDown
+                      className={
+                        (cfoDropdown === "hidden"
+                          ? "flex"
+                          : "hidden") +
+                        " " +
+                        styles.arrowDown
+                      }
+                    />
+                    <IoIosArrowUp
+                      className={
+                        cfoDropdown + " " + styles.arrowDown
+                      }
+                    />
+                </div>
+                      <div
+                        className={
+                          `pl-4 ${cfoDropdown} ` + styles.dropdown
+                        }
+                      >
+                          <button
+                            className="block"
+                            onClick={() => router.replace("/document/cfoinicial")}
+                          >
+                              Instruções Iniciais
+                          </button>
+                          <button
+                            className="block"
+                            onClick={() => router.replace("/document/m1teorico")}
+                          >
+                              Módulo I - Apostila
+                          </button>
+                          <button
+                            className="block"
+                            onClick={() => router.replace("/document/m1pratico")}
+                          >
+                              Módulo I - Avaliação
+                          </button>
+                          <button
+                            className="block"
+                            onClick={() => router.replace("/document/m2teorico")}
+                          >
+                              Módulo II - Apostila
+                          </button>
+                          <button
+                            className="block"
+                            onClick={() => router.replace("/document/m2pratico")}
+                          >
+                              Módulo II - Avaliação
+                          </button>
+                      </div>
+                  </>
+                }
 
                 {userClassRole && (
                   <>
