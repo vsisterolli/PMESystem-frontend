@@ -7,7 +7,8 @@ const UserContext = createContext({
     userData: {
         nick: "",
         role: {
-            name: ""
+            name: "",
+            powerLevel: 0
         },
         permissionsObtained: [],
         userDepartamentRole: [],

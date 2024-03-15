@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
     FaChalkboardTeacher,
-    FaChevronLeft, FaClipboardList,
+    FaChevronLeft, FaClipboardList, FaExchangeAlt,
     FaHandshake, FaList, FaUsers
 } from "react-icons/fa";
 import {
@@ -201,7 +201,7 @@ export default function Menu({ menuState }) {
                       className="block"
                       onClick={() => router.replace("/document/uniforme")}
                     >
-                        Uniformes
+                        Identificação Militar
                     </button>
                 </div>
                 <div
@@ -266,14 +266,32 @@ export default function Menu({ menuState }) {
                     >
                         - ESbt
                     </button>
+                    <button
+                      className="block"
+                      onClick={() => router.replace("/document/cfpe")}
+                    >
+                        - CFPE
+                    </button>
+                    <button
+                      className="block"
+                      onClick={() => router.replace("/document/cfc")}
+                    >
+                        - CFC
+                    </button>
+                    <button
+                      className="block"
+                      onClick={() => router.replace("/document/capex")}
+                    >
+                        - CApEx
+                    </button>
                 </div>
                 {userData?.role.hierarchyPosition >= 5 &&
                   <>
-                  <div
-                  onClick={() =>
-                    setCfoDropdown(
-                      cfoDropdown === "hidden"
-                        ? "flex"
+                      <div
+                        onClick={() =>
+                          setCfoDropdown(
+                            cfoDropdown === "hidden"
+                              ? "flex"
                         : "hidden"
                     )
                   }
@@ -404,6 +422,15 @@ export default function Menu({ menuState }) {
                   >
                       <FaHandshake/>
                       <button>Contratar</button>
+                  </div>
+                )}
+                {(userData.role?.hierarchyPosition > 10 &&
+                  <div
+                    className={styles.option}
+                    onClick={() => router.replace("/mudar-nick")}
+                  >
+                      <FaExchangeAlt/>
+                      <button>Mudar Nick</button>
                   </div>
                 )}
                 {manageableDepartaments && (

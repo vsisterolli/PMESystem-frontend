@@ -48,8 +48,23 @@ export default function Document({ params }) {
             src: "https://docs.google.com/document/d/e/2PACX-1vSMN72Fax6LoYCqymhWene9wT5vmUeo_IU8tJY2yexY_3jzL-77tQqY5tGhSHE9-9iGQ9vfIijtBQWi/pub?embedded=true"
         },
         uniforme: {
-            title: "[PME] Regulamento de Fardamentos ®",
+            title: "[PME] Identificação Militar ®",
             src: "https://docs.google.com/document/d/e/2PACX-1vTCTFMqXzLanK0djKTR0XAlpup0VcAaNdDOyjLwcbtaadn_5agOGubXw_2hE6i4_KmfgRmkplSHlt-i/pub?embedded=true"
+        },
+        cfpe: {
+            title: "[PME] Curso de Formação Policial Executiva ®",
+            src: `https://docs.google.com/presentation/d/e/2PACX-1vSygJ6YVbrynTQqEzdnI6avEHk44OuMKw2rQ8lqNeGknYclva5c1p4XCAS1p9S7yGy3KYTqfeS97J_f/embed?start=false&loop=true&delayms=3000`,
+            type: "slide"
+        },
+        cfc: {
+            title: "[PME] Curso de Formação Complementar ®",
+            src: `https://docs.google.com/presentation/d/e/2PACX-1vReZ6rbHcqppvKrWxSlMEcG-KYk4RV64fwa1FFozDd4kSe660czbku8yR1CfTc41Bilh4K-2dqwgIi_/embed?start=false&loop=false&delayms=3000`,
+            type: "slide"
+        },
+        capex: {
+            title: "[PME] Curso de Aprimoramento Executivo ®",
+            src: `https://docs.google.com/presentation/d/e/2PACX-1vT0Cv1fDH3u7x6MFytCRZfkPi6Oarc2Z5p66-gUZ71y9805GOiJP0cbmNPsPT3DMvMfPMdx5Seq3OWQ/embed?start=false&loop=false&delayms=3000`,
+            type: "slide"
         }
     });
 
@@ -110,8 +125,9 @@ export default function Document({ params }) {
                     {documents[params.name]?.title}
                 </h1>
                 <iframe
-                    className={"max-w-[120%] w-[1050px] min-h-screen mt-16"}
-                    src={documents[params.name]?.src}
+                  className={(documents[params.name]?.type !== "slide" ? "max-w-[120%] w-[1050px] min-h-screen mt-16" : "min-h-[80vh] w-[90vw] mt-16 mb-16")}
+                  src={documents[params.name]?.src}
+                  allowFullScreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"
                 />
             </div>
         </>

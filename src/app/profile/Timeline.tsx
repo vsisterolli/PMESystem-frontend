@@ -28,7 +28,9 @@ export default function Timeline({ profile, capeSelected }) {
         SELLING:
             "https://pmesystem.s3.sa-east-1.amazonaws.com/toppng.com-download-handshake-icon-gree-600x600.png",
         CONTRACTING:
-            "https://pmesystem.s3.sa-east-1.amazonaws.com/toppng.com-download-handshake-icon-gree-600x600.png"
+            "https://pmesystem.s3.sa-east-1.amazonaws.com/toppng.com-download-handshake-icon-gree-600x600.png",
+        CHANGE:
+            "https://pmesystem.s3.sa-east-1.amazonaws.com/exchange-14-256-removebg-preview.png"
     };
 
     function getTitle(activity) {
@@ -43,6 +45,10 @@ export default function Timeline({ profile, capeSelected }) {
         if (activity.type === "WARNING")
             return (
                 <h3>Advertência ({activity.isActive ? "ATIVA" : "INATIVA"})</h3>
+            );
+        if (activity.type === "CHANGE")
+            return (
+              <h3>Troca de Conta</h3>
             );
     }
 
