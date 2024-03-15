@@ -8,7 +8,8 @@ const UserContext = createContext({
         nick: "",
         role: {
             name: "",
-            powerLevel: 0
+            powerLevel: 0,
+            hierarchyPosition: 0
         },
         permissionsObtained: [],
         userDepartamentRole: [],

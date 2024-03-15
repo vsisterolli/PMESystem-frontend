@@ -45,9 +45,7 @@ export default function Contract() {
 
     useEffect(() => {
         if (
-            !userData ||
-            (userData.role.name !== "Supremo" &&
-                userData.role.name !== "Conselheiro")
+            userData.role?.hierarchyPosition <= 10
         ) {
             toast.error("Opa! Não era pra você estar por aqui.");
             return router.replace("/home");
