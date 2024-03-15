@@ -349,6 +349,9 @@ export default function Menu({ menuState }) {
                           >
                               Módulo II - Avaliação
                           </button>
+                          <button className="block">
+                              <a target="_blank" href="https://docs.google.com/forms/d/1o0ocPA4_s_WYr_yRdRX3HoPZm4wMz2PK76nIfaZkHWs/viewform?edit_requested=true">Agendamento - Prática</a>
+                          </button>
                       </div>
                   </>
                 }
