@@ -102,6 +102,12 @@ export default function Aside({ profile }) {
                         Situação:{" "}
                         {profile.isAccountActive ? " ativo" : " inativo"}
                     </span>
+                    <span>
+                        Bonificações na patente: {profile.bonificationsInRole}
+                    </span>
+                    <span>
+                        Bonificações totais: {profile.totalBonifications}
+                    </span>
                     <span>Número de advertências: {profile.advNum}</span>
                     <span>
                         Data de criação:{" "}

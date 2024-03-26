@@ -31,8 +31,12 @@ let timer;
 let submitTimer;
 
 export default function Activities() {
+
+    const bonifyReasons = ["Recepção", "Operadores", "Comando da Recepção", "Comando da Sala de Controles", "Auxiliar de Comando", "Oficial de Comando", "Atividade de Interação", "Recrutamento"];
+
     const menuState = useState("hidden");
     const [imageNick, setImageNick] = useState("");
+    const [reason, setReason] = useState("")
     const [nick, setNick] = useState("");
     const [checkbox, setCheckbox] = useState(false);
     const [description, setDescription] = useState("");
@@ -80,6 +84,21 @@ export default function Activities() {
                     { headers: { Authorization: userData?.access_token } }
                 );
                 toast.success("Promoção postada!");
+                router.replace("/profile?nick=" + nick);
+            } catch (error) {
+                catchErrorMessage(error);
+                setLoading(false);
+            }
+        }
+
+        if (option === "BONIFICAR") {
+            try {
+                await client.post(
+                  "/actions/bonify",
+                  { user: nick, reason },
+                  { headers: { Authorization: userData?.access_token } }
+                );
+                toast.success("Gratificação postada!");
                 router.replace("/profile?nick=" + nick);
             } catch (error) {
                 catchErrorMessage(error);
@@ -168,53 +187,72 @@ export default function Activities() {
                 <form onSubmit={(event) => debounceSubmit(event)} className={styles.activityForm}>
                     <h2 className={poppins.className}>POSTAR ATIVIDADE</h2>
                     <div className={"relative w-[60%] flex justify-center"}>
-                        <FaRegUserCircle />
+                        <FaRegUserCircle/>
                         <input
-                            required
-                            type="text"
-                            placeholder="Nickname do policial"
-                            className={poppins.className}
-                            value={nick}
-                            onChange={debounce}
+                          required
+                          type="text"
+                          placeholder="Nickname do policial"
+                          className={poppins.className}
+                          value={nick}
+                          onChange={debounce}
                         />
                     </div>
                     <div className={"relative w-[60%] flex justify-center"}>
-                        <IoMdCheckmarkCircleOutline />
+                        <IoMdCheckmarkCircleOutline/>
                         <select
-                            required
-                            className={poppins.className}
-                            value={option}
-                            onChange={(event) => setOption(event.target.value)}
-                            defaultValue={"unselected"}
+                          required
+                          className={poppins.className}
+                          value={option}
+                          onChange={(event) => setOption(event.target.value)}
+                          defaultValue={"unselected"}
                         >
                             <option value={"unselected"}>
                                 Selecione a atividade
                             </option>
                             <option>PROMOVER</option>
+                            <option>BONIFICAR</option>
                             <option>ADVERTIR</option>
                             <option>REBAIXAR</option>
                             <option>DEMITIR</option>
                         </select>
                     </div>
-                    <div className={"relative w-[60%] flex justify-center"}>
+                    { option === "BONIFICAR" &&
+                        <div className={"relative w-[60%] flex justify-center"}>
+                        <IoMdCheckmarkCircleOutline/>
+                        <select
+                          required
+                          className={poppins.className}
+                          value={reason}
+                          onChange={(event) => setReason(event.target.value)}
+                          defaultValue={"unselected"}
+                        >
+                            <option value={"unselected"}>
+                                Selecione o motivo da bonificação
+                            </option>
+                            {bonifyReasons.map(reason => <option key={reason}>{reason}</option>)}
+                        </select>
+                        </div>
+                    }
+                    {option !== "BONIFICAR" && <div className={"relative w-[60%] flex justify-center"}>
                         <textarea
-                            required
-                            placeholder="Motivo"
-                            className={poppins.className}
-                            maxLength={4000}
-                            value={description}
-                            onChange={(event) =>
-                                setDescription(event.target.value)
-                            }
+                          required
+                          placeholder="Motivo"
+                          className={poppins.className}
+                          maxLength={4000}
+                          value={description}
+                          onChange={(event) =>
+                            setDescription(event.target.value)
+                          }
                         />
                     </div>
+                    }
                     <div className={styles.checkbox}>
                         <input
-                            required
-                            type="checkbox"
-                            className={poppins.className}
-                            value={checkbox}
-                            onClick={(event) => setCheckbox(event.target.value)}
+                          required
+                          type="checkbox"
+                          className={poppins.className}
+                          value={checkbox}
+                          onClick={(event) => setCheckbox(event.target.value)}
                         />
                         <h4>
                             Confirmo ter verificado as condições para postar
@@ -222,7 +260,8 @@ export default function Activities() {
                             em caso de erros
                         </h4>
                     </div>
-                    <button disabled={loading} type="submit" style={{opacity: loading ? "70%" : "100%"}} className={styles.formButtons}>
+                    <button disabled={loading} type="submit" style={{opacity: loading ? "70%" : "100%"}}
+                            className={styles.formButtons}>
                         PUBLICAR
                     </button>
                 </form>

@@ -5,7 +5,7 @@ import styles from "./styles.module.css";
 import { useEffect, useState } from "react";
 import Menu from "@/components/Menu/Menu";
 
-import { Alatsi, Raleway } from "next/font/google";
+import {Bayon, Beth_Ellen, Raleway} from "next/font/google";
 
 import { useUserContext } from "@/app/Context/context";
 import Image from "next/image";
@@ -21,34 +21,27 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import moment from "moment";
 
-const alatsi = Alatsi({ subsets: ["latin"], weight: "400" });
-const raleway = Raleway({ subsets: ["latin"], weight: "800" });
+const beth = Beth_Ellen({ subsets: ["latin"], weight: "400" });
+const bayon = Bayon({ subsets: ["latin"], weight: "400" });
+const raleway = Raleway({ subsets: ["latin"], weight: "700" });
 let timer;
 
 export default function Home({ params }) {
     const menuState = useState("hidden");
     const { userData } = useUserContext();
     const [search, setSearch] = useState("");
-    const [userRole, setUserRole] = useState({ powerLevel: 0 });
     const [maxPages, setMaxPages] = useState(1);
     const [option, setOption] = useState("mine");
+    const [weeklyTop, setWeeklyTop] = useState([])
     const [page, setPage] = useState(1);
     const router = useRouter();
     const [actions, setActions] = useState([]);
 
-    const ACTIONS = {
-        "promocoes": "PROMOTION",
-        "rebaixamentos": "DEMOTION",
-        "advertencias": "WARNING",
-        "demissoes": "FIRE",
-        "gratificacoes": "BONIFY"
-    };
-
     const triggerSearch = async ({ option, search, page }) => {
         client
             .get(
-                "/actions" +
-                    `?action=${ACTIONS[params.activity]}&mode=${option}&search=${search}&offset=${(page - 1) * 10}`,
+                "/actions/bonifications" +
+                    `?mode=${option}&search=${search}&offset=${(page - 1) * 10}`,
                 { headers: { Authorization: userData.access_token } }
             )
             .then((response) => {
@@ -84,23 +77,24 @@ export default function Home({ params }) {
     useEffect(() => {
         client
             .get(
-                "/actions" +
-                    `?action=${ACTIONS[params.activity]}&mode=mine`,
+                "/actions/bonifications" +
+                    `?&mode=mine`,
                 { headers: { Authorization: userData.access_token } }
             )
             .then((response) => {
                 setMaxPages(Math.ceil(response.data[0] / 10));
                 setActions(response.data[1]);
             })
-            .catch((e) => {
+            .catch(() => {
                 router.replace("/home");
             });
-
-        userData.userDepartamentRole.forEach((role) => {
-            if (role.departamentRoles?.departament === "RH")
-                setUserRole(role.departamentRoles);
-        });
-    }, [params.activity]);
+        
+        client.get(
+          "/actions/mostBonificationsWeekly", {headers: { Authorization: userData.access_token }}
+        ).then(response => {
+            setWeeklyTop(response.data)
+        }).catch(() => router.replace("/home"))
+    }, []);
 
     return (
         <main className={"min-h-screen min-w-screen " + styles.home}>
@@ -145,6 +139,26 @@ export default function Home({ params }) {
                     </div>
                 </div>
                 <div className={styles.historyHolder}>
+                    <div className={"mr-8 " + styles.topHolder}>
+                        <div className={styles.topTitleHolder}>
+                            <h4 className={bayon.className}>TOP 5</h4>
+                            <h5 className={beth.className}>Bonificados da Semana</h5>
+                        </div>
+                        {console.log(weeklyTop)}
+                        {weeklyTop.map(user =>
+                        <div className={styles.topUser}>
+                            <div className={styles.topUserPortrait}>
+                                <Image
+                                  width={150}
+                                  height={222}
+                                  src={`https://www.habbo.com.br/habbo-imaging/avatarimage?img_format=png&user=${user.nick}&direction=2&head_direction=3&size=l&gesture=sml&action=std`}
+                                  alt={"Seu habbo avatar"}
+                                />
+                            </div>
+                            <p className={raleway.className}>{user.nick} - {user.totalgains}  bonificações</p>
+                        </div>
+                        )}
+                    </div>
                     <div>
                         <div className={styles.searchBar}>
                             <IoIosSearch />
@@ -156,9 +170,6 @@ export default function Home({ params }) {
                                 type="text"
                                 placeholder="Pesquisa..."
                             />
-                            {(userRole.powerLevel >= 1 ||
-                                userData.role.name === "Supremo" ||
-                                userData.role.name === "Conselheiro") && (
                                 <>
                                     <button
                                         onClick={() => handleSetOption("mine")}
@@ -191,94 +202,93 @@ export default function Home({ params }) {
                                         TODAS
                                     </button>
                                 </>
-                            )}
                         </div>
                         <table>
                             <tr>
                                 <th
-                                    className={
-                                        "border-r-2 border-solid border-white"
-                                    }
-                                >
-                                    Id
-                                </th>
-                                <th
-                                    className={
-                                        "border-r-2 border-solid border-white"
-                                    }
-                                >
-                                    Data
-                                </th>
-                                <th
-                                    className={
-                                        "border-r-2 border-solid border-white"
-                                    }
-                                >
-                                    Autor
-                                </th>
-                                <th
-                                    className={
-                                        "border-r-2 border-solid border-white"
-                                    }
-                                >
-                                    Receptor
-                                </th>
-                                {actions[0]?.newRole && <th
                                   className={
                                       "border-r-2 border-solid border-white"
                                   }
                                 >
-                                    Cargo
-                                </th>}
+                                    Id
+                                </th>
+                                <th
+                                  className={
+                                      "border-r-2 border-solid border-white"
+                                  }
+                                >
+                                    Data
+                                </th>
+                                <th
+                                  className={
+                                      "border-r-2 border-solid border-white"
+                                  }
+                                >
+                                    Autor
+                                </th>
+                                <th
+                                  className={
+                                      "border-r-2 border-solid border-white"
+                                  }
+                                >
+                                    Bonificado
+                                </th>
+                                <th
+                                  className={
+                                      "border-r-2 border-solid border-white"
+                                  }
+                                >
+                                    Motivo
+                                </th>
                                 <th
                                 >
-                                    Descrição
+                                    Atribuições
                                 </th>
                             </tr>
                             {actions?.map((action) => (
-                                <tr>
-                                    <td
-                                        className={
-                                            "border-r-2 border-solid border-white"
-                                        }
-                                    >
-                                        {action.id}
-                                    </td>
-                                    <td
-                                        className={
-                                            "border-r-2 border-solid border-white"
-                                        }
-                                    >
-                                        {moment(action.createdAt).format(
-                                            "DD/MM/yyyy HH:mm"
-                                        )}
-                                    </td>
-                                    <td
-                                        className={
-                                            "border-r-2 border-solid border-white"
-                                        }
-                                    >
-                                        {action.author}
-                                    </td>
-                                    <td
-                                        className={
-                                            "border-r-2 border-solid border-white"
-                                        }
-                                    >
-                                        {action.user.nick}
-                                    </td>
-                                    {action.newRole && <td
-                                        className={
-                                            "border-r-2 border-solid border-white"
-                                        }
-                                    >
-                                        {action.newRole}
-                                    </td>}
-                                    <td
-                                    >
-                                        {action.description}
-                                    </td>
-                                </tr>
+                              <tr>
+                                  <td
+                                    className={
+                                        "border-r-2 border-solid border-white"
+                                    }
+                                  >
+                                      {action.id}
+                                  </td>
+                                  <td
+                                    className={
+                                        "border-r-2 border-solid border-white"
+                                    }
+                                  >
+                                      {moment(action.createdAt).format(
+                                        "DD/MM/yyyy HH:mm"
+                                      )}
+                                  </td>
+                                  <td
+                                    className={
+                                        "border-r-2 border-solid border-white"
+                                    }
+                                  >
+                                      {action.author}
+                                  </td>
+                                  <td
+                                    className={
+                                        "border-r-2 border-solid border-white"
+                                    }
+                                  >
+                                      {action.user.nick}
+                                  </td>
+                                  <td
+                                    className={
+                                        "border-r-2 border-solid border-white"
+                                    }
+                                  >
+                                      {action.reason}
+                                  </td>
+                                  <td
+                                  >
+                                      {action.gains}
+                                  </td>
+                              </tr>
                             ))}
                         </table>
                         <div className={styles.navigation}>

@@ -536,6 +536,12 @@ export default function Menu({ menuState }) {
                     </button>
                     <button
                       className="block"
+                      onClick={() => router.replace("/bonificacoes")}
+                    >
+                        Bonificações
+                    </button>
+                    <button
+                      className="block"
                       onClick={() => router.replace("/rh/advertencias")}
                     >
                         Advertências
