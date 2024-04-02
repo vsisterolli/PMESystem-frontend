@@ -24,6 +24,7 @@ import {IoDocumentSharp} from "react-icons/io5";
 import {client} from "@/api/axios";
 import {toast} from "react-toastify";
 import {GiGraduateCap} from "react-icons/gi";
+import Link from "next/link";
 
 const alata = Alata({ subsets: ["latin"], weight: "400" });
 
@@ -31,7 +32,7 @@ export default function Menu({ menuState }) {
     const { userData, clearContext, setUserData } = useUserContext();
     const [userClassRole, setUserClassRole] = useState(false);
     const [visibility, setVisibility] = menuState;
-    const [manageableDepartaments, setManageableDepartaments] = useState(false);
+    const [manageableDepartaments, setManageableDepartaments] = useState([]);
     const [docDropdownVisibility, setDocDropdownVisibility] =
         useState("hidden");
     const [instructionsDropwdownVisibility, setInstructionsDropdownVisibility] =
@@ -40,6 +41,8 @@ export default function Menu({ menuState }) {
         useState("hidden");
     const [manageDropdownVisibility, setManageDropdownVisibility] =
         useState("hidden");
+    const [activitiesDropdownVisibility, setActivitiesDropdownVisibility] =
+      useState("hidden");
     const [listagesDropdownVisibility, setListagesDropdownVisibility] = useState("hidden");
     const [cfoDropdown, setCfoDropdown] = useState("hidden");
 
@@ -179,30 +182,30 @@ export default function Menu({ menuState }) {
                     `pl-4 ${docDropdownVisibility} ` + styles.dropdown
                   }
                 >
-                    <button
+                    <Link
                       className="block"
-                      onClick={() => router.replace("/document/estatuto")}
+                      href={"/document/estatuto"}
                     >
                         Estatuto Oficial
-                    </button>
-                    <button
+                    </Link>
+                    <Link
                       className="block"
-                      onClick={() => router.replace("/document/cd")}
+                      href={"/document/cd"}
                     >
                         Código Disciplinar
-                    </button>
-                    <button
+                    </Link>
+                    <Link
                       className="block"
-                      onClick={() => router.replace("/document/pm")}
+                      href={"/document/pm"}
                     >
                         Protocolo Militar
-                    </button>
-                    <button
+                    </Link>
+                    <Link
                       className="block"
-                      onClick={() => router.replace("/document/uniforme")}
+                      href={"/document/uniforme"}
                     >
                         Identificação Militar
-                    </button>
+                    </Link>
                 </div>
                 <div
                   onClick={() =>
@@ -236,54 +239,54 @@ export default function Menu({ menuState }) {
                     `pl-4 ${instructionsDropwdownVisibility} ` + styles.dropdown
                   }
                 >
-                    <button
+                    <Link
                       className="block"
-                      onClick={() => router.replace("/document/ecb")}
+                      href={"/document/ecb"}
                     >
                         - ECb
-                    </button>
-                    <button
+                    </Link>
+                    <Link
                       className="block"
-                      onClick={() => router.replace("/document/esgt")}
+                      href={ "/document/esgt"}
                     >
                         - ESgt
-                    </button>
-                    <button
+                    </Link>
+                    <Link
                       className="block"
-                      onClick={() => router.replace("/document/cort")}
+                      href={"/document/cort"}
                     >
                         - COrt
-                    </button>
-                    <button
+                    </Link>
+                    <Link
                       className="block"
-                      onClick={() => router.replace("/document/cpp")}
+                      href={"/document/cpp"}
                     >
                         - CPP
-                    </button>
-                    <button
+                    </Link>
+                    <Link
                       className="block"
-                      onClick={() => router.replace("/document/esbt")}
+                      href={"/document/esbt"}
                     >
                         - ESbt
-                    </button>
-                    <button
+                    </Link>
+                    <Link
                       className="block"
-                      onClick={() => router.replace("/document/cfpe")}
+                      href={"/document/cfpe"}
                     >
                         - CFPE
-                    </button>
-                    <button
+                    </Link>
+                    <Link
                       className="block"
-                      onClick={() => router.replace("/document/cfc")}
+                      href={"/document/cfc"}
                     >
                         - CFC
-                    </button>
-                    <button
+                    </Link>
+                    <Link
                       className="block"
-                      onClick={() => router.replace("/document/capex")}
+                      href={"/document/capex"}
                     >
                         - CApEx
-                    </button>
+                    </Link>
                 </div>
                 {userData?.role.hierarchyPosition >= 5 &&
                   <>
@@ -319,36 +322,36 @@ export default function Menu({ menuState }) {
                           `pl-4 ${cfoDropdown} ` + styles.dropdown
                         }
                       >
-                          <button
+                          <Link
                             className="block"
-                            onClick={() => router.replace("/document/cfoinicial")}
+                            href={"/document/cfoinicial"}
                           >
                               Instruções Iniciais
-                          </button>
-                          <button
+                          </Link>
+                          <Link
                             className="block"
-                            onClick={() => router.replace("/document/m1teorico")}
+                            href={"/document/m1teorico"}
                           >
                               Módulo I - Apostila
-                          </button>
-                          <button
+                          </Link>
+                          <Link
                             className="block"
-                            onClick={() => router.replace("/document/m1pratico")}
+                            href={"/document/m1pratico"}
                           >
                               Módulo I - Avaliação
-                          </button>
-                          <button
+                          </Link>
+                          <Link
                             className="block"
-                            onClick={() => router.replace("/document/m2teorico")}
+                            href={"/document/m2teorico"}
                           >
                               Módulo II - Apostila
-                          </button>
-                          <button
+                          </Link>
+                          <Link
                             className="block"
-                            onClick={() => router.replace("/document/m2pratico")}
+                            href={"/document/m2pratico"}
                           >
                               Módulo II - Avaliação
-                          </button>
+                          </Link>
                           <button className="block">
                               <a target="_blank" href="https://docs.google.com/forms/d/1o0ocPA4_s_WYr_yRdRX3HoPZm4wMz2PK76nIfaZkHWs/viewform?edit_requested=true">Agendamento - Prática</a>
                           </button>
@@ -394,29 +397,67 @@ export default function Menu({ menuState }) {
                         }
                       >
                           {userClassRole.map((role) => (
-                            <button
+                            <Link
                               key={role.departament}
                               className="block"
-                              onClick={() =>
-                                router.replace(
-                                  "/aulas/" +
-                                  role.departament.toLowerCase()
-                                )
-                              }
+                              href={"/aulas/" + role.departament.toLowerCase()}
                             >
                                 - {role.departament}
-                            </button>
+                            </Link>
                           ))}
                       </div>
                   </>
                 )}
-                <div
+                {!(userData.role.name === "Supremo" || userData.role.name === "Conselheiro" || manageableDepartaments.includes("RH")) && <div
                   className={styles.option}
                   onClick={() => router.replace("/atividades")}
                 >
-                    <IoMdCheckmarkCircleOutline/>
-                    <button>Atividades</button>
+                        <IoMdCheckmarkCircleOutline/>
+                        <button>Atividades</button>
                 </div>
+                }
+                {(userData.role.name === "Supremo" || userData.role.name === "Conselheiro" || manageableDepartaments.includes("RH")) &&
+                  <>
+                  <div
+                    onClick={() =>
+                      setActivitiesDropdownVisibility(
+                        activitiesDropdownVisibility === "hidden"
+                          ? "flex"
+                          : "hidden"
+                      )
+                    }
+                    className={styles.option}
+                  >
+                      <IoMdCheckmarkCircleOutline/>
+                      <button>Atividades</button>
+                      <IoIosArrowDown
+                        className={
+                          (activitiesDropdownVisibility === "hidden"
+                            ? "flex"
+                            : "hidden") +
+                          " " +
+                          styles.arrowDown
+                        }
+                      />
+                      <IoIosArrowUp
+                        className={
+                          activitiesDropdownVisibility +
+                          " " +
+                          styles.arrowDown
+                        }
+                      />
+                  </div>
+                    <div
+                    className={
+                    `pl-4 ${activitiesDropdownVisibility} ` +
+                    styles.dropdown
+                }
+            >
+                <Link href={"/atividades"}>Padrão</Link>
+                <Link href={"/atividades/rh"}>Em massa</Link>
+            </div>
+                  </>
+                }
                 {(userData.role.name === "Supremo" ||
                   userData.role.name === "Conselheiro") && (
                   <div
@@ -436,7 +477,7 @@ export default function Menu({ menuState }) {
                       <button>Mudar Nick</button>
                   </div>
                 )}
-                {manageableDepartaments && (
+                {manageableDepartaments.length > 0 && (
                   <>
                       <div
                         onClick={() =>

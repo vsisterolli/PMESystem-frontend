@@ -24,39 +24,36 @@ import { useRouter } from "next/navigation";
 const bayon = Bayon({ subsets: ["latin"], weight: "400" });
 const poppins = Poppins({ subsets: ["latin"], weight: "400" });
 import { FaRegUserCircle } from "react-icons/fa";
-import { IoMdCheckmarkCircleOutline } from "react-icons/io";
+import {IoIosCheckmarkCircle, IoMdCheckmarkCircleOutline} from "react-icons/io";
 import { useUserContext } from "@/app/Context/context";
+import {TbWriting} from "react-icons/tb";
 
 let timer;
 let submitTimer;
 
 export default function Activities() {
 
-    const bonifyReasons = ["Recepção", "Operadores", "Comando da Recepção", "Comando da Sala de Controles", "Auxiliar de Comando", "Oficial de Comando", "Atividade de Interação", "Recrutamento"];
 
     const menuState = useState("hidden");
     const [imageNick, setImageNick] = useState("");
+    const [approvedHeight, setApprovedHeight] = useState(68);
     const [reason, setReason] = useState("")
-    const [nick, setNick] = useState("");
+    const [nicks, setNicks] = useState("");
     const [checkbox, setCheckbox] = useState(false);
-    const [description, setDescription] = useState("");
     const [option, setOption] = useState("");
     const [loading, setLoading] = useState(false);
-    const { userData, clearContext } = useUserContext();
+    const { userData } = useUserContext();
 
     const router = useRouter();
     useEffect(() => {
         setImg({ target: { value: userData.nick } });
-        client
-            .get("/users/permissions", {
-                headers: { Authorization: userData?.access_token }
-            })
-            .catch(() => {
-                toast.error(
-                    "Opa! Você precisa estar logado para acessar essa página."
-                );
-                clearContext();
-            });
+        const rhRole = userData.userDepartamentRole.find(role => role.departamentRoles.departament === "RH")
+        if(userData.role.name === "Conselheiro" || userData.role.name === "Supremo")
+            return;
+        if(!rhRole || rhRole.departamentRoles.powerLevel < 10) {
+            router.replace("/home")
+            toast.error("Acesso negado")
+        }
     }, []);
 
     function setImg(event) {
@@ -64,57 +61,21 @@ export default function Activities() {
         else setImageNick(event.target.value);
     }
 
-    const debounce = (event) => {
-        setNick(event.target.value);
-        clearTimeout(timer);
-        timer = setTimeout(() => setImg(event), 1500);
-    };
-
     async function sendActivity() {
         if (option === "unselected") {
             toast.error("Selecione uma atividade.");
             return;
         }
 
-        if (option === "PROMOVER") {
-            try {
-                await client.post(
-                    "/actions/promote",
-                    { promotedNick: nick, description },
-                    { headers: { Authorization: userData?.access_token } }
-                );
-                toast.success("Promoção postada!");
-                router.replace("/profile?nick=" + nick);
-            } catch (error) {
-                catchErrorMessage(error);
-                setLoading(false);
-            }
-        }
-
-        if (option === "BONIFICAR") {
-            try {
-                await client.post(
-                  "/actions/bonify",
-                  { user: nick, reason },
-                  { headers: { Authorization: userData?.access_token } }
-                );
-                toast.success("Bonificação postada!");
-                router.replace("/bonificacoes");
-            } catch (error) {
-                catchErrorMessage(error);
-                setLoading(false);
-            }
-        }
-
         if (option === "REBAIXAR") {
             try {
                 await client.post(
-                    "/actions/demote",
-                    { demotedNick: nick, description },
+                    "/actions/demote/multiple",
+                    { demotedNicks: nicks.split("\n"), description: reason },
                     { headers: { Authorization: userData?.access_token } }
                 );
-                toast.success("Rebaixamento postado!");
-                router.replace("/profile?nick=" + nick);
+                toast.success("Rebaixamentos postados!");
+                router.replace("/rh/rebaixamentos");
             } catch (error) {
                 catchErrorMessage(error);
                 setLoading(false);
@@ -124,12 +85,12 @@ export default function Activities() {
         if (option === "DEMITIR") {
             try {
                 await client.post(
-                    "/actions/fire",
-                    { firedNick: nick, description },
+                    "/actions/fire/multiple",
+                    { firedNicks: nicks.split("\n"), description: reason },
                     { headers: { Authorization: userData?.access_token } }
                 );
-                toast.success("Demissão postada!");
-                router.replace("/profile?nick=" + nick);
+                toast.success("Demissões postadas!");
+                router.replace("/rh/demissoes");
             } catch (error) {
                 catchErrorMessage(error);
                 setLoading(false)
@@ -139,12 +100,12 @@ export default function Activities() {
         if (option === "ADVERTIR") {
             try {
                 await client.post(
-                    "/actions/warn",
-                    { warnedNick: nick, description },
+                    "/actions/warn/multiple",
+                    { warnedNicks: nicks.split("\n"), description: reason },
                     { headers: { Authorization: userData?.access_token } }
                 );
-                toast.success("Advertência postada!");
-                router.replace("/profile?nick=" + nick);
+                toast.success("Advertências postadas!");
+                router.replace("rh/advertencias");
             } catch (error) {
                 catchErrorMessage(error);
                 setLoading(false)
@@ -185,16 +146,21 @@ export default function Activities() {
                     </div>
                 </div>
                 <form onSubmit={(event) => debounceSubmit(event)} className={styles.activityForm}>
-                    <h2 className={poppins.className}>POSTAR ATIVIDADE</h2>
+                    <h2 className={poppins.className}>ATIVIDADES EM MASSA</h2>
                     <div className={"relative w-[60%] flex justify-center"}>
-                        <FaRegUserCircle/>
-                        <input
-                          required
-                          type="text"
-                          placeholder="Nickname do policial"
+                        <textarea
+                          rows={10}
+                          style={{height: `${approvedHeight}px`}}
+                          onInput={(event) =>
+                            setApprovedHeight(event.target.scrollHeight)
+                          }
+                          placeholder="Nickname dos policiais. (pule 1 linha por nick)"
                           className={poppins.className}
-                          value={nick}
-                          onChange={debounce}
+                          maxLength={4000}
+                          value={nicks}
+                          onChange={(event) =>
+                            setNicks(event.target.value)
+                          }
                         />
                     </div>
                     <div className={"relative w-[60%] flex justify-center"}>
@@ -209,43 +175,22 @@ export default function Activities() {
                             <option value={"unselected"}>
                                 Selecione a atividade
                             </option>
-                            <option>PROMOVER</option>
-                            <option>BONIFICAR</option>
                             <option>ADVERTIR</option>
                             <option>REBAIXAR</option>
                             <option>DEMITIR</option>
                         </select>
                     </div>
-                    { option === "BONIFICAR" &&
-                        <div className={"relative w-[60%] flex justify-center"}>
-                        <IoMdCheckmarkCircleOutline/>
-                        <select
+                    <div className={"relative w-[60%] flex justify-center"}>
+                        <TbWriting />
+                        <input
                           required
+                          type="text"
+                          placeholder="Motivo"
                           className={poppins.className}
                           value={reason}
                           onChange={(event) => setReason(event.target.value)}
-                          defaultValue={"unselected"}
-                        >
-                            <option value={"unselected"}>
-                                Selecione o motivo da bonificação
-                            </option>
-                            {bonifyReasons.map(reason => <option key={reason}>{reason}</option>)}
-                        </select>
-                        </div>
-                    }
-                    {option !== "BONIFICAR" && <div className={"relative w-[60%] flex justify-center"}>
-                        <textarea
-                          required
-                          placeholder="Motivo"
-                          className={poppins.className}
-                          maxLength={4000}
-                          value={description}
-                          onChange={(event) =>
-                            setDescription(event.target.value)
-                          }
                         />
                     </div>
-                    }
                     <div className={styles.checkbox}>
                         <input
                           required
